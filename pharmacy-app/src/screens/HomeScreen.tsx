@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
 export default HomeScreen;
 
 const Products = () => (
-  <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
+  <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent", flexWrap: "wrap"}}>
   <Card style={{width: "45%"}}>
    
-    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Cover style={{height:130}} source={{ uri: 'https://picsum.photos/700' }} />
     <Card.Content>
       <Text variant="titleMedium">Vitamin D3</Text>
       <Text variant="bodyMedium">Tablets, 240mg</Text>
@@ -133,7 +133,7 @@ const Products = () => (
 
   <Card  style={{width: "45%"}}>
    
-    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Cover style={{height:130}} source={{ uri: 'https://picsum.photos/600' }} />
     <Card.Content>
       <Text variant="titleMedium">Vitamin D3</Text>
       <Text variant="bodyMedium">Tablets, 240mg</Text>
@@ -142,6 +142,12 @@ const Products = () => (
       <Button><FontAwesomeIcon name="plus" size={FONTSIZE.size_16} /></Button>
     </Card.Actions>
   </Card>
+
+  
+
+  
+
+  
 
   </View>
 )
