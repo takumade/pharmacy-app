@@ -3,7 +3,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
+  // TextInput,
   TouchableOpacity,
   View,
   ToastAndroid,
@@ -20,6 +20,9 @@ import {
 import HeaderBar from '../components/HeaderBar';
 import CustomIcon from '../components/CustomIcon';
 
+import { TextInput } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const HomeScreen = () => {
   return (
     <View style={styles.ScreenContainer}>
@@ -35,7 +38,7 @@ const HomeScreen = () => {
 
         {/*Search input */}
         <View style={styles.InputContainerComponent}>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <CustomIcon
               name="search"
               color={COLORS.primaryBlackHex}
@@ -46,8 +49,17 @@ const HomeScreen = () => {
           <TextInput
             style={styles.TextInputContainer}
             placeholder="Find Your Drug..."
-          />
+          /> */}
+
+<TextInput
+      label="Search"
+      placeholder='Search for drugs'
+      left={<Ionicons name="search" size={FONTSIZE.size_18}  color={COLORS.primaryBlackHex}/>}
+      style={{width: "100%"}}
+    />
         </View>
+
+     
       </ScrollView>
     </View>
   );
