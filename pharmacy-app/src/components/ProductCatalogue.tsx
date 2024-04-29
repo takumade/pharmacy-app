@@ -18,7 +18,7 @@ import {
   SPACING,
 } from '../theme/theme';
 
-import { List } from 'react-native-paper';
+import { List, Text } from 'react-native-paper';
 
 
 const styles = StyleSheet.create({
@@ -43,34 +43,12 @@ const ProductCatalogue = () => {
 
         <ScrollView style={styles.productCatalogueContainer}>
         <List.Item
-      title="Medication"
+      title={<Text variant='titleMedium'>Medication</Text>}
       left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
       style={styles.productCatalogueItem}
     />
   
-  <List.Item
-      title="Vitamins"
-      left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
-      style={styles.productCatalogueItem}
-    />
-  
-  <List.Item
-      title="Suppliments"
-      left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
-      style={styles.productCatalogueItem}
-    />
-  
-  <List.Item
-      title="Body & Care"
-      left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
-      style={styles.productCatalogueItem}
-    />
-  
-  <List.Item
-      title="Products for children"
-      left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
-      style={styles.productCatalogueItem}
-    />
+
         </ScrollView>
   
       </View>)
