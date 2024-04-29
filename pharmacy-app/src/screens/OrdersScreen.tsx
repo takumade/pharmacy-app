@@ -50,9 +50,25 @@ const OrdersScreen = () => {
  <CartItems />
 
  
+ {/* Remove All  */}
+<View style={{ marginTop: SPACING.space_15}}>
 
- <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
-    Press me
+ <Button style={{alignSelf: 'flex-end'}} mode="text" onPress={() => console.log('Pressed')}>
+    Remove All
+  </Button>
+</View>
+
+{/* Total Amount  */}
+
+<View style={{flexDirection: "row", justifyContent: "space-between", marginTop: SPACING.space_15}}>
+  <Text variant='titleMedium'>Total Amount:</Text>
+
+<Text variant={'titleMedium'}>$66.00</Text>
+</View>
+
+
+<Button icon="cash-fast" mode="contained" onPress={() => console.log('Pressed')}>
+    Place Order
   </Button>
 
 
@@ -61,6 +77,9 @@ const OrdersScreen = () => {
 
    
     </ScrollView>
+
+    
+    
   </View>
   )
 }
@@ -69,6 +88,7 @@ export default OrdersScreen
 
 const styles = StyleSheet.create({  ScreenContainer: {
   flex: 1,
+  marginHorizontal: SPACING.space_30
 },
 ScrollViewFlex: {
   flexGrow: 1,
@@ -77,7 +97,6 @@ ScreenTitle: {
   fontSize: FONTSIZE.size_28,
   fontFamily: FONTFAMILY.poppins_semibold,
   color: COLORS.primaryBlackHex,
-  paddingLeft: SPACING.space_30,
 },
 InputIcon: {
   marginHorizontal: SPACING.space_20,

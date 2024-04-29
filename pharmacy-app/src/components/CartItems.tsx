@@ -34,8 +34,6 @@ import { List } from 'react-native-paper';
 
 const styles = StyleSheet.create({
     cartItemsContainer:  {
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
 
     },
