@@ -36,14 +36,13 @@ const styles = StyleSheet.create({
     cartItemsContainer:  {
     marginLeft: SPACING.space_30,
     marginRight: SPACING.space_30,
-    marginTop: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
     },
     cartItem: {
         backgroundColor: COLORS.primaryWhiteHex,
         borderRadius: BORDERRADIUS.radius_20,
         paddingLeft: SPACING.space_15,
-        marginTop: SPACING.space_10
+        marginTop: SPACING.space_10,
     }
 })
 
@@ -51,22 +50,40 @@ const CartItems = () => {
     return (    <ScrollView>
         <View style={styles.cartItemsContainer}>
         <List.Item
-      title="Paracetamol"
-      description="Tablets .240mg"
-      left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
-      right={props => <View style={{flexDirection: "row", gap: 12, alignItems: "center"}}>
-         <FontAwesomeIcon name="minus" size={FONTSIZE.size_18} />
-        
-        <Text style={{fontSize: FONTSIZE.size_16}}>10</Text>
-
-        <FontAwesomeIcon name="plus" size={FONTSIZE.size_18} />
-       
-      </View>}
+      title={<Text variant="titleMedium">Paracetamol</Text>}
+      description={<CartItemDesc/>}
+      left={props => <List.Image style={{marginTop: 8}}  source={{uri: 'https://picsum.photos/700'}}/>}
+      right={props => <CartItemQuantity/>}
       style={styles.cartItem}
     />
+    
         </View>
   
       </ScrollView>)
 }
 
 export default CartItems;
+
+const CartItemQuantity = () => {
+    return (<View >
+        <FontAwesomeIcon style={{alignSelf: "flex-end"}} name="times" size={FONTSIZE.size_18} />
+
+       <View style={{flexDirection: "row", gap: 12, alignItems: "center", marginTop: "40%"}}>
+        <FontAwesomeIcon name="minus" size={FONTSIZE.size_18} />
+       
+       <Text style={{fontSize: FONTSIZE.size_16}}>10</Text>
+
+       <FontAwesomeIcon name="plus" size={FONTSIZE.size_18} />
+      
+     </View>
+     </View>)
+}
+
+const CartItemDesc = () => {
+    return (<View>
+
+        <Text>Tablets .240mg</Text>
+
+        <Text variant="bodyMedium" style={{fontWeight: "bold", marginTop: 12}}>$10.00</Text>
+      </View>)
+}
