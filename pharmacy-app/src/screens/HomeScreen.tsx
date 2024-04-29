@@ -26,6 +26,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
 import Products from '../components/Products';
+import ProductCategory from '../components/ProductCategory';
 
 const HomeScreen = () => {
   return (
@@ -69,13 +70,14 @@ const HomeScreen = () => {
        <HomeActionCards/>
 
 
-    <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
-     <Text variant="titleLarge">Popular Items</Text>
-
-     <Text variant='titleMedium'>See All</Text>
-  </View>
+    <ProductCategory title="Popular Items"/>
 
   <Products/>
+
+  <ProductCategory title="Recently Viewed Products"/>
+
+<Products/>
+
 
 
 
@@ -160,3 +162,5 @@ const HomeActionCards = () => {
 
   )
 }
+
+
