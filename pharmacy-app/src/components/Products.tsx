@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.space_30,
     marginRight: SPACING.space_30,
     marginTop: SPACING.space_30,
+    marginBottom: SPACING.space_15,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',

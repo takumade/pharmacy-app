@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
+    marginTop: SPACING.space_30,
+    marginLeft: SPACING.space_30,
+    marginRight: SPACING.space_30,
   },
 });
 
