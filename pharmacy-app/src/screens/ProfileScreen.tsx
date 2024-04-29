@@ -20,10 +20,12 @@ import {
   Card,
   IconButton,
   Button,
+  Avatar,
   RadioButton,
   Text,
 } from 'react-native-paper';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import Octicons from 'react-native-vector-icons/Octicons';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from '../components/HomeActionCards';
@@ -45,7 +47,24 @@ const ProfileScreen = () => {
         <HeaderBar />
         <Text style={styles.ScreenTitle}>Your Profile</Text>
 
-        <View style={{gap: 12}}>
+        <View style={{flexDirection: 'row', gap: 12, marginVertical: SPACING.space_16}}>
+          <Avatar.Image
+            size={100}
+            source={require('../assets/app_images/avatar.jpg')}
+          />
+
+          <View style={{marginTop: SPACING.space_10}}>
+            <View style={{flexDirection: "row", alignItems: "center", gap: 6}}>
+            <Text variant="titleLarge">Richson Simbabwe</Text>
+
+<Octicons name="verified" size={FONTSIZE.size_18} color={"blue"}/>
+            </View>
+            <Text variant="titleMedium">Male</Text>
+            <Text variant="titleMedium">56</Text>
+          </View>
+        </View>
+
+        <View style={{gap: 12, marginTop: SPACING.space_20}}>
           <TextInput
             label="Full Name*"
             secureTextEntry
@@ -85,13 +104,18 @@ const ProfileScreen = () => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginTop: SPACING.space_20
+            marginTop: SPACING.space_20,
           }}>
           <Text variant="bodyLarge">Currency</Text>
 
           <RadioButton.Group onValueChange={newValue => {}} value={'usd'}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: "space-between"}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
                 <RadioButton value="usd" />
                 <Text>USD</Text>
               </View>
@@ -102,31 +126,33 @@ const ProfileScreen = () => {
             </View>
           </RadioButton.Group>
         </View>
+
+        <View style={{marginTop: SPACING.space_15}}>
+        <Button
+          style={{
+            paddingVertical: '2%',
+          }}
+          icon={() => <FontAwesomeIcon name="save" size={FONTSIZE.size_18} color={COLORS.primaryWhiteHex}/>}
+          mode="contained"
+          onPress={() => console.log('Pressed')}>
+          SAVE
+        </Button>
+        </View>
       </ScrollView>
 
       {/* Total Amount  */}
 
       <View style={{marginBottom: '30%'}}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: SPACING.space_15,
-            marginBottom: SPACING.space_36,
-          }}>
-          <Text variant="titleMedium">Total Amount:</Text>
-
-          <Text variant={'titleMedium'}>$66.00</Text>
-        </View>
 
         <Button
           style={{
             paddingVertical: '2%',
           }}
-          icon="cash-fast"
+          icon={() => <Octicons name="trash" size={FONTSIZE.size_18} color={COLORS.primaryWhiteHex}/>}
+          buttonColor={COLORS.primaryRedHex}
           mode="contained"
           onPress={() => console.log('Pressed')}>
-          Place Order
+          DELETE MY ACCOUNT
         </Button>
       </View>
     </View>
