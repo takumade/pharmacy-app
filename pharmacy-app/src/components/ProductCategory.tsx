@@ -1,6 +1,4 @@
 import {
-  ScrollView,
-  StatusBar,
   StyleSheet,
   // Text,
   // TextInput,
@@ -9,22 +7,11 @@ import {
   ToastAndroid,
 } from 'react-native';
 import React from 'react';
-import {ScreenContainer} from 'react-native-screens';
 import {
-  BORDERRADIUS,
-  COLORS,
-  FONTFAMILY,
-  FONTSIZE,
   SPACING,
 } from '../theme/theme';
-import HeaderBar from './HeaderBar';
-import CustomIcon from './CustomIcon';
 
-import {TextInput} from 'react-native-paper';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
-import {Icon, Card, IconButton, Button, Text} from 'react-native-paper';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
+import {Button, Text} from 'react-native-paper';
 
 const styles = StyleSheet.create({
   ProductCategoryContainer: {
@@ -32,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
     marginTop: SPACING.space_30,
+    alignItems: "center"
   },
 });
 
@@ -40,7 +28,11 @@ const ProductCategory = ({title}: {title: string}) => {
     <View style={styles.ProductCategoryContainer}>
       <Text variant="titleLarge">{title}</Text>
 
-      <Text variant="titleMedium">See All</Text>
+      
+
+      <Button mode="text" onPress={() => console.log('Pressed')}>
+    See All
+  </Button>
     </View>
   );
 };
