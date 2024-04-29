@@ -25,6 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
+import Products from '../components/Products';
 
 const HomeScreen = () => {
   return (
@@ -74,7 +75,7 @@ const HomeScreen = () => {
      <Text variant='titleMedium'>See All</Text>
   </View>
 
-  <Products />
+  <Products/>
 
 
 
@@ -108,49 +109,17 @@ const styles = StyleSheet.create({
   },
   InputContainerComponent: {
     flexDirection: 'row',
-    margin: SPACING.space_30,
+    marginLeft: SPACING.space_30,
+    marginRight: SPACING.space_30,
+    marginTop: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
     backgroundColor: COLORS.primaryWhiteHex,
     alignItems: 'center',
   },
+
 });
 
 export default HomeScreen;
-
-const Products = () => (
-  <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent", flexWrap: "wrap"}}>
-  <Card style={{width: "45%"}}>
-   
-    <Card.Cover style={{height:130}} source={{ uri: 'https://picsum.photos/700' }} />
-    <Card.Content>
-      <Text variant="titleMedium">Vitamin D3</Text>
-      <Text variant="bodyMedium">Tablets, 240mg</Text>
-    </Card.Content>
-    <Card.Actions>
-      <Button><FontAwesomeIcon name="plus" size={FONTSIZE.size_16} /></Button>
-    </Card.Actions>
-  </Card>
-
-  <Card  style={{width: "45%"}}>
-   
-    <Card.Cover style={{height:130}} source={{ uri: 'https://picsum.photos/600' }} />
-    <Card.Content>
-      <Text variant="titleMedium">Vitamin D3</Text>
-      <Text variant="bodyMedium">Tablets, 240mg</Text>
-    </Card.Content>
-    <Card.Actions>
-      <Button><FontAwesomeIcon name="plus" size={FONTSIZE.size_16} /></Button>
-    </Card.Actions>
-  </Card>
-
-  
-
-  
-
-  
-
-  </View>
-)
 
 
 const HomeActionCards = () => {
