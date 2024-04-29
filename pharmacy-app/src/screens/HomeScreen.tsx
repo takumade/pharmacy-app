@@ -43,26 +43,16 @@ const HomeScreen = () => {
 
         {/*Search input */}
         <View style={styles.InputContainerComponent}>
-          {/* <TouchableOpacity>
-            <CustomIcon
-              name="search"
-              color={COLORS.primaryBlackHex}
-              size={FONTSIZE.size_18}
-              style={styles.InputIcon}
-            />
-          </TouchableOpacity>
-          <TextInput
-            style={styles.TextInputContainer}
-            placeholder="Find Your Drug..."
-          /> */}
 
-<TextInput
-      label="Search"
-      placeholder='Search for drugs'
-      left={<Ionicons name="search" size={FONTSIZE.size_18}  color={COLORS.primaryBlackHex}/>}
-      style={{width: "100%"}}
+<View style={styles.searchSection}>
+    <Ionicons style={styles.searchIcon} name="search" size={FONTSIZE.size_24} color={COLORS.primaryBlackHex} />
+    <TextInput
+        style={styles.input}
+        placeholder="Search for drugs"
+        onChangeText={(searchString) => {}}
+        underlineColorAndroid="transparent"
     />
-
+</View>
 
 
         </View>
@@ -118,6 +108,26 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.primaryWhiteHex,
     alignItems: 'center',
   },
+
+  searchSection: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+},
+searchIcon: {
+    padding: 10,
+},
+input: {
+    flex: 1,
+    paddingTop: 5,
+    paddingRight: 10,
+    paddingBottom: 10,
+    paddingLeft: 0,
+    backgroundColor: '#fff',
+    color: '#424242',
+},
 
 });
 
