@@ -65,38 +65,16 @@ const HomeScreen = () => {
 
         </View>
 
-        <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
-
-        <Card style={{width: "32%"}}>
-
-    <Card.Content  style={{alignItems: "center"}}>
-    <FontAwesomeIcon name="plus-circle" size={FONTSIZE.size_24} />
-      <Text variant="titleMedium">Medication</Text>
-    
-    </Card.Content>
-  </Card>
-
-  <Card style={{width: "32%"}}>
-
-<Card.Content style={{alignItems: "center"}}>
-<Ionicons name="bag-outline" size={FONTSIZE.size_24} />
-  <Text variant="titleMedium">Orders</Text>
-
-</Card.Content>
-</Card>
-
-<Card style={{width: "32%"}}> 
-
-<Card.Content  style={{alignItems: "center"}}>
-<Ionicons name="chatbox-outline" size={FONTSIZE.size_24} />
-  <Text variant="titleMedium">Support</Text>
-
-</Card.Content>
-</Card>
+       <HomeActionCards/>
 
 
-     
-        </View>
+    <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
+     <Text variant="titleLarge">Popular Items</Text>
+
+     <Text variant='titleMedium'>See All</Text>
+  </View>
+
+
 
      
       </ScrollView>
@@ -136,3 +114,43 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+
+const HomeActionCards = () => {
+  return (
+
+    <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
+  
+
+  <Card style={{width: "32%"}}>
+
+<Card.Content  style={{alignItems: "center"}}>
+<FontAwesomeIcon name="plus-circle" size={FONTSIZE.size_24} />
+  <Text variant="titleMedium">Medication</Text>
+
+</Card.Content>
+</Card>
+
+<Card style={{width: "32%"}}>
+
+<Card.Content style={{alignItems: "center"}}>
+<Ionicons name="bag-outline" size={FONTSIZE.size_24} />
+<Text variant="titleMedium">Orders</Text>
+
+</Card.Content>
+</Card>
+
+<Card style={{width: "32%"}}> 
+
+<Card.Content  style={{alignItems: "center"}}>
+<Ionicons name="chatbox-outline" size={FONTSIZE.size_24} />
+<Text variant="titleMedium">Support</Text>
+
+</Card.Content>
+</Card>
+    </View>
+
+ 
+
+  )
+}
