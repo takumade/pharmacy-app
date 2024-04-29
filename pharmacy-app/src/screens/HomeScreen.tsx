@@ -140,7 +140,7 @@ const HomeActionCards = () => {
     <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
   
 
-  <Card style={{width: "32%"}}>
+  <Card style={{width: "32%", backgroundColor: "white"}}>
 
 <Card.Content  style={{alignItems: "center"}}>
 <FontAwesomeIcon name="plus-circle" size={FONTSIZE.size_24} />
@@ -149,7 +149,7 @@ const HomeActionCards = () => {
 </Card.Content>
 </Card>
 
-<Card style={{width: "32%"}}>
+<Card style={{width: "32%", backgroundColor: "white"}}>
 
 <Card.Content style={{alignItems: "center"}}>
 <Ionicons name="bag-outline" size={FONTSIZE.size_24} />
@@ -158,7 +158,7 @@ const HomeActionCards = () => {
 </Card.Content>
 </Card>
 
-<Card style={{width: "32%"}}> 
+<Card style={{width: "32%", backgroundColor: "white"}}> 
 
 <Card.Content  style={{alignItems: "center"}}>
 <Ionicons name="chatbox-outline" size={FONTSIZE.size_24} />
