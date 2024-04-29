@@ -63,13 +63,6 @@ const CatalogScreen = () => {
      
  <ProductCatalogue />
 
-
-
-
-
-
-
-   
     </ScrollView>
   </View>
   )
@@ -79,6 +72,8 @@ export default CatalogScreen
 
 const styles = StyleSheet.create({  ScreenContainer: {
   flex: 1,
+  marginHorizontal: SPACING.space_30
+  
 },
 ScrollViewFlex: {
   flexGrow: 1,
