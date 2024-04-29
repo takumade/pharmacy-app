@@ -27,6 +27,7 @@ import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
+import HomeActionCards from "../components/HomeActionCards";
 
 const HomeScreen = () => {
   return (
@@ -134,43 +135,5 @@ input: {
 export default HomeScreen;
 
 
-const HomeActionCards = () => {
-  return (
-
-    <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
-  
-
-  <Card style={{width: "32%", backgroundColor: "white"}}>
-
-<Card.Content  style={{alignItems: "center"}}>
-<FontAwesomeIcon name="plus-circle" size={FONTSIZE.size_24} />
-  <Text variant="titleMedium">Medication</Text>
-
-</Card.Content>
-</Card>
-
-<Card style={{width: "32%", backgroundColor: "white"}}>
-
-<Card.Content style={{alignItems: "center"}}>
-<Ionicons name="bag-outline" size={FONTSIZE.size_24} />
-<Text variant="titleMedium">Orders</Text>
-
-</Card.Content>
-</Card>
-
-<Card style={{width: "32%", backgroundColor: "white"}}> 
-
-<Card.Content  style={{alignItems: "center"}}>
-<Ionicons name="chatbox-outline" size={FONTSIZE.size_24} />
-<Text variant="titleMedium">Support</Text>
-
-</Card.Content>
-</Card>
-    </View>
-
- 
-
-  )
-}
 
 
