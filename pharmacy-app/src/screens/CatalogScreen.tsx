@@ -88,7 +88,6 @@ ScreenTitle: {
   fontSize: FONTSIZE.size_28,
   fontFamily: FONTFAMILY.poppins_semibold,
   color: COLORS.primaryBlackHex,
-  paddingLeft: SPACING.space_30,
 },
 InputIcon: {
   marginHorizontal: SPACING.space_20,
