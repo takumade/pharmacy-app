@@ -74,6 +74,8 @@ const HomeScreen = () => {
      <Text variant='titleMedium'>See All</Text>
   </View>
 
+  <Products />
+
 
 
      
@@ -114,6 +116,35 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+const Products = () => (
+  <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
+  <Card style={{width: "45%"}}>
+   
+    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Content>
+      <Text variant="titleMedium">Vitamin D3</Text>
+      <Text variant="bodyMedium">Tablets, 240mg</Text>
+    </Card.Content>
+    <Card.Actions>
+      <Button><FontAwesomeIcon name="plus" size={FONTSIZE.size_16} /></Button>
+    </Card.Actions>
+  </Card>
+
+  <Card  style={{width: "45%"}}>
+   
+    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Content>
+      <Text variant="titleMedium">Vitamin D3</Text>
+      <Text variant="bodyMedium">Tablets, 240mg</Text>
+    </Card.Content>
+    <Card.Actions>
+      <Button><FontAwesomeIcon name="plus" size={FONTSIZE.size_16} /></Button>
+    </Card.Actions>
+  </Card>
+
+  </View>
+)
 
 
 const HomeActionCards = () => {
