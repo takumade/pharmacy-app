@@ -15,7 +15,14 @@ import CustomIcon from '../components/CustomIcon';
 import {TextInput} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {Icon, Card, IconButton, Button, Text} from 'react-native-paper';
+import {
+  Icon,
+  Card,
+  IconButton,
+  Button,
+  RadioButton,
+  Text,
+} from 'react-native-paper';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
@@ -36,36 +43,76 @@ const ProfileScreen = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.ScrollViewFlex}>
         <HeaderBar />
-        <Text style={styles.ScreenTitle}>Your Cart</Text>
+        <Text style={styles.ScreenTitle}>Your Profile</Text>
 
-        <View>
+        <View style={{gap: 12}}>
+          <TextInput
+            label="Full Name*"
+            secureTextEntry
+            left={
+              <TextInput.Icon
+                icon={() => (
+                  <FontAwesomeIcon
+                    name="user-alt"
+                    size={FONTSIZE.size_20}
+                    color={COLORS.primaryDarkGreyHex}
+                  />
+                )}
+              />
+            }
+          />
 
-        <TextInput
-      label="Full Name*"
-      secureTextEntry
-      right={<TextInput.Icon icon={() => <FontAwesomeIcon name="user-alt" size={FONTSIZE.size_20} color={COLORS.primaryDarkGreyHex} />}/>}
-    />
+          <TextInput
+            label="Email*"
+            secureTextEntry
+            left={
+              <TextInput.Icon icon="email" color={COLORS.primaryDarkGreyHex} />
+            }
+          />
 
-<TextInput
-      label="Email*"
-      secureTextEntry
-      right={<TextInput.Icon icon="email" color={COLORS.primaryDarkGreyHex} />}
-    />
-
+          <TextInput
+            label="Mobile Number*"
+            secureTextEntry
+            left={
+              <TextInput.Icon icon="phone" color={COLORS.primaryDarkGreyHex} />
+            }
+          />
         </View>
 
-       
+        {/* Currency */}
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            marginTop: SPACING.space_20
+          }}>
+          <Text variant="bodyLarge">Currency</Text>
+
+          <RadioButton.Group onValueChange={newValue => {}} value={'usd'}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: "space-between"}}>
+                <RadioButton value="usd" />
+                <Text>USD</Text>
+              </View>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <RadioButton value="zig" />
+                <Text>Zig</Text>
+              </View>
+            </View>
+          </RadioButton.Group>
+        </View>
       </ScrollView>
 
-       {/* Total Amount  */}
+      {/* Total Amount  */}
 
-       <View style={{marginBottom: "30%"}}>
-       <View
+      <View style={{marginBottom: '30%'}}>
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginTop: SPACING.space_15,
-            marginBottom: SPACING.space_36
+            marginBottom: SPACING.space_36,
           }}>
           <Text variant="titleMedium">Total Amount:</Text>
 
@@ -73,15 +120,15 @@ const ProfileScreen = () => {
         </View>
 
         <Button
-           style={{
-            paddingVertical: "2%"           
+          style={{
+            paddingVertical: '2%',
           }}
           icon="cash-fast"
           mode="contained"
           onPress={() => console.log('Pressed')}>
           Place Order
         </Button>
-       </View>
+      </View>
     </View>
   );
 };
