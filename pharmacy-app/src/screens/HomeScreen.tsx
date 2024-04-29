@@ -2,7 +2,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
+  // Text,
   // TextInput,
   TouchableOpacity,
   View,
@@ -22,6 +22,9 @@ import CustomIcon from '../components/CustomIcon';
 
 import { TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
 
 const HomeScreen = () => {
   return (
@@ -57,6 +60,61 @@ const HomeScreen = () => {
       left={<Ionicons name="search" size={FONTSIZE.size_18}  color={COLORS.primaryBlackHex}/>}
       style={{width: "100%"}}
     />
+
+
+
+        </View>
+
+        <View style={{...styles.InputContainerComponent, flexDirection:"row", justifyContent: "space-between", backgroundColor: "transparent"}}>
+
+        <Card style={{width: "32%"}}>
+
+    <Card.Content  style={{alignItems: "center"}}>
+    <FontAwesomeIcon name="plus-circle" size={FONTSIZE.size_24} />
+      <Text variant="titleMedium">Medication</Text>
+    
+    </Card.Content>
+  </Card>
+
+  <Card style={{width: "32%"}}>
+
+<Card.Content style={{alignItems: "center"}}>
+<Ionicons name="bag-outline" size={FONTSIZE.size_24} />
+  <Text variant="titleMedium">Orders</Text>
+
+</Card.Content>
+</Card>
+
+<Card style={{width: "32%"}}> 
+
+<Card.Content  style={{alignItems: "center"}}>
+<Ionicons name="chatbox-outline" size={FONTSIZE.size_24} />
+  <Text variant="titleMedium">Support</Text>
+
+</Card.Content>
+</Card>
+
+
+        {/* <Card.Title
+    title="Medication"
+    subtitle="Card Subtitle"
+    left={(props) => <Avatar.Icon {...props} icon="folder" />}
+    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
+  />
+
+<Card.Title
+    title="My Orders"
+    subtitle="Card Subtitle"
+    left={(props) => <Avatar.Icon {...props} icon="folder" />}
+    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
+  />
+
+<Card.Title
+    title="Support Chat"
+    subtitle="Card Subtitle"
+    left={(props) => <Avatar.Icon {...props} icon="folder" />}
+    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />} */}
+  {/* /> */}
         </View>
 
      
