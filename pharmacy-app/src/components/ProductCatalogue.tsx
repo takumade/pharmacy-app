@@ -24,7 +24,6 @@ import { List } from 'react-native-paper';
 const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
-        marginHorizontal: SPACING.space_30
     },
     productCatalogueContainer:  {
     marginTop: SPACING.space_30,

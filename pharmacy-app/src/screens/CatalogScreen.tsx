@@ -82,6 +82,7 @@ const styles = StyleSheet.create({  ScreenContainer: {
 },
 ScrollViewFlex: {
   flexGrow: 1,
+  marginHorizontal: SPACING.space_30,
 },
 ScreenTitle: {
   fontSize: FONTSIZE.size_28,
@@ -101,8 +102,6 @@ TextInputContainer: {
 },
 InputContainerComponent: {
   flexDirection: 'row',
-  marginLeft: SPACING.space_30,
-  marginRight: SPACING.space_30,
   marginTop: SPACING.space_30,
   borderRadius: BORDERRADIUS.radius_20,
   backgroundColor: COLORS.primaryWhiteHex,
