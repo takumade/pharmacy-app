@@ -95,26 +95,7 @@ const HomeScreen = () => {
 </Card>
 
 
-        {/* <Card.Title
-    title="Medication"
-    subtitle="Card Subtitle"
-    left={(props) => <Avatar.Icon {...props} icon="folder" />}
-    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
-  />
-
-<Card.Title
-    title="My Orders"
-    subtitle="Card Subtitle"
-    left={(props) => <Avatar.Icon {...props} icon="folder" />}
-    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />}
-  />
-
-<Card.Title
-    title="Support Chat"
-    subtitle="Card Subtitle"
-    left={(props) => <Avatar.Icon {...props} icon="folder" />}
-    right={(props) => <IconButton {...props} icon="dots-vertical" onPress={() => {}} />} */}
-  {/* /> */}
+     
         </View>
 
      
