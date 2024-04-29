@@ -12,8 +12,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
     marginTop: SPACING.space_30,
   },
   cardStyle: {width: '32%', backgroundColor: 'white'},

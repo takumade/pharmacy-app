@@ -78,6 +78,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
+    marginHorizontal: SPACING.space_30
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_28,
     fontFamily: FONTFAMILY.poppins_semibold,
     color: COLORS.primaryBlackHex,
-    paddingLeft: SPACING.space_30,
   },
   InputIcon: {
     marginHorizontal: SPACING.space_20,
@@ -100,8 +100,6 @@ const styles = StyleSheet.create({
   },
   InputContainerComponent: {
     flexDirection: 'row',
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
     marginTop: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
     backgroundColor: COLORS.primaryWhiteHex,

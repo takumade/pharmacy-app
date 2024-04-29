@@ -7,8 +7,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
 const styles = StyleSheet.create({
   productsContainer: {
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
     marginTop: SPACING.space_30,
     marginBottom: SPACING.space_15,
     flexDirection: 'row',

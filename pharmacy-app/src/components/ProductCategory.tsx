@@ -32,8 +32,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
     marginTop: SPACING.space_30,
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
   },
 });
 

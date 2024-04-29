@@ -33,11 +33,14 @@ import { List } from 'react-native-paper';
 
 
 const styles = StyleSheet.create({
+    screenContainer: {
+        flex: 1,
+        marginHorizontal: SPACING.space_30
+    },
     productCatalogueContainer:  {
-    marginLeft: SPACING.space_30,
-    marginRight: SPACING.space_30,
     marginTop: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
+    
     },
     productCatalogueItem: {
         backgroundColor: COLORS.primaryWhiteHex,
@@ -48,8 +51,8 @@ const styles = StyleSheet.create({
 })
 
 const ProductCatalogue = () => {
-    return (    <ScrollView>
-        <View style={styles.productCatalogueContainer}>
+    return (    <View style={styles.screenContainer}>
+        <ScrollView style={styles.productCatalogueContainer}>
         <List.Item
       title="Medication"
       left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
@@ -79,9 +82,9 @@ const ProductCatalogue = () => {
       left={props => <List.Image  source={{uri: 'https://picsum.photos/700'}}/>}
       style={styles.productCatalogueItem}
     />
-        </View>
+        </ScrollView>
   
-      </ScrollView>)
+      </View>)
 }
 
 export default ProductCatalogue;
