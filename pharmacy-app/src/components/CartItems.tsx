@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     marginLeft: SPACING.space_30,
     marginRight: SPACING.space_30,
     borderRadius: BORDERRADIUS.radius_20,
+
     },
     cartItem: {
         backgroundColor: COLORS.primaryWhiteHex,
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
 })
 
 const CartItems = () => {
-    return (    <ScrollView>
+    return (   
         <View style={styles.cartItemsContainer}>
         <List.Item
       title={<Text variant="titleMedium">Paracetamol</Text>}
@@ -58,8 +59,7 @@ const CartItems = () => {
     />
     
         </View>
-  
-      </ScrollView>)
+      )
 }
 
 export default CartItems;

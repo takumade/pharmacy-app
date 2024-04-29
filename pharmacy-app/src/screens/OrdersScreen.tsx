@@ -44,18 +44,16 @@ const OrdersScreen = () => {
       contentContainerStyle={styles.ScrollViewFlex}>
       <HeaderBar />
       <Text style={styles.ScreenTitle}>Your Cart</Text>
-
-      {/*Search input */}
-      <View style={styles.InputContainerComponent}>
-
-
-
-      </View>
+     
 
      
  <CartItems />
 
+ 
 
+ <Button icon="camera" mode="contained" onPress={() => console.log('Pressed')}>
+    Press me
+  </Button>
 
 
 
