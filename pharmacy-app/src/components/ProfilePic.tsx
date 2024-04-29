@@ -5,11 +5,10 @@ import {COLORS, SPACING} from '../theme/theme';
 const ProfilePic = () => {
   return (
     <View style={styles.ImageContainer}>
-      {/* <Image
-        source={require('../assets/app_images/avatar.png')}
+      <Image
+        source={require("../assets/app_images/avatar.jpg")}
         style={styles.Image}
-      /> */}
-      <Text>image here</Text>
+      />
     </View>
   );
 };
@@ -26,8 +25,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   Image: {
-    height: SPACING.space_36,
-    width: SPACING.space_36,
+    height: "100%",
+    width: "100%",
+    objectFit: "fill"
+    
   },
 });
 
