@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
     marginTop: SPACING.space_30,
+    marginHorizontal: 5
   },
   cardStyle: {width: '32%', backgroundColor: 'white'},
 });
