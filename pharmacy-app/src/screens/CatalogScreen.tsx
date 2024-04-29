@@ -17,17 +17,10 @@ import {
   SPACING,
 } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
-import CustomIcon from '../components/CustomIcon';
-
 import { TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
-import Products from '../components/Products';
-import ProductCategory from '../components/ProductCategory';
-import HomeActionCards from "../components/HomeActionCards";
-
 import { List } from 'react-native-paper';
 import ProductCatalogue from '../components/ProductCatalogue';
 
@@ -77,12 +70,12 @@ const styles = StyleSheet.create({  ScreenContainer: {
 },
 ScrollViewFlex: {
   flexGrow: 1,
+  marginHorizontal: SPACING.space_30,
 },
 ScreenTitle: {
   fontSize: FONTSIZE.size_28,
   fontFamily: FONTFAMILY.poppins_semibold,
   color: COLORS.primaryBlackHex,
-  paddingLeft: SPACING.space_30,
 },
 InputIcon: {
   marginHorizontal: SPACING.space_20,
@@ -96,8 +89,6 @@ TextInputContainer: {
 },
 InputContainerComponent: {
   flexDirection: 'row',
-  marginLeft: SPACING.space_30,
-  marginRight: SPACING.space_30,
   marginTop: SPACING.space_30,
   borderRadius: BORDERRADIUS.radius_20,
   backgroundColor: COLORS.primaryWhiteHex,
