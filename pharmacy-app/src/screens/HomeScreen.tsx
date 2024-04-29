@@ -18,13 +18,11 @@ import {
   SPACING,
 } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
-import CustomIcon from '../components/CustomIcon';
 
 import { TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
+import {  Text } from 'react-native-paper';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from "../components/HomeActionCards";
