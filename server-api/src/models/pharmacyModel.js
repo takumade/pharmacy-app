@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const pharmacySchema = new mongoose.Schema({
   
-    userId: {
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
       },  
