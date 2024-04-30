@@ -35,7 +35,7 @@ const medicineSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  pharmacyField: {
+  pharmacyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Pharmacy'
   }
