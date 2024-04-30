@@ -1,0 +1,13 @@
+const express = require('express');
+const router = express.Router();
+const pharmacyController = require('../controllers/pharmacyController');
+
+router.use(authMiddleware.authenticateUser);
+
+// Define your routes
+router.post('/create', pharmacyController.createPharmacy);
+router.post('/approve', pharmacyController.approvePharmacy);
+router.post('/delete', pharmacyController.deletePharmacy);
+// Add more routes as needed
+
+module.exports = router;
