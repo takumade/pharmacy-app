@@ -9,13 +9,15 @@ app.use(cors());
 app.use(express.json());
 
 // Define your routes here
-const userRoutes = require("./routes/userRoutes");
+const userRoutes = require('./routes/userRoutes');
 const pharmacyRoutes = require('./routes/phamarcyRoutes');
 const medicineRoutes = require('./routes/medicineRoutes');
+const prescriptionRoutes = require('./routes/prescriptionRoutes')
 
 app.use('/api/user', userRoutes);
 app.use('/api/pharmacy', pharmacyRoutes)
 app.use('/api/medicine', medicineRoutes);
+app.use('/api/prescription', prescriptionRoutes);
 
 // Start the server
 app.listen(config.port, () => {
