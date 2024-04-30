@@ -60,6 +60,7 @@ const getMedicine = async (req, res) => {
   
     try {
       const medicine = await Medicine.findById(medicineId);
+
       if (!medicine) {
         return res.status(404).json({ success: false, message: "Medicine not found" });
       }
@@ -68,7 +69,8 @@ const getMedicine = async (req, res) => {
       if (req.user.role !== 'admin' && req.user.role !== 'pharmacy') {
         return res.status(403).json({ success: false, message: "You are not authorized to edit this medicine" });
       }
-  
+      
+      
       Object.assign(medicine, newData);
       await medicine.save();
   

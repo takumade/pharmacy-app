@@ -35,7 +35,7 @@ const medicineSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  pharmacyId: {
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Pharmacy'
   }
