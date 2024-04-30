@@ -13,7 +13,7 @@ router.get('/', prescriptionController.getPrescriptions);
 
 router.post('/create', prescriptionController.createPrescription);
 router.post('/approve', prescriptionController.approvePrescription);
-router.post('/delete', pharmacyController.deletePharmacy);
+router.post('/delete', prescriptionController.deletePrescription);
 // Add more routes as needed
 
 module.exports = router;
