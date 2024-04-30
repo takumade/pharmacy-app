@@ -47,6 +47,34 @@ const pharmacySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  isBanned: {
+    type: Boolean,
+    default: false
+  },
+  bannedEnd: {
+    type: Date
+  },
+  isApproved: {
+    type: Boolean,
+    default: false
+  },
+  onFreeTrial: {
+    type: Boolean,
+    default: false
+  },
+  trialEnds: {
+    type: Date
+  },
+  isSubscribed: {
+    type: Boolean,
+    default: false
+  },
+  packageId: {
+    type: String
+  },
+  subscriptionsEnds: {
+    type: Date
+  },
   additionalNotes: String
 });
 
