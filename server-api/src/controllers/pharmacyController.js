@@ -80,6 +80,6 @@ const approvePharmacy = async (req, res) => {
 
 module.exports = {
     createPharmacy,
-    deletePharmarcy,
+    deletePharmacy,
     approvePharmacy
 }
