@@ -19,13 +19,13 @@ import {
 } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
 
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {  Text } from 'react-native-paper';
+import {Text} from 'react-native-paper';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
-import HomeActionCards from "../components/HomeActionCards";
+import HomeActionCards from '../components/HomeActionCards';
 
 const HomeScreen = () => {
   return (
@@ -40,37 +40,33 @@ const HomeScreen = () => {
         <HeaderBar />
         <Text style={styles.ScreenTitle}>Search for {'\n'}drugs below</Text>
 
-        {/*Search input */}
+        {/*Search input  */}
         <View style={styles.InputContainerComponent}>
-
-<View style={styles.searchSection}>
-    <Ionicons style={styles.searchIcon} name="search" size={FONTSIZE.size_24} color={COLORS.primaryBlackHex} />
-    <TextInput
-        style={styles.input}
-        placeholder="Search for drugs"
-        onChangeText={(searchString) => {}}
-        underlineColorAndroid="transparent"
-    />
-</View>
-
-
+          <View style={styles.searchSection}>
+            <Ionicons
+              style={styles.searchIcon}
+              name="search"
+              size={FONTSIZE.size_24}
+              color={COLORS.primaryBlackHex}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Search for drugs"
+              onChangeText={searchString => {}}
+              underlineColorAndroid="transparent"
+            />
+          </View>
         </View>
 
-       <HomeActionCards/>
+        <HomeActionCards />
 
+        <ProductCategory title="Popular Items" />
 
-    <ProductCategory title="Popular Items"/>
+        <Products />
 
-  <Products/>
+        <ProductCategory title="Recently Viewed Products" />
 
-  <ProductCategory title="Recently Viewed Products"/>
-
-<Products/>
-
-
-
-
-     
+        <Products />
       </ScrollView>
     </View>
   );
@@ -78,7 +74,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   ScreenContainer: {
     flex: 1,
-    marginHorizontal: SPACING.space_30
+    marginHorizontal: SPACING.space_30,
   },
   ScrollViewFlex: {
     flexGrow: 1,
@@ -112,11 +108,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-},
-searchIcon: {
+  },
+  searchIcon: {
     padding: 10,
-},
-input: {
+  },
+  input: {
     flex: 1,
     paddingTop: 5,
     paddingRight: 10,
@@ -124,12 +120,7 @@ input: {
     paddingLeft: 0,
     backgroundColor: '#fff',
     color: '#424242',
-},
-
+  },
 });
 
 export default HomeScreen;
-
-
-
-
