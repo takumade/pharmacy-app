@@ -49,18 +49,31 @@ const getMedicine = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 }
-  const addMedicines = async (req, res) => {
+const addMedicines = async (req, res) => {
     const newMedicinesData = req.body;
   
     try {
-      const newMedicines = await Medicine.insertMany(newMedicinesData);
+        // Retrieve the pharmacy ID based on the current user's ID
+        const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+        if (!pharmacy) {
+            return res.status(404).json({ success: false, message: "Pharmacy not found for current user" });
+        }
+
+        // Update the owner field for each medicine in newMedicinesData
+        const newMedicinesWithOwner = newMedicinesData.map(medicineData => ({
+            ...medicineData,
+            owner: pharmacy._id
+        }));
+
+        const newMedicines = await Medicine.insertMany(newMedicinesWithOwner);
   
-      res.status(201).json({ success: true, message: "Medicines added successfully", medicines: newMedicines });
+        res.status(201).json({ success: true, message: "Medicines added successfully", medicines: newMedicines });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-  }
+}
+
   
   const editMedicine = async (req, res) => {
     const medicineId = req.params.medicineId;
