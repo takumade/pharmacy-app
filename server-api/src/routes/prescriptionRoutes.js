@@ -11,7 +11,7 @@ router.use(authMiddleware.authenticateUser);
 router.get('/:prescriptionId', prescriptionController.getPrescription);
 router.get('/', prescriptionController.getPrescriptions);
 
-router.post('/create', pharmacyController.createPharmacy);
+router.post('/create', prescriptionController.createPrescription);
 router.post('/update', pharmacyController.editPharmacy);
 router.post('/approve', pharmacyController.approvePharmacy);
 router.post('/delete', pharmacyController.deletePharmacy);
