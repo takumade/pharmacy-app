@@ -7,6 +7,7 @@ const authMiddleware= require('../middlewares/authMiddleware');
 router.use(authMiddleware.authenticateUser);
 
 // Define your routes
+
 router.post('/create', pharmacyController.createPharmacy);
 router.post('/update', pharmacyController.editPharmacy);
 router.post('/approve', pharmacyController.approvePharmacy);

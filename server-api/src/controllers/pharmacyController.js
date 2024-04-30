@@ -1,5 +1,22 @@
 
 
+const getPharmacy = async (req, res) => {
+    const pharmacyId = req.params.pharmacyId;
+  
+    try {
+      // Find the pharmacy by ID
+      const pharmacy = await Pharmacy.findById(pharmacyId);
+      if (!pharmacy) {
+        return res.status(404).json({ success: false, message: "Pharmacy not found" });
+      }
+  
+      res.status(200).json({ success: true, pharmacy });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
 const createPharmacy = async (req, res) => {
     const currentUser = req.user;
   
