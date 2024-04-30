@@ -6,6 +6,7 @@ router.use(authMiddleware.authenticateUser);
 
 // Define your routes
 router.post('/create', pharmacyController.createPharmacy);
+router.post('/update', pharmacyController.editPharmacy);
 router.post('/approve', pharmacyController.approvePharmacy);
 router.post('/delete', pharmacyController.deletePharmacy);
 // Add more routes as needed
