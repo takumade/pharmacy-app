@@ -5,6 +5,10 @@ const pharmacySchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  logo: {
+    type: String,
+    required: false
+  },
   location: {
     type: String,
     required: true
