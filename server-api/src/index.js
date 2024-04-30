@@ -14,7 +14,7 @@ const pharmacyRoutes = require('./routes/phamarcyRoutes');
 const medicineRoutes = require('./routes/medicineRoutes');
 
 app.use('/api/user', userRoutes);
-app.use('/pharmacy', pharmacyRoutes)
+app.use('/api/pharmacy', pharmacyRoutes)
 app.use('/api/medicine', medicineRoutes);
 
 // Start the server
