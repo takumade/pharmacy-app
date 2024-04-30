@@ -68,28 +68,51 @@ const userLogin = async (req, res) => {
 };
 
 const deleteAccount = async (req, res) => {
-    const userId = req.user._id;
+    const userId = req.params.userId;
+    const currentUser = req.user;
   
     try {
-      // Find the user by ID
-      const user = await User.findById(userId);
-      if (!user) {
+      // Find the user making the request
+      const userMakingRequest = await User.findById(currentUser._id);
+      if (!userMakingRequest) {
         return res.status(404).json({ success: false, message: "User not found" });
       }
   
-      // Soft delete the user account
-      user.isDeleted = true;
-      await user.save();
+      // If the user is not an admin and is trying to delete another user's account, deny access
+      if (userMakingRequest.role !== 'admin' && String(userMakingRequest._id) !== userId) {
+        return res.status(403).json({ success: false, message: "You are not authorized to delete this account" });
+      }
   
-      res.status(200).json({ success: true, message: "Account deleted successfully" });
+      // Find the user to be deleted
+      const userToDelete = await User.findById(userId);
+      if (!userToDelete) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      // Admin can delete any user's account
+      if (userMakingRequest.role === 'admin') {
+        userToDelete.isDeleted = true;
+        await userToDelete.save();
+        return res.status(200).json({ success: true, message: "Account deleted successfully" });
+      }
+  
+      // Non-admin user can only delete their own account
+      if (String(userToDelete._id) === String(userMakingRequest._id)) {
+        userToDelete.isDeleted = true;
+        await userToDelete.save();
+        return res.status(200).json({ success: true, message: "Account deleted successfully" });
+      }
+  
+      // If none of the conditions match, return unauthorized
+      return res.status(403).json({ success: false, message: "You are not authorized to delete this account" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+      return res.status(500).json({ success: false, message: "Internal server error" });
     }
   }
-  
 
 module.exports = {
   userRegister,
   userLogin,
+  deleteAccount
 };
