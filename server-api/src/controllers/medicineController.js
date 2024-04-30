@@ -31,16 +31,24 @@ const getMedicine = async (req, res) => {
     const newMedicineData = req.body;
   
     try {
-      const newMedicine = new Medicine(newMedicineData);
-      await newMedicine.save();
+        // Retrieve the pharmacy ID based on the current user's ID
+        const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+        if (!pharmacy) {
+            return res.status(404).json({ success: false, message: "Pharmacy not found for current user" });
+        }
+
+        // Assign the owner field to the pharmacy's ID
+        newMedicineData.owner = pharmacy._id;
+
+        const newMedicine = new Medicine(newMedicineData);
+        await newMedicine.save();
   
-      res.status(201).json({ success: true, message: "Medicine added successfully", medicine: newMedicine });
+        res.status(201).json({ success: true, message: "Medicine added successfully", medicine: newMedicine });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-  }
-  
+}
   const addMedicines = async (req, res) => {
     const newMedicinesData = req.body;
   
