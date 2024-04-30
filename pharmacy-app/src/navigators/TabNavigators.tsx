@@ -5,6 +5,7 @@ import CustomIcon from '../components/CustomIcon';
 import CatalogScreen from '../screens/CatalogScreen';
 import OrdersScreen from '../screens/OrdersScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {COLORS} from '../theme/theme';
 import {BlurView} from '@react-native-community/blur';
@@ -28,47 +29,75 @@ const TabNavigators = () => {
         ),
       }}>
       <Tab.Screen
-       name="Home" 
-      component={HomeScreen}
-      options={{
-        tabBarIcon: ({focused}) => (
-          <CustomIcon
-          size={25}
-            name="home"
-            color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex}
-          />
-        ),
-      }}></Tab.Screen>
-      <Tab.Screen name="Catalog" component={CatalogScreen}
-      options={{
-        tabBarIcon: ({focused}) => (
-          <CustomIcon
-          size={25}
-            name="cart"
-            color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex}
-          />
-        ),
-      }}></Tab.Screen>
-      <Tab.Screen name="Orders" component={OrdersScreen}
-      options={{
-        tabBarIcon: ({focused}) => (
-          <CustomIcon
-          size={25}
-            name="like"
-            color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex}
-          />
-        ),
-      }}></Tab.Screen>
-      <Tab.Screen name="Profile" component={ProfileScreen}
-      options={{
-        tabBarIcon: ({focused}) => (
-          <CustomIcon
-            size={25}
-            name="wallet"
-            color={focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex}
-          />
-        ),
-      }}></Tab.Screen>
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              size={25}
+              name="home"
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Catalog"
+        component={CatalogScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              size={25}
+              name="cart"
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Orders"
+        component={OrdersScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              size={25}
+              name="like"
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}></Tab.Screen>
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              size={25}
+              name="wallet"
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}></Tab.Screen>
+          <Tab.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <CustomIcon
+              size={25}
+              name="menu"
+              color={
+                focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
+              }
+            />
+          ),
+        }}></Tab.Screen>
     </Tab.Navigator>
   );
 };
