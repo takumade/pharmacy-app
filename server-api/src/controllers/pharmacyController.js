@@ -143,6 +143,8 @@ const approvePharmacy = async (req, res) => {
 
 
 module.exports = {
+    getPharmacies,
+    getPharmacy,
     createPharmacy,
     editPharmacy,
     deletePharmacy,
