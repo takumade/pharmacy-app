@@ -9,7 +9,7 @@ router.use(authMiddleware.authenticateUser);
 // Define your routes
 
 router.get('/:prescriptionId', prescriptionController.getPrescription);
-router.get('/', pharmacyController.getPharmacies);
+router.get('/', prescriptionController.getPrescriptions);
 
 router.post('/create', pharmacyController.createPharmacy);
 router.post('/update', pharmacyController.editPharmacy);
