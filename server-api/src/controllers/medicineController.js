@@ -1,31 +1,47 @@
 const Medicine = require("../models/medicineModel");
+const Pharmacy = require("../models/pharmacyModel");
+
 
 const getMedicine = async (req, res) => {
-  const medicineId = req.params.medicineId;
+    const medicineId = req.params.medicineId;
 
-  try {
-    const medicine = await Medicine.findById(medicineId);
-    if (!medicine) {
-      return res
-        .status(404)
-        .json({ success: false, message: "Medicine not found" });
+    try {
+        let medicine;
+        if (req.user.role === 'pharmacy') {
+            // If the user is a pharmacy, they can only retrieve their own medicine
+            let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+            medicine = await Medicine.findOne({ _id: medicineId, owner:  pharmacy._id});
+        } else {
+            medicine = await Medicine.findById(medicineId);
+        }
+
+        if (!medicine) {
+            return res.status(404).json({ success: false, message: "Medicine not found" });
+        }
+
+        res.status(200).json({ success: true, medicine });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-
-    res.status(200).json({ success: true, medicine });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
 };
 
 const getMedicines = async (req, res) => {
-  try {
-    const medicines = await Medicine.find();
-    res.status(200).json({ success: true, medicines });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
-  }
+    try {
+        let medicines;
+        if (req.user.role === 'pharmacy') {
+            // If the user is a pharmacy, they can only retrieve their own medicines
+            let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+            medicines = await Medicine.find({ owner: pharmacy._id });
+        } else {
+            medicines = await Medicine.find();
+        }
+
+        res.status(200).json({ success: true, medicines });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
 };
 
 const addMedicine = async (req, res) => {
