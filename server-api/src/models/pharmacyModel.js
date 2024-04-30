@@ -58,6 +58,10 @@ const pharmacySchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  isDeleted: {
+    type: Boolean,
+    default: false
+  },
   onFreeTrial: {
     type: Boolean,
     default: false
