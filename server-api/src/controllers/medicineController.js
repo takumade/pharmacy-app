@@ -75,32 +75,33 @@ const addMedicines = async (req, res) => {
 }
 
   
-  const editMedicine = async (req, res) => {
+const editMedicine = async (req, res) => {
     const medicineId = req.params.medicineId;
     const newData = req.body;
   
     try {
-      const medicine = await Medicine.findById(medicineId);
+        const medicine = await Medicine.findById(medicineId);
 
-      if (!medicine) {
-        return res.status(404).json({ success: false, message: "Medicine not found" });
-      }
-  
-      // Check if the user making the request is a pharmacy or admin
-      if (req.user.role !== 'admin' && req.user.role !== 'pharmacy') {
-        return res.status(403).json({ success: false, message: "You are not authorized to edit this medicine" });
-      }
-      
-      
-      Object.assign(medicine, newData);
-      await medicine.save();
-  
-      res.status(200).json({ success: true, message: "Medicine updated successfully", medicine });
+        if (!medicine) {
+            return res.status(404).json({ success: false, message: "Medicine not found" });
+        }
+
+        // Check if the user making the request is the owner of the pharmacy associated with the medicine or an admin
+        const pharmacy = await Pharmacy.findOne({ _id: medicine.owner });
+        if (!pharmacy || (req.user.role !== 'admin' && String(pharmacy.owner) !== String(req.user._id))) {
+            return res.status(403).json({ success: false, message: "You are not authorized to edit this medicine" });
+        }
+
+        Object.assign(medicine, newData);
+        await medicine.save();
+
+        res.status(200).json({ success: true, message: "Medicine updated successfully", medicine });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
-  }
+}
+
   
   const deleteMedicine = async (req, res) => {
     const medicineId = req.params.medicineId;
