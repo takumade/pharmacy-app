@@ -5,6 +5,7 @@ const medicineSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  image: String,
   brandName: String,
   genericName: String,
   dosageForm: String,
