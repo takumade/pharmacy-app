@@ -1,5 +1,30 @@
 const User = require("../models/userModel");
 
+
+const getUser = async (req, res) => {
+    const currentUser = req.user;
+    const userId = req.params.userId;
+  
+    try {
+      // Check if the user making the request is an admin
+      if (currentUser.role !== 'admin' && String(currentUser._id) !== userId) {
+        return res.status(403).json({ success: false, message: "You are not authorized to access this user's information" });
+      }
+  
+      // Find the user by ID
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ success: false, message: "User not found" });
+      }
+  
+      res.status(200).json({ success: true, user });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+  
+
 const userRegister = async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
