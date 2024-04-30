@@ -17,6 +17,17 @@ const getPharmacy = async (req, res) => {
     }
   }
 
+  const getPharmacies = async (req, res) => {
+    try {
+      // Find all pharmacies
+      const pharmacies = await Pharmacy.find();
+      res.status(200).json({ success: true, pharmacies });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
 const createPharmacy = async (req, res) => {
     const currentUser = req.user;
   
