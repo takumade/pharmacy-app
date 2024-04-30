@@ -1,69 +1,66 @@
-//imports
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const validator = require('validator')
-const Schema = mongoose.Schema
+// user.model.js
 
-const userSchema = new Schema ({
-  email:{
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const userSchema = new mongoose.Schema({
+  username: {
     type: String,
+    unique: true,
+    required: true
+  },
+  email: {
+    type: String,
+    unique: true,
     required: true,
-    unique: true
+    lowercase: true
+  },
+  phoneNumber: {
+    type: String,
+    unique: true,
+    required: true
   },
   password: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    enum: ['customer', 'pharmacy', 'admin'],
+    default: 'customer'
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
+  },
+  verificationToken: String,
+  passwordResetToken: String,
+  passwordResetExpires: Date
+});
+
+// Hash password before saving user
+userSchema.pre('save', async function(next) {
+  const user = this;
+  if (user.isModified('password')) {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
   }
-})
+  next();
+});
 
- userSchema.statics.signup = async function (email, password) {
-  //validation
-  if(!email || !password){
-    throw Error('All fields must be filled😒')
-  }
+// Method to compare passwords
+userSchema.methods.comparePassword = async function(password) {
+  return bcrypt.compare(password, this.password);
+};
 
-  if(!validator.isEmail(email)) {
-    throw Error('Email is not valid😢')
-  }
+// Method to generate auth token
+userSchema.methods.generateAuthToken = function() {
+  const user = this;
+  const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
+  return token;
+};
 
-  if(!validator.isStrongPassword(password)){
-        throw Error('Password not strong💪🏿 enough')
-  }
+const User = mongoose.model('User', userSchema);
 
-
-
-  const exist = await this.findOne({email})
-  
-  if(exist) {
-    throw Error('Email already in use')
-  }
-  const salt = await bcrypt.genSalt(10)
-  const hash = await bcrypt.hash(password, salt)
-
-  const user = await this.create({ email, password: hash})
-
-  return user
-}
-
-userSchema.statics.login = async function(email, password){
-   
-  if(!email || !password){
-    throw Error('All fields must be field')
-
-  }
-    const user = await this.findOne({ email }) 
-
-  if(!user){
-    throw Error('Incorrect email')
-  }
-
-  const match = await bcrypt.compare(password, user.password)
-
-  if(!match) {
-    throw Error('Incorrect password')
-  }
-  return user
-}
-
-
-module.exports = mongoose.model('User', userSchema)
+module.exports = User;
