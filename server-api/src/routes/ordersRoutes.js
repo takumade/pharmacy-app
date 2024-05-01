@@ -9,12 +9,10 @@ router.use(authMiddleware.authenticateUser);
 // Define your routes
 router.get('/', orderController.getOrders);
 router.get('/:pharmacyId', orderController.getOrders);
-router.get('/:orderId', medicineController.getMedicine);
+router.get('/:orderId', orderController.getOrders);
 
-router.post('/create', medicineController.addMedicine);
-router.post('/create-many', medicineController.addMedicines);
-router.post('/edit/:medicineId', medicineController.editMedicine);
-router.post('/delete/:medicineId', medicineController.deleteMedicine);
+router.post('/create', orderController.checkout);
+router.post('/delete/:orderId', orderController.deleteOrder);
 router.post('/delete-many', medicineController.deleteMedicines);
 // Add more routes as needed
 
