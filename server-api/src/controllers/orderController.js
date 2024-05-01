@@ -1,5 +1,7 @@
+const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
 const Prescription = require("../models/prescriptionModel");
+
 
 
 const checkout = async (req, res) => {
@@ -24,19 +26,10 @@ const checkout = async (req, res) => {
             })),
             totalAmount,
             shippingAddress: req.body.shippingAddress,
-            paymentMethod: req.body.paymentMethod
+            paymentMethod: 'cash-on-delivery'
         });
 
-        // Step 4: Process Payment
-        const paymentResult = await PaymentService.processPayment(req.body.paymentMethod, totalAmount);
 
-        if (!paymentResult.success) {
-            return res.status(400).json({ success: false, message: "Payment failed", error: paymentResult.error });
-        }
-
-        // Step 5: Update Inventory (not shown here, assume it's done elsewhere)
-
-        // Step 6: Save Order
         await newOrder.save();
 
         // Step 7: Send Response
