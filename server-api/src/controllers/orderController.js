@@ -100,6 +100,37 @@ const getOrder = async (req, res) => {
     }
 };
 
+const getOrders = async (req, res) => {
+    try {
+        // Define the criteria to filter orders
+        const criteria = {};
+
+        // Optionally, you can filter orders based on the requesting user's ID
+        if (!req.user.role === "admin") {
+            criteria.userId = req.user._id;
+        }
+
+        // Optionally, you can filter orders based on other parameters
+        // For example, you might want to filter orders by pharmacy
+        if (req.query.pharmacyId) {
+            criteria.pharmacy = req.query.pharmacyId;
+        }
+
+        // Find orders in the database based on the criteria
+        const orders = await Order.find(criteria);
+
+        // Optionally, you can populate additional fields
+        // For example, you might want to populate the pharmacy field
+        // await Order.populate(orders, { path: 'pharmacy' });
+
+        // Send the orders in the response
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 
 module.exports = {
     
