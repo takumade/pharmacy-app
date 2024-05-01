@@ -26,6 +26,13 @@ const orderSchema = new Schema({
             required: true
         }
     }],
+    prescriptions: [{
+        productId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Prescription',
+            required: true
+        }
+     }],
     totalAmount: {
         type: Number,
         required: true
