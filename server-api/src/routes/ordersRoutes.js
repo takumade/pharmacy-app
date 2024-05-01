@@ -8,7 +8,8 @@ router.use(authMiddleware.authenticateUser);
 
 // Define your routes
 router.get('/', orderController.getOrders);
-router.get('/:medicineId', medicineController.getMedicine);
+router.get('/:pharmacyId', orderController.getOrders);
+router.get('/:orderId', medicineController.getMedicine);
 
 router.post('/create', medicineController.addMedicine);
 router.post('/create-many', medicineController.addMedicines);
