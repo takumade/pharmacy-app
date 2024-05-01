@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const medicineController = require('../controllers/medicineController');
+const authMiddleware= require('../middlewares/authMiddleware');
+
+
+router.use(authMiddleware.authenticateUser);
 
 // Define your routes
 router.get('/', medicineController.getMedicines);
