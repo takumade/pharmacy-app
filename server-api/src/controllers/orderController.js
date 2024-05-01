@@ -40,6 +40,34 @@ const checkout = async (req, res) => {
     }
 };
 
+const deleteOrder = async (req, res) => {
+    try {
+        // Extract order ID from the request parameters
+        const orderId = req.params.orderId;
+
+        // Find the order in the database
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        // Check if the user making the request is authorized to delete the order
+        // For example, you might check if the user is an admin or if the order belongs to the user
+        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id)) {
+            return res.status(403).json({ success: false, message: "You are not authorized to delete this order" });
+        }
+
+        // Delete the order
+        await Order.findByIdAndDelete(orderId);
+
+        // Send success response
+        res.status(200).json({ success: true, message: "Order deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 
 
 module.exports = {
