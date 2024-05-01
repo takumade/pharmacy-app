@@ -74,15 +74,21 @@ const getOrder = async (req, res) => {
         const orderId = req.params.orderId;
 
         // Find the order in the database
-        const order = await Order.findById(orderId).populate('pharmacy');
+        const order = await Order.findById(orderId);
         if (!order) {
             return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        // Fetch the pharmacy associated with the order
+        const pharmacy = await Pharmacy.findById(order.pharmacy);
+        if (!pharmacy) {
+            return res.status(404).json({ success: false, message: "Pharmacy not found" });
         }
 
         // Check if the user making the request is authorized to access the order
         // For example, you might check if the user is an admin or if the order belongs to the user
         // Additionally, you may check if the pharmacy associated with the order matches the requesting user's pharmacy
-        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id) && String(order.pharmacy) !== String(req.user.pharmacy)) {
+        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id) && String(pharmacy._id) !== String(order.pharmacy)) {
             return res.status(403).json({ success: false, message: "You are not authorized to access this order" });
         }
 
@@ -93,7 +99,6 @@ const getOrder = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
-
 
 
 module.exports = {
