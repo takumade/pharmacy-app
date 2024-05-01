@@ -68,6 +68,32 @@ const deleteOrder = async (req, res) => {
     }
 };
 
+const getOrder = async (req, res) => {
+    try {
+        // Extract order ID from the request parameters
+        const orderId = req.params.orderId;
+
+        // Find the order in the database
+        const order = await Order.findById(orderId).populate('pharmacy');
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        // Check if the user making the request is authorized to access the order
+        // For example, you might check if the user is an admin or if the order belongs to the user
+        // Additionally, you may check if the pharmacy associated with the order matches the requesting user's pharmacy
+        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id) && String(order.pharmacy) !== String(req.user.pharmacy)) {
+            return res.status(403).json({ success: false, message: "You are not authorized to access this order" });
+        }
+
+        // Send the order in the response
+        res.status(200).json({ success: true, order });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 
 
 module.exports = {
