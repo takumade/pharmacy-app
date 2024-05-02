@@ -1,5 +1,7 @@
+const { userRoles } = require("../constants");
 const Medicine = require("../models/medicineModel");
 const Pharmacy = require("../models/pharmacyModel");
+
 
 
 const getMedicine = async (req, res) => {
@@ -7,7 +9,7 @@ const getMedicine = async (req, res) => {
 
     try {
         let medicine;
-        if (req.user.role === 'pharmacy') {
+        if (req.user.role === userRoles.pharmacy) {
             // If the user is a pharmacy, they can only retrieve their own medicine
             let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             medicine = await Medicine.findOne({ _id: medicineId, owner:  pharmacy._id});
@@ -29,7 +31,7 @@ const getMedicine = async (req, res) => {
 const getMedicines = async (req, res) => {
     try {
         let medicines;
-        if (req.user.role === 'pharmacy') {
+        if (req.user.role === userRoles.pharmacy) {
             // If the user is a pharmacy, they can only retrieve their own medicines
             let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             medicines = await Medicine.find({ owner: pharmacy._id });
@@ -130,7 +132,7 @@ const editMedicine = async (req, res) => {
     const pharmacy = await Pharmacy.findOne({ _id: medicine.owner });
     if (
       !pharmacy ||
-      (req.user.role !== "admin" &&
+      (req.user.role !== userRoles.admin &&
         String(pharmacy.owner) !== String(req.user._id))
     ) {
       return res
@@ -172,7 +174,7 @@ const deleteMedicine = async (req, res) => {
     const pharmacy = await Pharmacy.findOne({ _id: medicine.owner });
     if (
       !pharmacy ||
-      (req.user.role !== "admin" &&
+      (req.user.role !== userRoles.admin &&
         String(pharmacy.owner) !== String(req.user._id))
     ) {
       return res
@@ -198,7 +200,7 @@ const deleteMedicines = async (req, res) => {
 
   try {
     // Check if the user making the request is an admin
-    if (req.user.role !== "admin") {
+    if (req.user.role !== userRoles.admin) {
       return res
         .status(403)
         .json({
