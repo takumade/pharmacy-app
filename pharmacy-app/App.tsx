@@ -1,4 +1,6 @@
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import React from "react";
+
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,9 +12,10 @@ const Stack = createNativeStackNavigator();
 
 const App = () => {
   return (
-    <PaperProvider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <PaperProvider>
       <NavigationContainer>
-      {/* <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen
          name="TabNavigator"
          component={TabNavigator}
@@ -23,10 +26,11 @@ const App = () => {
          component={DetailsScreen}
          options={{animation:'slide_from_bottom'}}>
         </Stack.Screen>
-      </Stack.Navigator> */}
-      <Map/>
+      </Stack.Navigator>
+      {/* <Map/> */}
     </NavigationContainer>
     </PaperProvider>
+    </GestureHandlerRootView>
   )
 }
 export default App;
