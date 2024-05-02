@@ -13,7 +13,6 @@ router.get('/:transactionId', transactionController.getTransaction);
 router.post('/create', transactionController.createTransaction);
 router.post('/delete/:transactionId', transactionController.deleteTransaction);
 router.post('/delete', transactionController.deleteTransactions);
-router.post('/delete-many', medicineController.deleteMedicines);
 // Add more routes as needed
 
 module.exports = router;
