@@ -106,7 +106,7 @@ const getOrders = async (req, res) => {
         const criteria = {};
 
         // Optionally, you can filter orders based on the requesting user's ID
-        if (!req.user.role === "admin") {
+        if (!req.user.role === userRoles.admin) {
             criteria.userId = req.user._id;
         }
 
