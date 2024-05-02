@@ -10,6 +10,7 @@ router.use(authMiddleware.authenticateUser);
 
 router.get('/:pharmacyId', pharmacyController.getPharmacy);
 router.get('/', pharmacyController.getPharmacies);
+router.get('/customers', pharmacyController.getCustomers);
 
 router.post('/create', pharmacyController.createPharmacy);
 router.post('/update', pharmacyController.editPharmacy);
