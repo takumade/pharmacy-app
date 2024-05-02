@@ -151,4 +151,30 @@ const deleteTransaction = async (req, res) => {
     }
 };
 
+const deleteTransactions = async (req, res) => {
+    try {
+        // Extract transactionIds from the request body
+        const { transactionIds } = req.body;
+
+        // Find transactions in the database
+        const transactions = await Transaction.find({ _id: { $in: transactionIds } });
+        if (transactions.length === 0) {
+            return res.status(404).json({ success: false, message: "No transactions found" });
+        }
+
+        // Check if the user making the request is authorized to delete the transactions
+        if (req.user.role === 'admin') {
+            // If user is admin, delete the transactions
+            await Transaction.deleteMany({ _id: { $in: transactionIds } });
+            return res.status(200).json({ success: true, message: "Transactions deleted successfully" });
+        } else {
+            // Otherwise, user is not authorized to delete the transactions
+            return res.status(403).json({ success: false, message: "You are not authorized to delete transactions" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 
