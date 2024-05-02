@@ -8,6 +8,7 @@ import TabNavigator from "./src/navigators/TabNavigators";
 import DetailsScreen from "./src/screens/DetailsScreen";
 import { PaperProvider } from 'react-native-paper';
 import Map from "./src/screens/Map";
+import StoreScreen from "./src/screens/StoreScreen";
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -26,8 +27,10 @@ const App = () => {
          component={DetailsScreen}
          options={{animation:'slide_from_bottom'}}>
         </Stack.Screen>
-      </Stack.Navigator>
-      {/* <Map/> */}
+      </Stack.Navigator> */}
+      <Map/>
+      {/* 
+      <StoreScreen /> */}
     </NavigationContainer>
     </PaperProvider>
     </GestureHandlerRootView>
