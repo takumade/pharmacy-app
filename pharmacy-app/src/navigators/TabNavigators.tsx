@@ -15,6 +15,7 @@ const Tab = createBottomTabNavigator();
 const TabNavigators = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Map Screen"
       screenOptions={{
         tabBarHideOnKeyboard: true,
         headerShown: false,
@@ -57,12 +58,12 @@ const TabNavigators = () => {
           ),
         }}></Tab.Screen>
       <Tab.Screen
-        name="Orders"
-        component={OrdersScreen}
+        name="Map Screen"
+        component={DetailsScreen}
         options={{
           tabBarIcon: ({focused}) => (
             <CustomIcon
-              size={25}
+              size={45}
               name="like"
               color={
                 focused ? COLORS.primaryOrangeHex : COLORS.primaryLightGreyHex
@@ -85,8 +86,8 @@ const TabNavigators = () => {
           ),
         }}></Tab.Screen>
           <Tab.Screen
-        name="Details"
-        component={DetailsScreen}
+        name="Orders"
+        component={OrdersScreen}
         options={{
           tabBarIcon: ({focused}) => (
             <CustomIcon
