@@ -1,4 +1,8 @@
 const { userRoles } = require("../constants");
+const Order = require("../models/orderModel");
+const Pharmacy = require("../models/pharmacyModel");
+const User = require("../models/userModel");
+
 
 const getPharmacy = async (req, res) => {
     const pharmacyId = req.params.pharmacyId;
