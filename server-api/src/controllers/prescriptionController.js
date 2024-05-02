@@ -1,3 +1,4 @@
+const { userRoles } = require("../constants");
 const Pharmacy = require("../models/pharmacyModel");
 const Prescription = require("../models/prescriptionModel");
 
@@ -14,7 +15,7 @@ const getPrescription = async (req, res) => {
         }
 
         // Check if the user making the request is the owner of the prescription, a pharmacy, or an admin
-        if (req.user.role !== 'admin' && String(prescription.owner) !== String(req.user._id) && req.user.role !== 'pharmacy') {
+        if (req.user.role !== userRoles.admin && String(prescription.owner) !== String(req.user._id) && req.user.role !== userRoles.pharmacy) {
             return res.status(403).json({ success: false, message: "You are not authorized to access this prescription" });
         }
 
@@ -31,13 +32,13 @@ const getPrescriptions = async (req, res) => {
         let prescriptions;
 
         // Check if the user making the request is a pharmacy or an admin
-        if (req.user.role === 'admin') {
+        if (req.user.role === userRoles.admin) {
             // If the user is a pharmacy or an admin, retrieve all prescriptions
             prescriptions = await Prescription.find();
-        } else if (req.user.role === 'customer') {
+        } else if (req.user.role === userRoles.customer) {
             // If the user is a customer, retrieve only their own prescriptions
             prescriptions = await Prescription.find({ owner: req.user._id });
-        }else if(req.user.role === 'pharmacy'){
+        }else if(req.user.role === userRoles.pharmacy){
             // TODO: get prescriotions submited to a pharmarcy 
         } else {
             // If the user role is not recognized, return a 403 Forbidden response
@@ -55,7 +56,7 @@ const getPrescriptions = async (req, res) => {
 const createPrescription = async (req, res) => {
     try {
         // Check if the user making the request is a customer
-        if (req.user.role !== 'customer') {
+        if (req.user.role !== userRoles.customer) {
             return res.status(403).json({ success: false, message: "Only customers can create a prescription" });
         }
 
@@ -79,7 +80,7 @@ const createPrescription = async (req, res) => {
 const approvePrescription = async (req, res) => {
     try {
         // Check if the user making the request is a pharmacy
-        if (req.user.role !== 'pharmacy') {
+        if (req.user.role !== userRoles.pharmacy) {
             return res.status(403).json({ success: false, message: "Only pharmacies can approve a prescription" });
         }
 
@@ -119,7 +120,7 @@ const deletePrescription = async (req, res) => {
         }
 
         // Check if the user making the request is the owner of the prescription or an admin
-        if ((req.user.role !== 'admin' || req.user.role !== 'pharmacy') && String(prescription.owner) !== String(req.user._id)) {
+        if ((req.user.role !== userRoles.admin || req.user.role !== userRoles.pharmacy) && String(prescription.owner) !== String(req.user._id)) {
             return res.status(403).json({ success: false, message: "You are not authorized to delete this prescription" });
         }
 

@@ -1,4 +1,4 @@
-
+const { userRoles } = require("../constants");
 
 const getPharmacy = async (req, res) => {
     const pharmacyId = req.params.pharmacyId;
@@ -33,7 +33,7 @@ const createPharmacy = async (req, res) => {
   
     try {
       // Check if the user making the request is an admin or pharmacy
-      if (currentUser.role !== 'admin' && currentUser.role !== 'pharmacy') {
+      if (currentUser.role !== userRoles.admin && currentUser.role !== userRoles.pharmacy) {
         return res.status(403).json({ success: false, message: "You are not authorized to create a pharmacy" });
       }
   
@@ -63,7 +63,7 @@ const createPharmacy = async (req, res) => {
       }
   
       // Check if the user making the request is an admin or the pharmacy itself
-      if (currentUser.role !== 'admin' && String(pharmacy.owner) !== String(currentUser._id)) {
+      if (currentUser.role !== userRoles.admin && String(pharmacy.owner) !== String(currentUser._id)) {
         return res.status(403).json({ success: false, message: "You are not authorized to edit this pharmacy" });
       }
   
@@ -98,7 +98,7 @@ const createPharmacy = async (req, res) => {
       }
   
       // Check if the user making the request is an admin or the pharmacy itself
-      if (currentUser.role !== 'admin' && String(pharmacy.owner) !== String(currentUser._id)) {
+      if (currentUser.role !== userRoles.admin && String(pharmacy.owner) !== String(currentUser._id)) {
         return res.status(403).json({ success: false, message: "You are not authorized to delete this pharmacy" });
       }
   
@@ -119,7 +119,7 @@ const approvePharmacy = async (req, res) => {
   
     try {
       // Check if the user making the request is an admin
-      if (currentUser.role !== 'admin') {
+      if (currentUser.role !== userRoles.admin) {
         return res.status(403).json({ success: false, message: "Only an admin can approve a pharmacy" });
       }
   

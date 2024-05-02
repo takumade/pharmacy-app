@@ -1,4 +1,6 @@
+const { userRoles } = require("../constants");
 const User = require("../models/userModel");
+
 
 const getUser = async (req, res) => {
   const currentUser = req.user;
@@ -6,7 +8,7 @@ const getUser = async (req, res) => {
 
   try {
     // Check if the user making the request is an admin
-    if (currentUser.role !== "admin" && String(currentUser._id) !== userId) {
+    if (currentUser.role !== userRoles.admin && String(currentUser._id) !== userId) {
       return res
         .status(403)
         .json({
@@ -35,7 +37,7 @@ const getUsers = async (req, res) => {
 
   try {
     // Check if the user making the request is an admin
-    if (currentUser.role !== "admin") {
+    if (currentUser.role !== userRoles.admin) {
       return res
         .status(403)
         .json({
@@ -133,7 +135,7 @@ const deleteAccount = async (req, res) => {
 
     // If the user is not an admin and is trying to delete another user's account, deny access
     if (
-      userMakingRequest.role !== "admin" &&
+      userMakingRequest.role !== userRoles.admin &&
       String(userMakingRequest._id) !== userId
     ) {
       return res
@@ -153,7 +155,7 @@ const deleteAccount = async (req, res) => {
     }
 
     // Admin can delete any user's account
-    if (userMakingRequest.role === "admin") {
+    if (userMakingRequest.role === userRoles.admin) {
       userToDelete.isDeleted = true;
       await userToDelete.save();
       return res
