@@ -33,9 +33,7 @@ app.use('/api/dashboard', dashboardRoutes);
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(config.mongodb_uri, {
-      useNewUrlParser: true,
-    });
+    const conn = await mongoose.connect(config.mongodb_uri);
     console.log(`MongoDB Connected: {conn.connection.host}`);
   } catch (error) {
     console.error(error.message);
@@ -46,6 +44,9 @@ const connectDB = async () => {
 // Start the server
 app.listen(config.port, () => {
   console.log(`Server is running on port ${config.port}`);
+
+  console.log('config: ', config);
+  
 
   connectDB()
 });
