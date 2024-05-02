@@ -187,10 +187,37 @@ const deleteAccount = async (req, res) => {
   }
 };
 
+const deleteUsers = async (req, res) => {
+  try {
+      // Check if the user making the request is authorized to delete users
+      if (req.user.role !== userRoles.admin) {
+          return res.status(403).json({ success: false, message: "You are not authorized to delete users" });
+      }
+
+      // Extract user IDs from the request body
+      const { userIds } = req.body;
+
+      // Validate if userIds is an array
+      if (!Array.isArray(userIds) || userIds.length === 0) {
+          return res.status(400).json({ success: false, message: "Invalid user IDs provided" });
+      }
+
+      // Delete users from the database based on their IDs
+      await User.deleteMany({ _id: { $in: userIds } });
+
+      // Send success response
+      res.status(200).json({ success: true, message: "Users deleted successfully" });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
 module.exports = {
   getUser,
   getUsers,
   userRegister,
   userLogin,
   deleteAccount,
+  deleteUsers
 };
