@@ -1,6 +1,6 @@
-
-
-
+const { userRoles } = require("../constants");
+const Pharmacy = require("../models/pharmacyModel");
+const Transaction = require("../models/transactionModel");
 
 
 const createTransaction = async (req, res) => {
@@ -61,11 +61,11 @@ const getTransaction = async (req, res) => {
         }
 
         // Check if the user making the request is authorized to access the transaction
-        if (req.user.role === 'admin' ||
+        if (req.user.role === userRoles.admin ||
             String(transaction.userId) === String(req.user._id)) {
             // If user is admin or transaction belongs to user
             return res.status(200).json({ success: true, data: transaction });
-        } else if (req.user.role === 'pharmacy') {
+        } else if (req.user.role === userRoles.pharmacy) {
             // If user is pharmacy, check if the transaction is associated with their pharmacy
             const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             if (!pharmacy || String(pharmacy._id) !== String(transaction.pharmacyId)) {
@@ -89,10 +89,10 @@ const getTransactions = async (req, res) => {
     try {
         // Find transactions based on user role
         let transactions;
-        if (req.user.role === 'admin') {
+        if (req.user.role === userRoles.admin) {
             // If user is admin, retrieve all transactions
             transactions = await Transaction.find();
-        } else if (req.user.role === 'pharmacy') {
+        } else if (req.user.role === userRoles.pharmacy) {
             // If user is pharmacy, retrieve transactions associated with their pharmacy
             const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             if (!pharmacy) {
@@ -125,12 +125,12 @@ const deleteTransaction = async (req, res) => {
         }
 
         // Check if the user making the request is authorized to delete the transaction
-        if (req.user.role === 'admin' ||
+        if (req.user.role === userRoles.admin ||
             String(transaction.userId) === String(req.user._id)) {
             // If user is admin or transaction belongs to user, delete the transaction
             await Transaction.findByIdAndDelete(transactionId);
             return res.status(200).json({ success: true, message: "Transaction deleted successfully" });
-        } else if (req.user.role === 'pharmacy') {
+        } else if (req.user.role === userRoles.pharmacy) {
             // If user is pharmacy, check if the transaction is associated with their pharmacy
             const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             if (!pharmacy || String(pharmacy._id) !== String(transaction.pharmacyId)) {
@@ -163,7 +163,7 @@ const deleteTransactions = async (req, res) => {
         }
 
         // Check if the user making the request is authorized to delete the transactions
-        if (req.user.role === 'admin') {
+        if (req.user.role === userRoles.admin) {
             // If user is admin, delete the transactions
             await Transaction.deleteMany({ _id: { $in: transactionIds } });
             return res.status(200).json({ success: true, message: "Transactions deleted successfully" });
