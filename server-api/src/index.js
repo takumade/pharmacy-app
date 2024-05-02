@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const config = require('./config/config');
 
+
+
 const app = express();
 
 // Middleware
@@ -25,7 +27,22 @@ app.use('/api/order', orderRoutes);
 app.use('/api/transaction', transactionRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 
+
+const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(config.mongodb_uri, {
+      useNewUrlParser: true,
+    });
+    console.log(`MongoDB Connected: {conn.connection.host}`);
+  } catch (error) {
+    console.error(error.message);
+    process.exit(1);
+  }
+}
+
 // Start the server
 app.listen(config.port, () => {
   console.log(`Server is running on port ${config.port}`);
+
+  connectDB()
 });
