@@ -111,3 +111,44 @@ const getTransactions = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+
+const deleteTransaction = async (req, res) => {
+    try {
+        // Extract transactionId from the request parameters
+        const transactionId = req.params.transactionId;
+
+        // Find the transaction in the database
+        const transaction = await Transaction.findById(transactionId);
+        if (!transaction) {
+            return res.status(404).json({ success: false, message: "Transaction not found" });
+        }
+
+        // Check if the user making the request is authorized to delete the transaction
+        if (req.user.role === 'admin' ||
+            String(transaction.userId) === String(req.user._id)) {
+            // If user is admin or transaction belongs to user, delete the transaction
+            await Transaction.findByIdAndDelete(transactionId);
+            return res.status(200).json({ success: true, message: "Transaction deleted successfully" });
+        } else if (req.user.role === 'pharmacy') {
+            // If user is pharmacy, check if the transaction is associated with their pharmacy
+            const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+            if (!pharmacy || String(pharmacy._id) !== String(transaction.pharmacyId)) {
+                // If pharmacy not found or transaction not associated with pharmacy, deny access
+                return res.status(403).json({ success: false, message: "You are not authorized to delete this transaction" });
+            } else {
+                // If transaction associated with pharmacy, delete the transaction
+                await Transaction.findByIdAndDelete(transactionId);
+                return res.status(200).json({ success: true, message: "Transaction deleted successfully" });
+            }
+        } else {
+            // Otherwise, user is not authorized to delete the transaction
+            return res.status(403).json({ success: false, message: "You are not authorized to delete this transaction" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+
