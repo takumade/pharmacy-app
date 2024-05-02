@@ -35,7 +35,7 @@ const getPrescriptions = async (req, res) => {
         if (req.user.role === userRoles.admin) {
             // If the user is a pharmacy or an admin, retrieve all prescriptions
             prescriptions = await Prescription.find();
-        } else if (req.user.role === 'customer') {
+        } else if (req.user.role === userRoles.customer) {
             // If the user is a customer, retrieve only their own prescriptions
             prescriptions = await Prescription.find({ owner: req.user._id });
         }else if(req.user.role === userRoles.pharmacy){
@@ -56,7 +56,7 @@ const getPrescriptions = async (req, res) => {
 const createPrescription = async (req, res) => {
     try {
         // Check if the user making the request is a customer
-        if (req.user.role !== 'customer') {
+        if (req.user.role !== userRoles.customer) {
             return res.status(403).json({ success: false, message: "Only customers can create a prescription" });
         }
 
