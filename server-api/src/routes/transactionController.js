@@ -177,4 +177,12 @@ const deleteTransactions = async (req, res) => {
     }
 };
 
+module.exports = {
+    getTransaction,
+    getTransactions,
+    createTransaction,
+    deleteTransaction,
+    deleteTransactions
+}
+
 
