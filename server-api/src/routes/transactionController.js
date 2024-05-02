@@ -49,14 +49,65 @@ const createTransaction = async (req, res) => {
     }
 };
 
-const getTransaction = (reql, res) => {
-    
-}
+const getTransaction = async (req, res) => {
+    try {
+        // Extract transactionId from the request parameters
+        const transactionId = req.params.transactionId;
 
-const getTransactions = (reql, res) => {
-    
-}
+        // Find the transaction in the database
+        const transaction = await Transaction.findById(transactionId);
+        if (!transaction) {
+            return res.status(404).json({ success: false, message: "Transaction not found" });
+        }
 
-const deleteTransaction = (reql, res) => {
-    
-}
+        // Check if the user making the request is authorized to access the transaction
+        if (req.user.role === 'admin' ||
+            String(transaction.userId) === String(req.user._id)) {
+            // If user is admin or transaction belongs to user
+            return res.status(200).json({ success: true, data: transaction });
+        } else if (req.user.role === 'pharmacy') {
+            // If user is pharmacy, check if the transaction is associated with their pharmacy
+            const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+            if (!pharmacy || String(pharmacy._id) !== String(transaction.pharmacyId)) {
+                // If pharmacy not found or transaction not associated with pharmacy
+                return res.status(403).json({ success: false, message: "You are not authorized to access this transaction" });
+            } else {
+                // If transaction associated with pharmacy, return the transaction
+                return res.status(200).json({ success: true, data: transaction });
+            }
+        } else {
+            // Otherwise, user is not authorized to access the transaction
+            return res.status(403).json({ success: false, message: "You are not authorized to access this transaction" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+const getTransactions = async (req, res) => {
+    try {
+        // Find transactions based on user role
+        let transactions;
+        if (req.user.role === 'admin') {
+            // If user is admin, retrieve all transactions
+            transactions = await Transaction.find();
+        } else if (req.user.role === 'pharmacy') {
+            // If user is pharmacy, retrieve transactions associated with their pharmacy
+            const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
+            if (!pharmacy) {
+                return res.status(404).json({ success: false, message: "Pharmacy not found" });
+            }
+            transactions = await Transaction.find({ pharmacyId: pharmacy._id });
+        } else {
+            // If user is regular user, retrieve transactions associated with their user ID
+            transactions = await Transaction.find({ userId: req.user._id });
+        }
+
+        // Send the transactions in the response
+        res.status(200).json({ success: true, data: transactions });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
