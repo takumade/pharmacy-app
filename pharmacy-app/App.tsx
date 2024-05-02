@@ -27,8 +27,9 @@ const App = () => {
          component={DetailsScreen}
          options={{animation:'slide_from_bottom'}}>
         </Stack.Screen>
-      </Stack.Navigator> */}
-      <Map/>
+      </Stack.Navigator> 
+     {/* <Map/>*/}
+      
       {/* 
       <StoreScreen /> */}
     </NavigationContainer>
