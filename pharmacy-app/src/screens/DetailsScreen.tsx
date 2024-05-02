@@ -3,15 +3,26 @@ import BottomSheet from '@gorhom/bottom-sheet';
 import React from 'react';
 import { useMemo } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import Map from './Map';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import HomeScreen from './HomeScreen';
 
+const Tab = createBottomTabNavigator();
 export default function DetailsScreen() {
-	const snapPoints = useMemo(() => ['25%', '50%', '70%'], []);
+	const snapPoints = useMemo(() => ['25%', '50%', '65%'], []);
 
 	return (
-		<View style={styles.container}>
+	
+		<View >
+			<Map />
 			<BottomSheet index={1} snapPoints={snapPoints}>
-				<View style={styles.contentContainer}>
-					<Text style={styles.containerHeadline}>Awesome Bottom Sheet 🎉</Text>
+				<View >
+				{/* <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+
+      </Tab.Navigator> */}
+	  <Text>Thinking of the design</Text>
+
 				</View>
 			</BottomSheet>
 		</View>
@@ -26,7 +37,8 @@ const styles = StyleSheet.create({
 	},
 	contentContainer: {
 		flex: 1,
-		alignItems: 'center'
+		alignItems: 'center',
+		justifyContent: 'center'
 	},
 	containerHeadline: {
 		fontSize: 24,
