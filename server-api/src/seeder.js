@@ -5,6 +5,12 @@ const prescriptionSeed = require("./seeds/prescriptionSeed");
 const userSeed = require("./seeds/userSeed");
 
 const mongoose = require("mongoose");
+const Pharmacy = require("./models/pharmacyModel");
+const Medicine = require("./models/medicineModel");
+const Prescription = require("./models/prescriptionModel");
+const User = require("./models/userModel");
+
+
 
 const seedData = async () => {
   // Seed users first
