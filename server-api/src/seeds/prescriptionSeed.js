@@ -12,4 +12,4 @@ const prescriptionSeed = (userId = 22) => {
 };
 
 // Example usage:
-module.exports = prescriptionSeed();
+module.exports = prescriptionSeed
