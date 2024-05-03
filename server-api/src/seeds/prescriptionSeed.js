@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 
 // Generate fake object for prescription
-const generatePrescriptionSeed = (userId = 22) => {
+const prescriptionSeed = (userId = 22) => {
   return {
     owner: userId, // Replace this with the appropriate user id
     src: faker.image.url(),
@@ -12,4 +12,4 @@ const generatePrescriptionSeed = (userId = 22) => {
 };
 
 // Example usage:
-module.exports = generatePrescriptionSeed();
+module.exports = prescriptionSeed();

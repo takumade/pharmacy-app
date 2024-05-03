@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 
 // Generate seed object for pharmacy
-const generatePharmacySeed = (userId) => {
+const pharmacySeed = (userId) => {
   return {
     owner: userId,
     name: faker.company.name(),
@@ -40,4 +40,4 @@ const generatePharmacySeed = (userId) => {
 };
 
 
-module.exports = generatePharmacySeed
+module.exports = pharmacySeed
