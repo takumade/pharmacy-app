@@ -5,10 +5,10 @@ const generatePharmacySeed = (userId) => {
   return {
     owner: userId,
     name: faker.company.name(),
-    logo: faker.image.imageUrl(),
-    location: faker.address.streetAddress(),
-    latitude: parseFloat(faker.address.latitude()),
-    longitude: parseFloat(faker.address.longitude()),
+    logo: faker.image.url(),
+    location: faker.location.streetAddress(),
+    latitude: parseFloat(faker.location.latitude()),
+    longitude: parseFloat(faker.location.longitude()),
     contactInformation: {
       phone: faker.phone.number(),
       email: faker.internet.email()
@@ -23,10 +23,10 @@ const generatePharmacySeed = (userId) => {
         end: "16:00"
       }
     },
-    cityCouncilLicense: faker.random.alphaNumeric(10),
-    pharmacistCouncilLicense: faker.random.alphaNumeric(10),
-    healthProfessionsAuthorityLicense: faker.random.alphaNumeric(10),
-    medicinesControlAuthorityLicense: faker.random.alphaNumeric(10),
+    cityCouncilLicense: faker.image.url(),
+    pharmacistCouncilLicense:faker.image.url(),
+    healthProfessionsAuthorityLicense: faker.image.url(),
+    medicinesControlAuthorityLicense: faker.image.url(),
     isBanned: faker.datatype.boolean(),
     bannedEnd: faker.date.future(),
     isApproved: faker.datatype.boolean(),
