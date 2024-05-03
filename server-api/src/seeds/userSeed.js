@@ -32,6 +32,7 @@ for (let index = 0; index < pharmacyNo; index++) {
     password: "password123",
     role: "pharmacy",
     isVerified: true,
+    verificationImage: faker.image.url()
   });
 }
 
