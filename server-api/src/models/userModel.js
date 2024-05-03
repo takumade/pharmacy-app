@@ -10,6 +10,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
+  fullName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,
@@ -38,6 +42,8 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
+  avatar: String,
+  verificationImage:String,
   verificationToken: String,
   passwordResetToken: String,
   passwordResetExpires: Date

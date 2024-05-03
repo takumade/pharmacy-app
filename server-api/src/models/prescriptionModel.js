@@ -7,6 +7,14 @@ const prescriptionSchema = new Schema({
         ref: 'User',
         required: true
     },
+    pharmacyId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Pharmacy',
+    },
+    orderId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Order',
+    },
     src: {
         type: String,
         required: true
