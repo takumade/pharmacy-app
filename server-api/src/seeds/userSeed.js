@@ -12,6 +12,7 @@ for (let index = 0; index < customersNo; index++) {
     password: "password123",
     role: "customer",
     isVerified: true,
+    avatar: faker.image.url()
   });
 }
 
@@ -32,6 +33,7 @@ for (let index = 0; index < pharmacyNo; index++) {
     password: "password123",
     role: "pharmacy",
     isVerified: true,
+    avatar: faker.image.url(),
     verificationImage: faker.image.url()
   });
 }
@@ -49,7 +51,8 @@ const generateAdmins = () => {
             phoneNumber: "5555555555",
             password: "password123",
             role: "admin",
-            isVerified: true
+            isVerified: true,
+            avatar: faker.image.url()
           },
           {
             username: "admin2",
@@ -58,7 +61,8 @@ const generateAdmins = () => {
             phoneNumber: "5555555555",
             password: "password123",
             role: "admin",
-            isVerified: true
+            isVerified: true,
+            avatar: faker.image.url()
           }
     ]
 
