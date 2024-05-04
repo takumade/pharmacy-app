@@ -18,16 +18,24 @@ const seedData = async () => {
   let customers = users.filter(user => user.role === "customer")
   let pharmacies = users.filter(user => user.role === "pharmacy")
 
-  
-
   let prescriptions = await Prescription.insertMany(customers.map(customer => prescriptionSeed(customer._id)))
-
 
   // Grab user with role pharmacy id and seed pharmacy
   let pharmaciesList = await Pharmacy.insertMany(pharmacies.map(pharmacy => pharmacySeed(pharmacy._id)))
 
+
+  let insertMedicines = []
+
+  pharmaciesList.map(pharmacy => {
+    insertMedicines = [
+      ...insertMedicines,
+      ...medicineSeed(pharmacy._id, 10)
+    ]
+  });
+  console.log("Medicines: ", insertMedicines)
+
   // Grap  pharmacies and seed medicine
-  let medicines  = await Medicine.insertMany(pharmaciesList.map(pharmacy => medicineSeed(pharmacy._id, 10)))
+  let medicines  = await Medicine.insertMany(insertMedicines)
 };
 
 const seedApplication = async () => {
