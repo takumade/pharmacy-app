@@ -50,3 +50,5 @@ app.listen(config.port, () => {
 
   connectDB()
 });
+
+module.exports = app
