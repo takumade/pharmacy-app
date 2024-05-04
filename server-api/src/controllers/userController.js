@@ -57,23 +57,40 @@ const getUsers = async (req, res) => {
 
 const userRegister = async (req, res) => {
   try {
-    const { username, email, phone, password } = req.body;
+    const { name, username, email, phone, password } = req.body;
 
-    let user = User.create({
-      username,
-      email,
-      phoneNumber: phone,
-      password,
-      role: "customer"
-    });
+    let userExists = await User.findOne({username, email})
 
-    delete user.password;
+    if (!userExists){
+      let user = await User.create({
+        username,
+        email,
+        fullName: name,
+        phoneNumber: phone,
+        password,
+        role: "customer"
+      });
 
-    res.send({
-      success: true,
-      message: "User Created",
-      data: user,
-    });
+      delete user.password;
+
+      res.send({
+        success: true,
+        message: "User Created",
+        data: user,
+      });
+    }else{
+
+      userExists.password = "REDACTED"
+
+      
+      res.send({
+        success: true,
+        message: "User Exists",
+        data: userExists,
+      });
+    }
+
+   
   } catch (err) {
     res.send({
       success: false,
