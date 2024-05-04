@@ -16,7 +16,6 @@ const User = require("./models/userModel");
 
 const seedData = async () => {
   // Seed users first
-
   let users = await User.insertMany(userSeed())
   
   let customers = users.filter(user => user.role === "customer")
@@ -30,9 +29,8 @@ const seedData = async () => {
   // Grab user with role pharmacy id and seed pharmacy
   let pharmaciesList = await Pharmacy.insertMany(pharmacies.map(pharmacy => pharmacySeed(pharmacy._id)))
 
-
   // Grap  pharmacies and seed medicine
-  let medicines  = await Medicine.insertMany(pharmaciesList.map(pharmacy => medicineSeed(pharmacy._id)))
+  let medicines  = await Medicine.insertMany(pharmaciesList.map(pharmacy => medicineSeed(pharmacy._id, 10)))
 };
 
 const seedApplication = async () => {
