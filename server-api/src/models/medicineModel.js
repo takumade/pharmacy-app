@@ -22,7 +22,6 @@ const medicineSchema = new mongoose.Schema({
   },
   totalPrice: {
     type: Number,
-    required: true
   },
   manufacturer: String,
   supplier: String,
