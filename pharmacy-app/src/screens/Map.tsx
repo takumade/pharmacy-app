@@ -28,7 +28,7 @@ export default class Map extends React.Component {
     searchSection = () => {
         return (
             <View style={{height:"10%",marginTop:10 }}>
-            <Searchbar placeholder='Search for drugs' value={''} /> 
+            {/* <Searchbar placeholder='Search for drugs' value={''} />  */}
           </View>
         )
     }
