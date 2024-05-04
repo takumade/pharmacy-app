@@ -78,8 +78,8 @@ const userSeed = async () => {
     ...generateAdmins(),
   ].map(async (user) => ({
     ...user,
-    password: await hashPass(password),
-    clearText: password,
+    password: await hashPass(user.password),
+    clearText: user.password,
   }));
 
   return allUsers;
