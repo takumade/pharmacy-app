@@ -64,6 +64,7 @@ const userRegister = async (req, res) => {
       email,
       phoneNumber: phone,
       password,
+      role: "customer"
     });
 
     delete user.password;
