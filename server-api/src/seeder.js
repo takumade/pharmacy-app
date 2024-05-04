@@ -11,9 +11,6 @@ const Prescription = require("./models/prescriptionModel");
 const User = require("./models/userModel");
 
 
-
-
-
 const seedData = async () => {
   // Seed users first
   let users = await User.insertMany(userSeed())
