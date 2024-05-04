@@ -13,7 +13,7 @@ router.get('/', pharmacyController.getPharmacies);
 router.get('/customers', pharmacyController.getCustomers);
 
 router.post('/create', pharmacyController.createPharmacy);
-router.post('/update', pharmacyController.editPharmacy);
+router.post('/update/:pharmacyId', pharmacyController.editPharmacy);
 router.post('/approve', pharmacyController.approvePharmacy);
 router.post('/delete', pharmacyController.deletePharmacy);
 // Add more routes as needed
