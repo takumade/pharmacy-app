@@ -36,7 +36,11 @@ const getMedicines = async (req, res) => {
             let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             medicines = await Medicine.find({ owner: pharmacy._id });
         } else {
+          if (req.user.role === userRoles.admin) {
             medicines = await Medicine.find();
+          }else{
+            res.status(403).json({ success: false, message: "You are not authorized to fetch medicines" });
+          }
         }
 
         res.status(200).json({ success: true, medicines });
