@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  clearText: {
+    type: String,
+  },
   role: {
     type: String,
     enum: ['customer', 'pharmacy', 'admin'],
