@@ -3,20 +3,21 @@ const User = require('../models/userModel');
 
 const authenticateUser = async (req, res, next) => {
   // Check for the presence of the authorization header
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
+  const token = req.headers.authorization;
+  console.log('Authorization: ', token);
+  
+  if (!token) {
     return res.status(401).json({ message: "Unauthorized - Missing authorization header" });
   }
 
-  // Extract the token from the authorization header
-  const token = authHeader.split(' ')[1];
+
   if (!token) {
     return res.status(401).json({ message: "Unauthorized - Missing token" });
   }
 
   try {
     // Verify the token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
     
     // Find the user by ID
     const user = await User.findById(decoded._id);
