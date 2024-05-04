@@ -76,7 +76,7 @@ const hashPass = async (pass) => {
 
 const userSeed = async () => {
 
-  let hashedPass = await hashPass("password1123")
+  let hashedPass = await hashPass("password123")
   let allUsers = [
     ...generartePharmacies(),
     ...generateCustomers(),
