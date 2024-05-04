@@ -24,11 +24,15 @@ const seedData = async () => {
 
   
 
-  let prescription = await Prescription.insertMany(customers.map(customer => prescriptionSeed(customer._id)))
+  let prescriptions = await Prescription.insertMany(customers.map(customer => prescriptionSeed(customer._id)))
 
 
   // Grab user with role pharmacy id and seed pharmacy
+  let pharmaciesList = await Pharmacy.insertMany(pharmacies.map(pharmacy => pharmacySeed(pharmacy._id)))
+
+
   // Grap  pharmacies and seed medicine
+  let medicines  = await Medicine.insertMany(pharmaciesList.map(pharmacy => medicineSeed(pharmacy._id)))
 };
 
 const seedApplication = async () => {
