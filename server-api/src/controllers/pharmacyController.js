@@ -1,4 +1,5 @@
 const { userRoles } = require("../constants");
+const Medicine = require("../models/medicineModel");
 const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
 const User = require("../models/userModel");
@@ -105,6 +106,8 @@ const createPharmacy = async (req, res) => {
       if (currentUser.role !== userRoles.admin && String(pharmacy.owner) !== String(currentUser._id)) {
         return res.status(403).json({ success: false, message: "You are not authorized to delete this pharmacy" });
       }
+
+      await Medicine.deleteMany({owner: pharmacy._id})
   
       // Soft delete the pharmacy by setting isDeleted to true
       pharmacy.isDeleted = true;
