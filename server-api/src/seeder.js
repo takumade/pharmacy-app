@@ -12,9 +12,21 @@ const User = require("./models/userModel");
 
 
 
+
+
 const seedData = async () => {
   // Seed users first
-  // Grab user with rol custeomer and seed prescriptions
+
+  let users = await User.insertMany(userSeed())
+  
+  let customers = users.filter(user => user.role === "customer")
+  let pharmacies = users.filter(user => user.role === "pharmacy")
+
+  
+
+  let prescription = await Prescription.insertMany(customers.map(customer => prescriptionSeed(customer._id)))
+
+
   // Grab user with role pharmacy id and seed pharmacy
   // Grap  pharmacies and seed medicine
 };
