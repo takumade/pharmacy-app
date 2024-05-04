@@ -21,7 +21,7 @@ const getMedicine = async (req, res) => {
             return res.status(404).json({ success: false, message: "Medicine not found" });
         }
 
-        res.status(200).json({ success: true, medicine });
+        res.status(200).json({ success: true, data:medicine });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -36,10 +36,14 @@ const getMedicines = async (req, res) => {
             let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
             medicines = await Medicine.find({ owner: pharmacy._id });
         } else {
+          if (req.user.role === userRoles.admin) {
             medicines = await Medicine.find();
+          }else{
+            res.status(403).json({ success: false, message: "You are not authorized to fetch medicines" });
+          }
         }
 
-        res.status(200).json({ success: true, medicines });
+        res.status(200).json({ success: true, data:medicines });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -151,7 +155,7 @@ const editMedicine = async (req, res) => {
       .json({
         success: true,
         message: "Medicine updated successfully",
-        medicine,
+        data:medicine,
       });
   } catch (error) {
     console.error(error);

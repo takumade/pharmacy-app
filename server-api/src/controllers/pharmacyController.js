@@ -1,4 +1,5 @@
 const { userRoles } = require("../constants");
+const Medicine = require("../models/medicineModel");
 const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
 const User = require("../models/userModel");
@@ -25,7 +26,7 @@ const getPharmacy = async (req, res) => {
     try {
       // Find all pharmacies
       const pharmacies = await Pharmacy.find();
-      res.status(200).json({ success: true, pharmacies });
+      res.status(200).json({ success: true, data: pharmacies });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -47,7 +48,7 @@ const createPharmacy = async (req, res) => {
       // Save the new pharmacy to the database
       await newPharmacy.save();
   
-      res.status(201).json({ success: true, message: "Pharmacy created successfully", pharmacy: newPharmacy });
+      res.status(201).json({ success: true, message: "Pharmacy created successfully", data: newPharmacy });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -82,7 +83,7 @@ const createPharmacy = async (req, res) => {
       // Save the updated pharmacy
       await pharmacy.save();
   
-      res.status(200).json({ success: true, message: "Pharmacy updated successfully", pharmacy });
+      res.status(200).json({ success: true, message: "Pharmacy updated successfully", data: pharmacy });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -105,6 +106,8 @@ const createPharmacy = async (req, res) => {
       if (currentUser.role !== userRoles.admin && String(pharmacy.owner) !== String(currentUser._id)) {
         return res.status(403).json({ success: false, message: "You are not authorized to delete this pharmacy" });
       }
+
+      await Medicine.deleteMany({owner: pharmacy._id})
   
       // Soft delete the pharmacy by setting isDeleted to true
       pharmacy.isDeleted = true;
@@ -138,7 +141,7 @@ const approvePharmacy = async (req, res) => {
       pharmacy.isApproved = true;
       await pharmacy.save();
   
-      res.status(200).json({ success: true, message: "Pharmacy approved successfully", pharmacy });
+      res.status(200).json({ success: true, message: "Pharmacy approved successfully", data: pharmacy });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -173,7 +176,7 @@ const approvePharmacy = async (req, res) => {
         const customers = await User.find({ _id: { $in: userIds } });
 
         // Send the list of customers in the response
-        res.status(200).json({ success: true, customers });
+        res.status(200).json({ success: true, data: customers });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });

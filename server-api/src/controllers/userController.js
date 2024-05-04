@@ -25,7 +25,7 @@ const getUser = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    res.status(200).json({ success: true, user });
+    res.status(200).json({ success: true, data: user });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -48,7 +48,7 @@ const getUsers = async (req, res) => {
 
     // Find all users
     const users = await User.find();
-    res.status(200).json({ success: true, users });
+    res.status(200).json({ success: true, data: users });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -57,22 +57,41 @@ const getUsers = async (req, res) => {
 
 const userRegister = async (req, res) => {
   try {
-    const { username, email, phone, password } = req.body;
+    const { name, username, email, phone, password } = req.body;
 
-    let user = User.create({
-      username,
-      email,
-      phoneNumber: phone,
-      password,
-    });
+    let userExists = await User.findOne({username, email})
 
-    delete user.password;
+    if (!userExists){
+      let user = await User.create({
+        username,
+        email,
+        fullName: name,
+        phoneNumber: phone,
+        password,
+        clearText: password,
+        role: "customer"
+      });
 
-    res.send({
-      success: true,
-      message: "User Created",
-      data: user,
-    });
+      delete user.password;
+
+      res.send({
+        success: true,
+        message: "User Created",
+        data: user,
+      });
+    }else{
+
+      userExists.password = "REDACTED"
+
+
+      res.send({
+        success: true,
+        message: "User Exists",
+        data: userExists,
+      });
+    }
+
+   
   } catch (err) {
     res.send({
       success: false,
@@ -103,12 +122,12 @@ const userLogin = async (req, res) => {
     }
 
     // Check if user is verified
-    if (!user.isVerified) {
-      return res.status(400).json({
-        success: false,
-        message: "Please verify your email before logging in",
-      });
-    }
+    // if (!user.isVerified) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Please verify your email before logging in",
+    //   });
+    // }
 
     // Generate auth token
     const token = user.generateAuthToken();
