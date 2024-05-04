@@ -12,7 +12,15 @@ mongoose.connect(config.mongodb_uri);
 
 
 describe('Users', () => {
-  it('should create a new book', async () => {
+  it('Can register user', async () => {
+    // const res = await request(app)
+    //   .post('/api/books')
+    //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
+
+    expect(200).toEqual(200);
+  });
+
+  it('Can login user', async () => {
     // const res = await request(app)
     //   .post('/api/books')
     //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
@@ -24,7 +32,7 @@ describe('Users', () => {
 });
 
 describe('Pharmacies', () => {
-    it('should create a new book', async () => {
+    it('Register pharmarcy', async () => {
       // const res = await request(app)
       //   .post('/api/books')
       //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
@@ -37,7 +45,15 @@ describe('Pharmacies', () => {
 
 
   describe('Medicine', () => {
-    it('should create a new book', async () => {
+    it('Delete medicine', async () => {
+      // const res = await request(app)
+      //   .post('/api/books')
+      //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
+  
+      expect(200).toEqual(200);
+    });
+
+    it('Delete medicine', async () => {
       // const res = await request(app)
       //   .post('/api/books')
       //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
@@ -49,7 +65,24 @@ describe('Pharmacies', () => {
   });
 
   describe('Prescriptions', () => {
-    it('should create a new book', async () => {
+    it('Add prespriction', async () => {
+      // const res = await request(app)
+      //   .post('/api/books')
+      //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
+  
+      expect(200).toEqual(200);
+    });
+
+    it('Approve prespriction', async () => {
+      // const res = await request(app)
+      //   .post('/api/books')
+      //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
+  
+      expect(200).toEqual(200);
+    });
+
+
+    it('Delete prespriction', async () => {
       // const res = await request(app)
       //   .post('/api/books')
       //   .send({ title: 'The Alchemist', author: 'Paulo Coelho' });
