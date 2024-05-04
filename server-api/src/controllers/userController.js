@@ -82,7 +82,7 @@ const userRegister = async (req, res) => {
 
       userExists.password = "REDACTED"
 
-      
+
       res.send({
         success: true,
         message: "User Exists",
@@ -121,12 +121,12 @@ const userLogin = async (req, res) => {
     }
 
     // Check if user is verified
-    if (!user.isVerified) {
-      return res.status(400).json({
-        success: false,
-        message: "Please verify your email before logging in",
-      });
-    }
+    // if (!user.isVerified) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Please verify your email before logging in",
+    //   });
+    // }
 
     // Generate auth token
     const token = user.generateAuthToken();
