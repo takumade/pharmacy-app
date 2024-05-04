@@ -1,8 +1,8 @@
 const { faker } = require("@faker-js/faker");
 
 // Generate seed object for medicine
-const medicineSeed = (pharmacyId=22) => {
-  return {
+const medicineSeed = (pharmacyId=22, count = 1) => {
+  return Array.from(Array(count)).map(d => ({
     medicineName: faker.word.words(),
     image: faker.image.url(),
     brandName: faker.company.name(),
@@ -21,7 +21,7 @@ const medicineSeed = (pharmacyId=22) => {
     lastUpdated: faker.date.recent(),
     prescriptionRequired: faker.datatype.boolean(),
     owner: pharmacyId // You need to replace this with the appropriate owner value
-  };
+  }))
 };
 
 module.exports = medicineSeed
