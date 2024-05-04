@@ -21,7 +21,7 @@ const getMedicine = async (req, res) => {
             return res.status(404).json({ success: false, message: "Medicine not found" });
         }
 
-        res.status(200).json({ success: true, medicine });
+        res.status(200).json({ success: true, data:medicine });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -43,7 +43,7 @@ const getMedicines = async (req, res) => {
           }
         }
 
-        res.status(200).json({ success: true, medicines });
+        res.status(200).json({ success: true, data:medicines });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -155,7 +155,7 @@ const editMedicine = async (req, res) => {
       .json({
         success: true,
         message: "Medicine updated successfully",
-        medicine,
+        data:medicine,
       });
   } catch (error) {
     console.error(error);
