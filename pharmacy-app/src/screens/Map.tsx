@@ -55,7 +55,7 @@ export default class Map extends React.Component {
         </MapView>
         <BottomSheet index={1} snapPoints={snapPoints}>
           <View>
-            <Text>Thinking of the design</Text>
+          <Searchbar placeholder='Search for drugs' value={''} /> 
           </View>
         </BottomSheet>
       </View>

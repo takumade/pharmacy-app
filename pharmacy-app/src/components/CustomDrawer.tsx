@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerContentComponentProps } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 
 interface CustomDrawerProps extends DrawerContentComponentProps {}
 
 const CustomDrawer: React.FC<CustomDrawerProps> = (props) => {
   return (
     <View style={{ flex: 1 }}>
-      <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: '#3f51b5' }}>
+      <DrawerContentScrollView {...props} contentContainerStyle={{ backgroundColor: '#5284b5', }}>
         <ImageBackground  style={{ padding: 20 }}>
           <Image source={require('../assets/app_images/avatar.jpg')} style={{ height: 80, width: 80, borderRadius: 40, marginBottom: 10 }} />
           <Text style={{ color: '#fff', fontSize: 18, fontFamily: 'Roboto-Medium', marginBottom: 5 }}>
