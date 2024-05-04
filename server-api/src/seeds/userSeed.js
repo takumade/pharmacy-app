@@ -1,4 +1,6 @@
 const { faker } = require("@faker-js/faker");
+const bcrypt = require('bcryptjs');
+
 
 const generateCustomers = (customersNo = 10) => {
   let customers = [];
@@ -66,23 +68,28 @@ const generateAdmins = () => {
   return admins;
 };
 
+
 const hashPass = async (pass) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(pass, salt);
 };
 
 const userSeed = async () => {
+
+  let hashedPass = await hashPass("password1123")
   let allUsers = [
     ...generartePharmacies(),
     ...generateCustomers(),
     ...generateAdmins(),
-  ].map(async (user) => ({
+  ].map((user) => ({
     ...user,
-    password: await hashPass(user.password),
+    password: hashedPass,
     clearText: user.password,
   }));
 
+
   return allUsers;
 };
+
 
 module.exports = userSeed;

@@ -14,7 +14,7 @@ const User = require("./models/userModel");
 const seedData = async () => {
   // Seed users first
   console.log("[+] Seeding users....")
-  let users = await User.insertMany(userSeed())
+  let users = await User.insertMany(await userSeed())
   
   let customers = users.filter(user => user.role === "customer")
   let pharmacies = users.filter(user => user.role === "pharmacy")
