@@ -34,7 +34,7 @@ app.use('/api/dashboard', dashboardRoutes);
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(config.mongodb_uri);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`[+] MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error(error.message);
     process.exit(1);
