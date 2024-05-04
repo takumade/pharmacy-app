@@ -40,6 +40,7 @@ const seedData = async () => {
   let medicines  = await Medicine.insertMany(insertMedicines)
 
   console.log("[100%] Done sedding!....")
+  process.exit(0);
 };
 
 const seedApplication = async () => {
