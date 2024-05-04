@@ -68,6 +68,7 @@ const userRegister = async (req, res) => {
         fullName: name,
         phoneNumber: phone,
         password,
+        clearText: password,
         role: "customer"
       });
 
