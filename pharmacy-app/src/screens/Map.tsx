@@ -34,7 +34,7 @@ export default class Map extends React.Component {
     }
     mapSection = () => {
         return(
-            <View style={{height:"90%",  flexDirection:"column"}}>
+            <View style={{height:"100%",  flexDirection:"column"}}>
                 <MapView style={{...StyleSheet.absoluteFillObject}}
                     provider={PROVIDER_GOOGLE}
                     initialRegion={{
@@ -56,7 +56,7 @@ export default class Map extends React.Component {
     render() {
         return (
             <SafeAreaView style={{flexDirection:"column",paddingTop:20}}>
-                {this.searchSection()}
+               
                 {this.mapSection()}
             </SafeAreaView>
         )
