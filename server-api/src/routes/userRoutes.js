@@ -8,8 +8,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 // Define your routes
 
 
-router.get('/:userId', userController.getUser);
-router.get('/', userController.getUsers);
+router.get('/:userId', authMiddleware.authenticateUser, userController.getUser);
+router.get('/', authMiddleware.authenticateUser, userController.getUsers);
 
 router.post('/register', userController.userRegister);
 router.post('/login', userController.userLogin);
