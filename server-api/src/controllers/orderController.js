@@ -35,7 +35,7 @@ const checkout = async (req, res) => {
         await newOrder.save();
 
         // Step 7: Send Response
-        res.status(201).json({ success: true, message: "Order placed successfully", order: newOrder });
+        res.status(201).json({ success: true, message: "Order placed successfully", data: newOrder });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -95,7 +95,7 @@ const getOrder = async (req, res) => {
         }
 
         // Send the order in the response
-        res.status(200).json({ success: true, order });
+        res.status(200).json({ success: true, data:order });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -126,7 +126,7 @@ const getOrders = async (req, res) => {
         // await Order.populate(orders, { path: 'pharmacy' });
 
         // Send the orders in the response
-        res.status(200).json({ success: true, orders });
+        res.status(200).json({ success: true, data: orders });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
