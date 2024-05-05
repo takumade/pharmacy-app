@@ -17,14 +17,6 @@ const DrawerNavigator = () => {
     <Drawer.Navigator
       initialRouteName="Buy"
       drawerContent={props => <CustomDrawer {...props} />}>
-      <Drawer.Screen 
-      name="Buy"
-      component={Map}
-      options={{
-        drawerIcon: ({color}) => (
-          <Ionicons name="location" size={22} color={color} />
-        ),
-      }} />
       <Drawer.Screen
         name="Home"
         component={HomeScreen}
@@ -34,7 +26,6 @@ const DrawerNavigator = () => {
           ),
         }}
       />
-      
       <Drawer.Screen
         name="Orders"
         component={OrdersScreen}
@@ -44,6 +35,15 @@ const DrawerNavigator = () => {
           ),
         }}
       />
+      
+      <Drawer.Screen 
+      name="Locate"
+      component={Map}
+      options={{
+        drawerIcon: ({color}) => (
+          <Ionicons name="location" size={22} color={color} />
+        ),
+      }} />
          <Drawer.Screen
         name="Support"
         component={Support}
