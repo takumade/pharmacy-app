@@ -87,22 +87,27 @@ const getTransaction = async (req, res) => {
 
 const getTransactions = async (req, res) => {
     try {
-        // Find transactions based on user role
-        let transactions;
-        if (req.user.role === userRoles.admin) {
-            // If user is admin, retrieve all transactions
-            transactions = await Transaction.find();
-        } else if (req.user.role === userRoles.pharmacy) {
-            // If user is pharmacy, retrieve transactions associated with their pharmacy
-            const pharmacy = await Pharmacy.findOne({ owner: req.user._id });
-            if (!pharmacy) {
-                return res.status(404).json({ success: false, message: "Pharmacy not found" });
-            }
-            transactions = await Transaction.find({ pharmacyId: pharmacy._id });
-        } else {
-            // If user is regular user, retrieve transactions associated with their user ID
-            transactions = await Transaction.find({ userId: req.user._id });
+        // Define the criteria to filter transactions
+        const criteria = {};
+        let transactions = []
+
+        // Optionally, you can filter transactions based on the requesting user's ID
+        if (req.user.role === userRoles.customer) {
+            criteria.userId = req.user._id;
         }
+
+        // Optionally, you can filter transactions based on other parameters
+        // For example, you might want to filter transactions by pharmacy
+        if (req.user.role === userRoles.pharmacy) {
+            let pharmacy = await Pharmacy.find({owner: req.user._id})
+            criteria.pharmacy = pharmacy._id;
+        }
+
+        // Find transactions in the database based on the criteria
+        if (req.user.role === userRoles.admin)
+            transactions = await Transaction.find();
+        else
+            transactions = await Transaction.find(criteria);
 
         // Send the transactions in the response
         res.status(200).json({ success: true, data: transactions });
