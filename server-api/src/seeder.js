@@ -51,28 +51,15 @@ const seedData = async () => {
 
       let userPrescriptions = prescriptions.filter(p => p.owner == customer._id)
 
-
-
-
       let order = await orderSeed(customer._id, pharmacy._id, products,  userPrescriptions[0])
       let createdOrder = await Order.create(order)
 
       let txn = await transactionSeed(customer._id, pharmacy._id, createdOrder._id, createdOrder.totalAmount)
       let createdTxn = await Transaction.create(txn)
 
-
-      
-
-    })
-
-
-    
-    
+    }) 
    }
 
- 
-
- 
  
   console.log("[100%] Done sedding!....")
   process.exit(0);
