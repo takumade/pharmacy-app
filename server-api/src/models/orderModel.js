@@ -7,7 +7,7 @@ const orderSchema = new Schema({
         ref: 'User',
         required: true
     },
-    pharmacy: {
+    pharmacyId: {
         type: Schema.Types.ObjectId,
         ref: 'Pharmacy',
         required: true

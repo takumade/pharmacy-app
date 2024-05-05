@@ -9,7 +9,7 @@ const Prescription = require("../models/prescriptionModel");
 const checkout = async (req, res) => {
     try {
         // Step 1: Retrieve Cart from Request Body
-        const { cart, shippingAddress, pharmacy  }= req.body;
+        const { cart, shippingAddress, pharmacyId  }= req.body;
 
         // Step 2: Calculate Total
         let totalAmount = 0;
@@ -20,7 +20,7 @@ const checkout = async (req, res) => {
         // Step 3: Create Order
         const newOrder = new Order({
             userId: req.user._id,
-            pharmacy: pharmacy,
+            pharmacyId: pharmacyId,
             items: cart.map(item => ({
                 productId: item.productId,
                 productName: item.productName,
@@ -83,7 +83,7 @@ const getOrder = async (req, res) => {
         }
 
         // Fetch the pharmacy associated with the order
-        const pharmacy = await Pharmacy.findById(order.pharmacy);
+        const pharmacy = await Pharmacy.findById(order.pharmacyId);
         if (!pharmacy) {
             return res.status(404).json({ success: false, message: "Pharmacy not found" });
         }
@@ -91,7 +91,7 @@ const getOrder = async (req, res) => {
         // Check if the user making the request is authorized to access the order
         // For example, you might check if the user is an admin or if the order belongs to the user
         // Additionally, you may check if the pharmacy associated with the order matches the requesting user's pharmacy
-        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id) && String(pharmacy._id) !== String(order.pharmacy)) {
+        if (!req.user.isAdmin && String(order.userId) !== String(req.user._id) && String(pharmacy._id) !== String(order.pharmacyId)) {
             return res.status(403).json({ success: false, message: "You are not authorized to access this order" });
         }
 
@@ -118,7 +118,7 @@ const getOrders = async (req, res) => {
         // For example, you might want to filter orders by pharmacy
         if (req.user.role === userRoles.pharmacy) {
             let pharmacy = await Pharmacy.find({owner: req.user._id})
-            criteria.pharmacy = pharmacy._id;
+            criteria.pharmacyId = pharmacy._id;
         }
 
         // Find orders in the database based on the criteria
