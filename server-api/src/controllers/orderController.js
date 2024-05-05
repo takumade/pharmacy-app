@@ -107,20 +107,25 @@ const getOrders = async (req, res) => {
     try {
         // Define the criteria to filter orders
         const criteria = {};
+        let orders = []
 
         // Optionally, you can filter orders based on the requesting user's ID
-        if (!req.user.role === userRoles.admin) {
+        if (req.user.role === userRoles.customer) {
             criteria.userId = req.user._id;
         }
 
         // Optionally, you can filter orders based on other parameters
         // For example, you might want to filter orders by pharmacy
-        if (req.query.pharmacyId) {
-            criteria.pharmacy = req.query.pharmacyId;
+        if (req.user.role === userRoles.pharmacy) {
+            let pharmacy = await Pharmacy.find({owner: req.user._id})
+            criteria.pharmacy = pharmacy._id;
         }
 
         // Find orders in the database based on the criteria
-        const orders = await Order.find(criteria);
+        if (req.user.role === userRoles.admin)
+            orders = await Order.find();
+        else
+            orders = await Order.find(criteria);
 
         // Optionally, you can populate additional fields
         // For example, you might want to populate the pharmacy field
