@@ -1,14 +1,17 @@
 const { faker } = require("@faker-js/faker");
+const pharmacyData = require("./pharmacyData");
 
 // Generate seed object for pharmacy
-const pharmacySeed = (userId) => {
+const pharmacySeed = (index, userId) => {
+
+  let pharmacyRealistic = pharmacyData[index]
   return {
     owner: userId,
-    name: faker.company.name(),
+    name: pharmacyRealistic.name,
     logo: faker.image.url(),
     location: faker.location.streetAddress(),
-    latitude: parseFloat(faker.location.latitude()),
-    longitude: parseFloat(faker.location.longitude()),
+    latitude: pharmacyRealistic.latitude,
+    longitude: pharmacyRealistic.longitude,
     contactInformation: {
       phone: faker.phone.number(),
       email: faker.internet.email()
