@@ -45,7 +45,6 @@ const transactionSchema = new Schema({
         type: String,
         required: true
     },
-    cardType: String, // Removed lastFourDigits field
     data: String // Added data field as string
 });
 
