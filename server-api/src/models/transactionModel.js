@@ -16,7 +16,7 @@ const transactionSchema = new Schema({
         ref: 'User',
         required: true
     },
-    pharmacy: {
+    pharmacyId: {
         type: Schema.Types.ObjectId, // Reference to Pharmacy model
         ref: 'Pharmacy',
         required: true

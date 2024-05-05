@@ -3,7 +3,7 @@ const { faker } = require("@faker-js/faker");
 const orderSeed = (userId="6136f7f8eaa0e84132d4f5bd", pharmacyId="6136f7f8eaa0e84132d4f5be", products=[], presciptions=[]) => {
     return {
         userId: userId,
-        pharmacy: pharmacyId,
+        pharmacyId: pharmacyId,
         items: products,
         prescriptions: presciptions,
         totalAmount: 27.97,
