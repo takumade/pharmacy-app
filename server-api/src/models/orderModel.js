@@ -35,7 +35,7 @@ const orderSchema = new Schema({
         productId: {
             type: Schema.Types.ObjectId,
             ref: 'Prescription',
-            required: true
+            required: false
         }
      }],
     totalAmount: {
