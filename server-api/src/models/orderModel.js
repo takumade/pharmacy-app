@@ -32,10 +32,10 @@ const orderSchema = new Schema({
         }
     }],
     prescriptions: [{
-        productId: {
+        prescriptionId: {
             type: Schema.Types.ObjectId,
             ref: 'Prescription',
-            required: true
+            required: false
         }
      }],
     totalAmount: {
