@@ -4,6 +4,23 @@ const Pharmacy = require("../models/pharmacyModel");
 
 
 
+const searchMedicine = async (req, res) => {
+    const name = req.query.name
+
+    try {
+
+      let medicines = await Medicine.find({medicineName: {$regex : name, $options : "i"}})
+
+      res.status(200).json({ success: true, data:medicines });
+     
+
+    }catch(error){
+      console.error(error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+
+}
+
 const getMedicine = async (req, res) => {
     const medicineId = req.params.medicineId;
 
@@ -224,6 +241,7 @@ const deleteMedicines = async (req, res) => {
 };
 
 module.exports = {
+  searchMedicine,
   getMedicine,
   getMedicines,
   addMedicine,
