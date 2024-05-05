@@ -14,17 +14,17 @@ const checkout = async (req, res) => {
         // Step 2: Calculate Total
         let totalAmount = 0;
         for (const item of cart) {
-            totalAmount += item.quantity * item.product.price;
+            totalAmount += item.quantity * item.price;
         }
 
         // Step 3: Create Order
         const newOrder = new Order({
             userId: req.user._id,
             items: cart.map(item => ({
-                productId: item.product._id,
-                productName: item.product.name,
+                productId: item.productId,
+                productName: item.productName,
                 quantity: item.quantity,
-                price: item.product.price
+                price: item.price
             })),
             totalAmount,
             shippingAddress: req.body.shippingAddress,
