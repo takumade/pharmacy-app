@@ -8,6 +8,7 @@ router.use(authMiddleware.authenticateUser);
 
 // Define your routes
 
+router.get('/search', pharmacyController.searchPharmacies);
 router.get('/:pharmacyId', pharmacyController.getPharmacy);
 router.get('/', pharmacyController.getPharmacies);
 router.get('/customers', pharmacyController.getCustomers);

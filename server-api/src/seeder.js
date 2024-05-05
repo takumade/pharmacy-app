@@ -9,6 +9,10 @@ const Pharmacy = require("./models/pharmacyModel");
 const Medicine = require("./models/medicineModel");
 const Prescription = require("./models/prescriptionModel");
 const User = require("./models/userModel");
+const orderSeed = require("./seeds/orderSeed");
+const Order = require("./models/orderModel");
+const transactionSeed = require("./seeds/transactionSeed");
+const Transaction = require("./models/transactionModel");
 
 
 const seedData = async () => {
@@ -27,18 +31,36 @@ const seedData = async () => {
 
   let insertMedicines = []
 
-  pharmaciesList.map(pharmacy => {
-    insertMedicines = [
-      ...insertMedicines,
-      ...medicineSeed(pharmacy._id, 10)
-    ]
-  });
+
+   // Grap  pharmacies and seed medicine
+   console.log("[+] Seeding medicines, orders and transactions....")
+
+   for (let index = 0; index < pharmaciesList.length; index++) {
+    const pharmacy = pharmaciesList[index];
+
+    // Seed medicines
+    let medicines  = await Medicine.insertMany(medicineSeed(pharmacy._id, 10))
+
+  customers.forEach(async(customer) => {
+      let products = medicines.slice(0, 3).map(medicine => ({
+        productId: medicine._id,
+        productName: medicine.medicineName,
+        quantity: 2,
+        price: medicine.unitPrice
+      }));
+
+      let userPrescriptions = prescriptions.filter(p => p.owner == customer._id)
+
+      let order = await orderSeed(customer._id, pharmacy._id, products,  userPrescriptions[0])
+      let createdOrder = await Order.create(order)
+
+      let txn = await transactionSeed(customer._id, pharmacy._id, createdOrder._id, createdOrder.totalAmount)
+      let createdTxn = await Transaction.create(txn)
+
+    }) 
+   }
+
  
-
-  // Grap  pharmacies and seed medicine
-  console.log("[+] Seeding medicines....")
-  let medicines  = await Medicine.insertMany(insertMedicines)
-
   console.log("[100%] Done sedding!....")
   process.exit(0);
 };

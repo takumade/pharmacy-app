@@ -9,25 +9,26 @@ const Prescription = require("../models/prescriptionModel");
 const checkout = async (req, res) => {
     try {
         // Step 1: Retrieve Cart from Request Body
-        const cart = req.body.cart;
+        const { cart, shippingAddress, pharmacy  }= req.body;
 
         // Step 2: Calculate Total
         let totalAmount = 0;
-        for (const item of cart.items) {
-            totalAmount += item.quantity * item.product.price;
+        for (const item of cart) {
+            totalAmount += item.quantity * item.price;
         }
 
         // Step 3: Create Order
         const newOrder = new Order({
             userId: req.user._id,
-            items: cart.items.map(item => ({
-                productId: item.product._id,
-                productName: item.product.name,
+            pharmacy: pharmacy,
+            items: cart.map(item => ({
+                productId: item.productId,
+                productName: item.productName,
                 quantity: item.quantity,
-                price: item.product.price
+                price: item.price
             })),
             totalAmount,
-            shippingAddress: req.body.shippingAddress,
+            shippingAddress: shippingAddress,
             paymentMethod: 'cash-on-delivery'
         });
 
@@ -35,7 +36,7 @@ const checkout = async (req, res) => {
         await newOrder.save();
 
         // Step 7: Send Response
-        res.status(201).json({ success: true, message: "Order placed successfully", order: newOrder });
+        res.status(201).json({ success: true, message: "Order placed successfully", data: newOrder });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -95,7 +96,7 @@ const getOrder = async (req, res) => {
         }
 
         // Send the order in the response
-        res.status(200).json({ success: true, order });
+        res.status(200).json({ success: true, data:order });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
@@ -106,27 +107,32 @@ const getOrders = async (req, res) => {
     try {
         // Define the criteria to filter orders
         const criteria = {};
+        let orders = []
 
         // Optionally, you can filter orders based on the requesting user's ID
-        if (!req.user.role === userRoles.admin) {
+        if (req.user.role === userRoles.customer) {
             criteria.userId = req.user._id;
         }
 
         // Optionally, you can filter orders based on other parameters
         // For example, you might want to filter orders by pharmacy
-        if (req.query.pharmacyId) {
-            criteria.pharmacy = req.query.pharmacyId;
+        if (req.user.role === userRoles.pharmacy) {
+            let pharmacy = await Pharmacy.find({owner: req.user._id})
+            criteria.pharmacy = pharmacy._id;
         }
 
         // Find orders in the database based on the criteria
-        const orders = await Order.find(criteria);
+        if (req.user.role === userRoles.admin)
+            orders = await Order.find();
+        else
+            orders = await Order.find(criteria);
 
         // Optionally, you can populate additional fields
         // For example, you might want to populate the pharmacy field
         // await Order.populate(orders, { path: 'pharmacy' });
 
         // Send the orders in the response
-        res.status(200).json({ success: true, orders });
+        res.status(200).json({ success: true, data: orders });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
