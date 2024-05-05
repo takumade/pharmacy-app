@@ -9,7 +9,7 @@ const Prescription = require("../models/prescriptionModel");
 const checkout = async (req, res) => {
     try {
         // Step 1: Retrieve Cart from Request Body
-        const cart = req.body.cart;
+        const { cart, shippingAddress, pharmacy  }= req.body;
 
         // Step 2: Calculate Total
         let totalAmount = 0;
@@ -20,6 +20,7 @@ const checkout = async (req, res) => {
         // Step 3: Create Order
         const newOrder = new Order({
             userId: req.user._id,
+            pharmacy: pharmacy,
             items: cart.map(item => ({
                 productId: item.productId,
                 productName: item.productName,
@@ -27,7 +28,7 @@ const checkout = async (req, res) => {
                 price: item.price
             })),
             totalAmount,
-            shippingAddress: req.body.shippingAddress,
+            shippingAddress: shippingAddress,
             paymentMethod: 'cash-on-delivery'
         });
 
