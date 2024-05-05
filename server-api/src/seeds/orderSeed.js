@@ -7,7 +7,6 @@ const orderSeed = (userId="6136f7f8eaa0e84132d4f5bd", pharmacyId="6136f7f8eaa0e8
         items: products,
         prescriptions: presciptions,
         totalAmount: 27.97,
-        orderDate: Date.now,
         status: "processing",
         shippingAddress: {
         street: faker.location.streetAddress(),
