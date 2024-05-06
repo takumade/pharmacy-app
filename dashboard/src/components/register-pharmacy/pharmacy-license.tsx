@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
+import { FormLabel } from '@mui/material';
 
 
 
@@ -24,50 +25,35 @@ export function PharmacyLicense(): React.JSX.Element {
       }}
     >
       <Card>
-        <CardHeader subheader="Add you pharmcy information below" title="Profile" />
+        <CardHeader subheader="Upload your licenses below" title="Licenses" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid md={12} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>First name</InputLabel>
-                <OutlinedInput placeholder="MediCare" label="Name" name="firstName" />
-              </FormControl>
-            </Grid>
-            <Grid md={12} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Address</InputLabel>
-                <OutlinedInput placeholder="Address here" label="Address" name="location" />
-              </FormControl>
-            </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Latitude</InputLabel>
-                <OutlinedInput placeholder="-17.234343" label="Latitude" name="latitude" />
+                <FormLabel>City Council License</FormLabel>
+                <OutlinedInput type="file" label="City Council License" name="cityCouncilLicense" />
               </FormControl>
             </Grid>
+
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Longitude</InputLabel>
-                <OutlinedInput placeholder="-31.23232" label="Longitude" name="longitude" />
+                <FormLabel>Pharmacist Council License</FormLabel>
+                <OutlinedInput type="file" label="Pharmacist Council  License" name="pharmacistCouncilLicense" />
               </FormControl>
             </Grid>
+
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Email address</InputLabel>
-                <OutlinedInput placeholder="sofia@devias.io" label="Email address" name="email" />
+                <FormLabel>Health Professionals License</FormLabel>
+                <OutlinedInput type="file" label="Health Professionals License" name="healthProfessionsAuthorityLicense" />
               </FormControl>
             </Grid>
+
             <Grid md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Phone number</InputLabel>
-                <OutlinedInput placeholder='+263778123123' label="Phone number" name="phone" type="tel" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>City</InputLabel>
-                <OutlinedInput label="City" />
+              <FormControl fullWidth required>
+                <FormLabel>Medicines Control License</FormLabel>
+                <OutlinedInput type="file" label="Medicines Control License" name="medicinesControlAuthorityLicense" />
               </FormControl>
             </Grid>
           </Grid>
