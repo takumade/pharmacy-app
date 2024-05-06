@@ -25,6 +25,15 @@ export default function Page(): React.JSX.Element {
           <PharmacyProfile />
         </Grid>
       </Grid>
+
+      <Grid container spacing={3}>
+        <Grid lg={4} md={6} xs={12}>
+          
+        </Grid>
+        <Grid lg={8} md={6} xs={12}>
+          <PharmacyProfile />
+        </Grid>
+      </Grid>
     </Stack>
   );
 }
