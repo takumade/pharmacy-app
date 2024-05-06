@@ -36,7 +36,7 @@ export function PharmacyOperatingHours(): React.JSX.Element {
       }}
     >
       <Card>
-        <CardHeader subheader="Add you pharmacy operating hours" title="Operating Hours" />
+        <CardHeader subheader="Add you pharmacy operating hours" title="Step 3: Operating Hours" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>

@@ -25,7 +25,7 @@ export function PharmacyLicense(): React.JSX.Element {
       }}
     >
       <Card>
-        <CardHeader subheader="Upload your licenses below" title="Licenses" />
+        <CardHeader subheader="Upload your licenses below" title="Step 2: Licenses" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>

@@ -35,7 +35,7 @@ export function PharmacyProfile(): React.JSX.Element {
       }}
     >
       <Card>
-        <CardHeader subheader="Add you pharmcy information below" title="Profile" />
+        <CardHeader subheader="Add you pharmcy information below" title="Step 1: Profile" />
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
