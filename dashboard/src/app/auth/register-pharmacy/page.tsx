@@ -8,6 +8,7 @@ import { config } from '@/config';
 import { AccountDetailsForm } from '@/components/dashboard/account/account-details-form';
 import { AccountInfo } from '@/components/dashboard/account/account-info';
 import { PharmacyProfile } from '@/components/register-pharmacy/pharmacy-profile';
+import { PharmacyLicense } from '@/components/register-pharmacy/pharmacy-license';
 
 export const metadata = { title: `Account | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -28,10 +29,10 @@ export default function Page(): React.JSX.Element {
 
       <Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
-          
+
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-          <PharmacyProfile />
+        <PharmacyLicense />
         </Grid>
       </Grid>
     </Stack>
