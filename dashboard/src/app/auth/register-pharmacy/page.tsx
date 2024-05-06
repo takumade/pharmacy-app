@@ -9,6 +9,7 @@ import { AccountDetailsForm } from '@/components/dashboard/account/account-detai
 import { AccountInfo } from '@/components/dashboard/account/account-info';
 import { PharmacyProfile } from '@/components/register-pharmacy/pharmacy-profile';
 import { PharmacyLicense } from '@/components/register-pharmacy/pharmacy-license';
+import { PharmacyOperatingHours } from '@/components/register-pharmacy/operating-hours';
 
 export const metadata = { title: `Account | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -16,7 +17,7 @@ export default function Page(): React.JSX.Element {
   return (
     <Stack spacing={3} style={{padding:"5rem"}}>
       <div>
-        <Typography variant="h4">Account</Typography>
+        <Typography variant="h4">Register Pharmacy</Typography>
       </div>
       <Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
@@ -29,10 +30,17 @@ export default function Page(): React.JSX.Element {
 
       <Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
-
         </Grid>
         <Grid lg={8} md={6} xs={12}>
         <PharmacyLicense />
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid lg={4} md={6} xs={12}>
+
+        </Grid>
+        <Grid lg={8} md={6} xs={12}>
+        <PharmacyOperatingHours/>
         </Grid>
       </Grid>
     </Stack>
