@@ -40,38 +40,38 @@ export function PharmacyOperatingHours(): React.JSX.Element {
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid md={12} xs={12}>
+            <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Weekday Opening Hours</FormLabel>
                 <OutlinedInput type="time" label="Weekday Start" name="weekdaystart" />
               </FormControl>
             </Grid>
-            <Grid md={12} xs={12}>
+            <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Weekday Closing Hours</FormLabel>
                 <OutlinedInput type="time" label="Weekday End" name="weekdayend" />
               </FormControl>
             </Grid>
 
-            <Grid md={12} xs={12}>
+            <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Weekend Opening Hours</FormLabel>
                 <OutlinedInput type="time" label="Weekend Start" name="weekendstart" />
               </FormControl>
             </Grid>
 
-            <Grid md={12} xs={12}>
+            <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Weekend Closing Hours</FormLabel>
                 <OutlinedInput type="time" label="Weekend End" name="weekendend" />
               </FormControl>
             </Grid>
-            
+
           </Grid>
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save details</Button>
+          <Button variant="contained">Apply</Button>
         </CardActions>
       </Card>
     </form>
