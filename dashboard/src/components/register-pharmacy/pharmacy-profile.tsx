@@ -97,7 +97,7 @@ export function PharmacyProfile(): React.JSX.Element {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Save details</Button>
+          <Button variant="contained">Next</Button>
         </CardActions>
       </Card>
     </form>
