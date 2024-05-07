@@ -1,4 +1,4 @@
-const backendClient = async (method:string, path:string, body: any) => {
+const backendClient = async (method:string, path:string, body: any = {}) => {
   try {
 
     let options: any = {
@@ -16,7 +16,7 @@ const backendClient = async (method:string, path:string, body: any) => {
 
 
 
-    const response = await fetch(`${process.env.BACKEND_API}/api/${path}`, options);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/${path}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
