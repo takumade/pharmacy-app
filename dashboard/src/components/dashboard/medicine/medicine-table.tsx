@@ -32,19 +32,19 @@ export interface Customer {
   createdAt: Date;
 }
 
-interface CustomersTableProps {
+interface GeneralTableProps {
   count?: number;
   page?: number;
   rows?: Customer[];
   rowsPerPage?: number;
 }
 
-export function CustomersTable({
+export function MedicineTable({
   count = 0,
   rows = [],
   page = 0,
   rowsPerPage = 0,
-}: CustomersTableProps): React.JSX.Element {
+}: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((customer) => customer.id);
   }, [rows]);
