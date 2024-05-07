@@ -9,10 +9,9 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import dayjs from 'dayjs';
 
 import { config } from '@/config';
-import { CustomersFilters } from '@/components/dashboard/customer/customers-filters';
-import { CustomersTable } from '@/components/dashboard/customer/customers-table';
 import type { Customer } from '@/components/dashboard/customer/customers-table';
 import { GeneralFilters } from '@/components/general/general-filter';
+import { MedicineTable } from '@/components/dashboard/medicine/medicine-table';
 
 export const metadata = { title: `Customers | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -139,7 +138,7 @@ export default function Page(): React.JSX.Element {
         </div>
       </Stack>
       <GeneralFilters item="medicine" />
-      <CustomersTable
+      <MedicineTable
         count={paginatedCustomers.length}
         page={page}
         rows={paginatedCustomers}
