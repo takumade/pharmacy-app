@@ -132,7 +132,10 @@ const userLogin = async (req, res) => {
     // Generate auth token
     const token = user.generateAuthToken();
 
-    res.status(200).json({ success: true, data: token });
+    res.status(200).json({ success: true, data: {
+      token,
+      user
+    } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
