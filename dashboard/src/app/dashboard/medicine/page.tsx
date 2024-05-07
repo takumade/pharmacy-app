@@ -22,16 +22,9 @@ export const metadata = { title: `Customers | Dashboard | ${config.site.name}` }
 export default async function Page() {
 
 
-  const page = 0;
-  const rowsPerPage = 5;
 
 
-
-  const fetchMedicine = async () => {
-        return await backendClient('get', 'medicine/')
-  }
-
-  let response = await fetchMedicine()
+  let response = await backendClient('get', 'medicine/')
   let medicine = response.data
 
 
@@ -60,9 +53,7 @@ console.log(response)
       <GeneralFilters item="medicine" />
       <MedicineTable
         count={medicine.length}
-        page={page}
         rows={medicine}
-        rowsPerPage={rowsPerPage}
       />
     </Stack>
   );
