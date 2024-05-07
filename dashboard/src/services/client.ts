@@ -1,12 +1,19 @@
+import { setCookie, getCookie } from 'cookies-next';
+
 const backendClient = async (method:string, path:string, body: any = {}) => {
   try {
 
     let options: any = {
       method: method.toUpperCase(),
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('custom-auth-token')
+        'Content-Type': 'application/json'
       }
+    }
+
+    let token = getCookie('custom-auth-token')
+
+    if (token) {
+      options.headers.Authorization = token
     }
 
 
@@ -15,8 +22,10 @@ const backendClient = async (method:string, path:string, body: any = {}) => {
     }
 
 
+    let serverUrl = process.env.NEXT_PUBLIC_BACKEND_API ? process.env.NEXT_PUBLIC_BACKEND_API : process.env.BACKEND_API
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/api/${path}`, options);
+
+    const response = await fetch(`${serverUrl}/api/${path}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
