@@ -61,6 +61,8 @@ export function SignInForm(): React.JSX.Element {
         setError('root', { type: 'server', message: response.message });
         setIsPending(false);
         return;
+      }else{
+        localStorage.setItem('custom-auth-token', response.data);
       }
 
       // Refresh the auth state
