@@ -1,6 +1,9 @@
 'use client';
 
+import { setCookie, deleteCookie, getCookie } from 'cookies-next';
+import backendClient from '@/services/client';
 import type { User } from '@/types/user';
+
 
 function generateToken(): string {
   const arr = new Uint8Array(12);
@@ -8,17 +11,11 @@ function generateToken(): string {
   return Array.from(arr, (v) => v.toString(16).padStart(2, '0')).join('');
 }
 
-const user = {
-  id: 'USR-000',
-  avatar: '/assets/avatar.png',
-  firstName: 'Sofia',
-  lastName: 'Rivers',
-  email: 'sofia@devias.io',
-} satisfies User;
+
 
 export interface SignUpParams {
-  firstName: string;
-  lastName: string;
+  fullName: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -42,7 +39,7 @@ class AuthClient {
 
     // We do not handle the API, so we'll just generate a token and store it in localStorage.
     const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
+    setCookie('custom-auth-token', token);
 
     return {};
   }
@@ -51,20 +48,31 @@ class AuthClient {
     return { error: 'Social authentication not implemented' };
   }
 
-  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
-    const { email, password } = params;
+  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ success?: boolean, message: string, data:any }> {
 
     // Make API request
-
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'sofia@devias.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
+    let options:any = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...params
+      })
     }
 
-    const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
+    let result = await fetch('/api/login', options);
 
-    return {};
+    let response = await result.json()
+
+    if (response.success){
+        setCookie('custom-auth-token', response.data.token);
+        setCookie('custom-auth-user', JSON.stringify(response.data.user));
+    }
+
+
+
+    return response;
   }
 
   async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }> {
@@ -79,17 +87,19 @@ class AuthClient {
     // Make API request
 
     // We do not handle the API, so just check if we have a token in localStorage.
-    const token = localStorage.getItem('custom-auth-token');
+    const token = getCookie('custom-auth-token');
 
     if (!token) {
       return { data: null };
     }
 
+    let user = JSON.parse(getCookie('custom-auth-user') as string);
+
     return { data: user };
   }
 
   async signOut(): Promise<{ error?: string }> {
-    localStorage.removeItem('custom-auth-token');
+    deleteCookie('custom-auth-token');
 
     return {};
   }
