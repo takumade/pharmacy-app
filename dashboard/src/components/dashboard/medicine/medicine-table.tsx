@@ -22,20 +22,31 @@ function noop(): void {
   // do nothing
 }
 
-export interface Customer {
-  id: string;
-  avatar: string;
-  name: string;
-  email: string;
-  address: { city: string; state: string; country: string; street: string };
-  phone: string;
-  createdAt: Date;
+export interface Medicine {
+  _id: string;
+  medicineName: string;
+  image: string;
+  brandName: string;
+  genericName: string;
+  dosageForm: string;
+  dosageStrength: string;
+  batchNumber: string;
+  expirationDate: string; // Should be of type Date, but string for simplicity
+  quantity: number;
+  unitPrice: number;
+  manufacturer: string;
+  supplier: string;
+  storageConditions: string;
+  notes: string;
+  lastUpdated: string; // Should be of type Date, but string for simplicity
+  prescriptionRequired: boolean;
+  owner: string;
 }
 
 interface GeneralTableProps {
   count?: number;
   page?: number;
-  rows?: Customer[];
+  rows?: Medicine[];
   rowsPerPage?: number;
 }
 
@@ -46,7 +57,7 @@ export function MedicineTable({
   rowsPerPage = 0,
 }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
-    return rows.map((customer) => customer.id);
+    return rows.map((medicine) => medicine._id);
   }, [rows]);
 
   const { selectAll, deselectAll, selectOne, deselectOne, selected } = useSelection(rowIds);
@@ -74,42 +85,50 @@ export function MedicineTable({
                 />
               </TableCell>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Signed Up</TableCell>
+              <TableCell>Brand Name</TableCell>
+              <TableCell>Generic Name</TableCell>
+              <TableCell>Dosage Form</TableCell>
+              <TableCell>Dosage Strength</TableCell>
+              <TableCell>Batch Number</TableCell>
+              <TableCell>Unit Price</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Expiration Date</TableCell>
+              <TableCell>Manufacturer</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row) => {
-              const isSelected = selected?.has(row.id);
+              const isSelected = selected?.has(row._id);
 
               return (
-                <TableRow hover key={row.id} selected={isSelected}>
+                <TableRow hover key={row._id} selected={isSelected}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={isSelected}
                       onChange={(event) => {
                         if (event.target.checked) {
-                          selectOne(row.id);
+                          selectOne(row._id);
                         } else {
-                          deselectOne(row.id);
+                          deselectOne(row._id);
                         }
                       }}
                     />
                   </TableCell>
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-                      <Avatar src={row.avatar} />
-                      <Typography variant="subtitle2">{row.name}</Typography>
+                      <Avatar src={row.image} />
+                      <Typography variant="subtitle2">{row.medicineName}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>
-                    {row.address.city}, {row.address.state}, {row.address.country}
-                  </TableCell>
-                  <TableCell>{row.phone}</TableCell>
-                  <TableCell>{dayjs(row.createdAt).format('MMM D, YYYY')}</TableCell>
+                  <TableCell>{row.brandName}</TableCell>
+                  <TableCell>{row.genericName}</TableCell>
+                  <TableCell>{row.dosageForm}</TableCell>
+                  <TableCell>{row.dosageStrength}</TableCell>
+                  <TableCell>{row.batchNumber}</TableCell>
+                  <TableCell>{row.unitPrice}</TableCell>
+                  <TableCell>{row.quantity}</TableCell>
+                  <TableCell>{row.expirationDate}</TableCell>
+                  <TableCell>{row.manufacturer}</TableCell>
                 </TableRow>
               );
             })}
