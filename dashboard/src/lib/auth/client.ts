@@ -58,7 +58,8 @@ class AuthClient {
     let response = await backendClient('post','user/login', params);
 
     if (response.success)
-        localStorage.setItem('custom-auth-token', response.data);
+        localStorage.setItem('custom-auth-token', response.data.token);
+        localStorage.setItem('custom-auth-user', JSON.stringify(response.data.user));
 
     return response;
   }
@@ -80,6 +81,8 @@ class AuthClient {
     if (!token) {
       return { data: null };
     }
+
+    let user = JSON.parse(localStorage.getItem('custom-auth-user') as string);
 
     return { data: user };
   }
