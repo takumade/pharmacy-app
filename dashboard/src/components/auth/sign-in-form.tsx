@@ -21,7 +21,6 @@ import { z as zod } from 'zod';
 import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
-import backendClient from '@/services/client';
 
 const schema = zod.object({
   email: zod.string().min(1, { message: 'Email is required' }).email(),
@@ -53,18 +52,13 @@ export function SignInForm(): React.JSX.Element {
       setIsPending(true);
 
       // const response = await authClient.signInWithPassword(values);
-      const response = await backendClient('post','user/login', values);
-
-      console.log('Backend Response: ', response)
+      const response = await authClient.signInWithPassword(values)
 
       if (!response.success) {
         setError('root', { type: 'server', message: response.message });
         setIsPending(false);
         return;
-      }else{
-        localStorage.setItem('custom-auth-token', response.data);
       }
-
       // Refresh the auth state
       await checkSession?.();
 

@@ -1,5 +1,6 @@
 'use client';
 
+import backendClient from '@/services/client';
 import type { User } from '@/types/user';
 
 function generateToken(): string {
@@ -51,20 +52,15 @@ class AuthClient {
     return { error: 'Social authentication not implemented' };
   }
 
-  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ error?: string }> {
-    const { email, password } = params;
+  async signInWithPassword(params: SignInWithPasswordParams): Promise<{ success?: boolean, message: string, data:any }> {
 
     // Make API request
+    let response = await backendClient('post','user/login', params);
 
-    // We do not handle the API, so we'll check if the credentials match with the hardcoded ones.
-    if (email !== 'sofia@devias.io' || password !== 'Secret1') {
-      return { error: 'Invalid credentials' };
-    }
+    if (response.success)
+        localStorage.setItem('custom-auth-token', response.data);
 
-    const token = generateToken();
-    localStorage.setItem('custom-auth-token', token);
-
-    return {};
+    return response;
   }
 
   async resetPassword(_: ResetPasswordParams): Promise<{ error?: string }> {
