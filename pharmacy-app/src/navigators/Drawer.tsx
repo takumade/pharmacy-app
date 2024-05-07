@@ -15,7 +15,7 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Buy"
+      initialRouteName="Locate"
       drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen
         name="Home"
