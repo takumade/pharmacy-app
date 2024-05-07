@@ -15,18 +15,14 @@ import { GeneralFilters } from '@/components/general/general-filter';
 import { Medicine, MedicineTable } from '@/components/dashboard/medicine/medicine-table';
 import backendClient from '@/services/client';
 
-export const metadata = { title: `Customers | Dashboard | ${config.site.name}` } satisfies Metadata;
+export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
 
 
 export default async function Page() {
 
-
-
-
   let response = await backendClient('get', 'medicine/')
   let medicine = response.data
-
 
 
 console.log(response)

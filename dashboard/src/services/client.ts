@@ -1,5 +1,7 @@
 import { setCookie, getCookie, getCookies } from 'cookies-next';
 import { cookies } from 'next/headers';
+import fetch from 'node-fetch';
+
 
 
 const backendClient = async (method:string, path:string, body: any = {}) => {
