@@ -1,6 +1,9 @@
+'use client';
+
 import { setCookie, deleteCookie, getCookie } from 'cookies-next';
 import backendClient from '@/services/client';
 import type { User } from '@/types/user';
+
 
 function generateToken(): string {
   const arr = new Uint8Array(12);
@@ -48,12 +51,26 @@ class AuthClient {
   async signInWithPassword(params: SignInWithPasswordParams): Promise<{ success?: boolean, message: string, data:any }> {
 
     // Make API request
-    let response = await backendClient('post','user/login', params);
+    let options:any = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        ...params
+      })
+    }
+
+    let result = await fetch('/api/login', options);
+
+    let response = await result.json()
 
     if (response.success){
         setCookie('custom-auth-token', response.data.token);
         setCookie('custom-auth-user', JSON.stringify(response.data.user));
     }
+
+
 
     return response;
   }
