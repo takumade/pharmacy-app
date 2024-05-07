@@ -1,4 +1,6 @@
-import { setCookie, getCookie } from 'cookies-next';
+import { setCookie, getCookie, getCookies } from 'cookies-next';
+import { cookies } from 'next/headers';
+
 
 const backendClient = async (method:string, path:string, body: any = {}) => {
   try {
@@ -10,10 +12,11 @@ const backendClient = async (method:string, path:string, body: any = {}) => {
       }
     }
 
-    let token = getCookie('custom-auth-token')
+
+    let token = cookies().get('custom-auth-token')
 
     if (token) {
-      options.headers.Authorization = token
+      options.headers.Authorization = token.value
     }
 
 
