@@ -1,14 +1,22 @@
-const fetchData = async (method:string, path:string, body: any) => {
+const backendClient = async (method:string, path:string, body: any) => {
   try {
-    const response = await fetch(`${process.env.BACKEND_API}/api/${path}`, {
-      method: method,
+
+    let options: any = {
+      method: method.toUpperCase(),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': localStorage.getItem('custom-auth-token')
-      },
-      body: JSON.stringify(body)
+      }
+    }
 
-    });
+
+    if (method.toUpperCase() == "POST"){
+      options.body = JSON.stringify(body)
+    }
+
+
+
+    const response = await fetch(`${process.env.BACKEND_API}/api/${path}`, options);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -16,3 +24,5 @@ const fetchData = async (method:string, path:string, body: any) => {
     throw error;
   }
 };
+
+export default backendClient;
