@@ -34,7 +34,7 @@ export default async function Page() {
   let response = await fetchMedicine()
   let medicine = response.data
 
-  const paginatedCustomers = applyPagination(medicine, page, rowsPerPage);
+
 
 console.log(response)
   return (
@@ -59,15 +59,12 @@ console.log(response)
       </Stack>
       <GeneralFilters item="medicine" />
       <MedicineTable
-        count={paginatedCustomers.length}
+        count={medicine.length}
         page={page}
-        rows={paginatedCustomers}
+        rows={medicine}
         rowsPerPage={rowsPerPage}
       />
     </Stack>
   );
 }
 
-function applyPagination(rows: Medicine[], page: number, rowsPerPage: number): Medicine[] {
-  return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-}
