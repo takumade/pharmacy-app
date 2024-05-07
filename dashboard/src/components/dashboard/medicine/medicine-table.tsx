@@ -53,17 +53,35 @@ interface GeneralTableProps {
 export function MedicineTable({
   count = 0,
   rows = [],
-  page = 0,
-  rowsPerPage = 0,
 }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((medicine) => medicine._id);
   }, [rows]);
 
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: { target: { value: string; }; }) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  function applyPagination(rows: Medicine[], page: number, rowsPerPage: number): Medicine[] {
+    return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  }
+
   const { selectAll, deselectAll, selectOne, deselectOne, selected } = useSelection(rowIds);
 
   const selectedSome = (selected?.size ?? 0) > 0 && (selected?.size ?? 0) < rows.length;
   const selectedAll = rows.length > 0 && selected?.size === rows.length;
+
+  const onPageChange = (event: React.MouseEvent | null, page: number) => {
+    fetch(`${process.env.CLIENT_URI}?page=${page}`);
+  };
 
   return (
     <Card>
@@ -97,7 +115,7 @@ export function MedicineTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => {
+            {(rowsPerPage ? applyPagination(rows, page, rowsPerPage) : rows).map((row) => {
               const isSelected = selected?.has(row._id);
 
               return (
@@ -139,11 +157,11 @@ export function MedicineTable({
       <TablePagination
         component="div"
         count={count}
-        onPageChange={noop}
-        onRowsPerPageChange={noop}
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Card>
   );
