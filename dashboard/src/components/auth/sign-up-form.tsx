@@ -66,6 +66,8 @@ export function SignUpForm(): React.JSX.Element {
       // UserProvider, for this case, will not refresh the router
       // After refresh, GuestGuard will handle the redirect
       router.refresh();
+
+      router.replace(paths.auth.registerPharmacy);
     },
     [checkSession, router, setError]
   );
