@@ -64,7 +64,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           fieldButtonFunction={() => {}}
         />
         
-        <CustomButton label="Login" onPress={() => {() => navigation.navigate('Home')}} />
+        <CustomButton label="Login" onPress={() => {() => navigation.navigate('Register')}} />
 
         <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...

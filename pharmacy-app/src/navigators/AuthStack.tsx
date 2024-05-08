@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // import OnboardingScreen from '../screens/OnboardingScreen';
 import SignInScreen from '../screens/SignInScreen';
-// import RegisterScreen from '../screens/RegisterScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 type AuthStackParamList = {
   Onboarding: undefined;
@@ -18,7 +18,7 @@ const AuthStack: React.FC = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
       <Stack.Screen name="Login" component={SignInScreen} />
-      {/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
+      <Stack.Screen name="Register" component={RegisterScreen} />
     </Stack.Navigator>
   );
 };
