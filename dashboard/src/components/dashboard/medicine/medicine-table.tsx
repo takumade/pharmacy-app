@@ -17,6 +17,10 @@ import Typography from '@mui/material/Typography';
 import dayjs from 'dayjs';
 
 import { useSelection } from '@/hooks/use-selection';
+import { Grid, IconButton } from '@mui/material';
+
+import { Eye, Trash } from '@phosphor-icons/react';
+import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 
 function noop(): void {
   // do nothing
@@ -104,7 +108,6 @@ export function MedicineTable({
               </TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Brand Name</TableCell>
-              <TableCell>Generic Name</TableCell>
               <TableCell>Dosage Form</TableCell>
               <TableCell>Dosage Strength</TableCell>
               <TableCell>Batch Number</TableCell>
@@ -112,6 +115,7 @@ export function MedicineTable({
               <TableCell>Quantity</TableCell>
               <TableCell>Expiration Date</TableCell>
               <TableCell>Manufacturer</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -139,7 +143,6 @@ export function MedicineTable({
                     </Stack>
                   </TableCell>
                   <TableCell>{row.brandName}</TableCell>
-                  <TableCell>{row.genericName}</TableCell>
                   <TableCell>{row.dosageForm}</TableCell>
                   <TableCell>{row.dosageStrength}</TableCell>
                   <TableCell>{row.batchNumber}</TableCell>
@@ -147,6 +150,29 @@ export function MedicineTable({
                   <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.expirationDate}</TableCell>
                   <TableCell>{row.manufacturer}</TableCell>
+                  <TableCell>
+
+                    <div style={{display: "flex"}}>
+                    <IconButton>
+
+<Eye/>
+                    </IconButton>
+                      <IconButton>
+
+<PencilSimple />
+                    </IconButton>
+                     <IconButton color="error">
+
+<Trash />
+                    </IconButton>
+                    </div>
+
+
+
+
+
+
+                    </TableCell>
                 </TableRow>
               );
             })}
