@@ -10,7 +10,7 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 
 import { config } from '@/config';
 import { GeneralFilters } from '@/components/general/general-filter';
-import {  MedicineTable } from '@/components/dashboard/medicine/medicine-table';
+import {  MedicineTable } from '@/components/dashboard/tables/medicine-table';
 import backendClient from '@/services/client';
 import { cookies } from 'next/headers';
 import { User } from '@/types/user';
