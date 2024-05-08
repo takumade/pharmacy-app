@@ -40,7 +40,7 @@ const getPrescriptions = async (req, res) => {
             prescriptions = await Prescription.find({ owner: req.user._id });
         }else if(req.user.role === userRoles.pharmacy){
             // TODO: get prescriotions submited to a pharmarcy 
-            return res.status(200).json({ success: false, message: "Not Yet implemented", prescriptions: [] });
+            return res.status(200).json({ success: false, message: "Not Yet implemented", data: [] });
             
         } else {
             // If the user role is not recognized, return a 403 Forbidden response
@@ -48,7 +48,7 @@ const getPrescriptions = async (req, res) => {
         }
 
         // Send the prescriptions in the response
-        res.status(200).json({ success: true, prescriptions });
+        res.status(200).json({ success: true, data: prescriptions });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
