@@ -40,6 +40,8 @@ const getPrescriptions = async (req, res) => {
             prescriptions = await Prescription.find({ owner: req.user._id });
         }else if(req.user.role === userRoles.pharmacy){
             // TODO: get prescriotions submited to a pharmarcy 
+            return res.status(200).json({ success: false, message: "Not Yet implemented", prescriptions: [] });
+            
         } else {
             // If the user role is not recognized, return a 403 Forbidden response
             return res.status(403).json({ success: false, message: "You are not authorized to access prescriptions" });
