@@ -13,12 +13,37 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import CustomButton from '../components/CustomButton';
+import  useStore  from '../store/store';
+
+
+interface UserData {
+    name: string;
+    email: string;
+    password: string;
+}
 
 const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+ const {signUpUser} = useStore();
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
   const [dobLabel, setDobLabel] = useState('Date of Birth');
+  const [name,setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
+ const handleSignUp = async () => {
+    const userData: UserData = {
+        name,
+        email,
+        password,
+        
+    }
+    try{
+        await signUpUser(userData);
+    } catch(error) {
+        console.log(error);
+    }
+ }
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <ScrollView
@@ -90,9 +115,13 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       name="person-outline"
                       size={20}
                       color="#666"
-                      style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
+                      style={{ marginRight: 5 }} />}
+                       keyboardType={'email-address'}
+                        fieldButtonLabel={''} 
+                        fieldButtonFunction={function (): void {
                           throw new Error('Function not implemented.');
-                      } }        />
+                      } }      
+                      value={name}  />
 
         <InputField
                   label={'Email ID'}
@@ -103,7 +132,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       style={{ marginRight: 5 }} />}
                   keyboardType="email-address" fieldButtonLabel={''} fieldButtonFunction={function (): void {
                       throw new Error('Function not implemented.');
-                  } }        />
+                  } } value={email}        />
 
         <InputField
                   label={'Password'}
@@ -113,8 +142,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       color="#666"
                       style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
                           throw new Error('Function not implemented.');
-                      } }        
-        />
+                      } } value={password}        />
 
         <InputField
                   label={'Confirm Password'}
@@ -124,8 +152,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       color="#666"
                       style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
                           throw new Error('Function not implemented.');
-                      } }       
-        />
+                      } } value={password}        />
 
         <View
           style={{
@@ -165,7 +192,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           }}
         />
 
-        <CustomButton label={'Register'} onPress={() => {}} />
+        <CustomButton label={'Register'} onPress={() => {handleSignUp}} />
 
         <View
           style={{

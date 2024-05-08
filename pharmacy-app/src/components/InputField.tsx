@@ -12,6 +12,7 @@ interface InputFieldProps {
   label: string;
   icon: JSX.Element;
   keyboardType: 'default' | 'email-address';
+  value: string;
   fieldButtonLabel: string;
   fieldButtonFunction: () => void;
 }
@@ -22,6 +23,7 @@ const InputField: React.FC<InputFieldProps> = ({
   keyboardType,
   fieldButtonLabel,
   fieldButtonFunction,
+  value
 }) => {
   return (
     <View
@@ -35,9 +37,12 @@ const InputField: React.FC<InputFieldProps> = ({
       {icon}
       <TextInput
         placeholder={label}
+        value={value}
         keyboardType={keyboardType}
         style={{flex: 1, paddingVertical: 0}}
-        secureTextEntry={keyboardType === 'default' ? false : true}
+        secureTextEntry={keyboardType === 'default' ? false : true
+      
+        }
       />
       <TouchableOpacity onPress={fieldButtonFunction}>
         <Text style={buttonTextStyle}>{fieldButtonLabel}</Text>

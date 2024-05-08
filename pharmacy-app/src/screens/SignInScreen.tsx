@@ -13,8 +13,18 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Image } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
+import  useStore  from '../store/store';
 
+interface UserData {
+  email: string;
+  password: string;
+}
 const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const {signInUser} = useStore()
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+ 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <View style={{ paddingHorizontal: 25 }}>
@@ -36,33 +46,26 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 
         <InputField
           label={'Email ID'}
-         icon={
-          <Ionicons
-          name="mail-outline"
-          size={20}
-          color="#666"
-          style={{ marginRight: 5 }}
-        />
-          }
+          icon={<Ionicons
+            name="mail-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5 }}
+            />}
           keyboardType="email-address"
           fieldButtonLabel=""
-          fieldButtonFunction={() => {}}
-        />
+          fieldButtonFunction={() => { } } value={''}        />
 
         <InputField
           label={'Password'}
-          icon={
-            <Ionicons
-              name="lock-closed-outline"
-              size={20}
-              color="#666"
-              style={{ marginRight: 5 }}
-            />
-          }
+          icon={<Ionicons
+            name="lock-closed-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5 }} />}
           keyboardType="default"
           fieldButtonLabel="Forgot?"
-          fieldButtonFunction={() => {}}
-        />
+          fieldButtonFunction={() => { } } value={''}        />
         
         <CustomButton label="Login" onPress={() => {() => navigation.navigate('Register')}} />
 
