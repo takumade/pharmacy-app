@@ -10,6 +10,7 @@ import { PaperProvider } from 'react-native-paper';
 import Map from "./src/screens/Map";
 import StoreScreen from "./src/screens/StoreScreen";
 import DrawerNavigator from './src/navigators/Drawer';
+import AuthStack from './src/navigators/AuthStack';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
     <GestureHandlerRootView style={{flex: 1}}>
       <PaperProvider>
       <NavigationContainer>
-    <DrawerNavigator />
+    {/* <DrawerNavigator /> */}
+    <AuthStack />
       {/* <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen
          name="TabNavigator"
