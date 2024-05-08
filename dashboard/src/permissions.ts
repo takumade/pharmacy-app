@@ -1,25 +1,14 @@
 
 
 
- const permissions = {
-     medicine: {
-      pharmacy: {
-        delete: true,
-        edit: true
-      }
-     },
-     prescriptions: {
-      pharmacy: {
-        view: true
-      }
-     },
-     orders: {
-      pharmacy: {
-        view: true,
-        delete: true,
-        edit: true
-      }
-     }
- }
+import { RolePerms } from "./types/permissions"
 
- export default permissions
+
+export const medicinePerms: RolePerms[] = [
+    {
+      role: 'pharmacy',
+      view: true,
+      delete: true,
+      edit: true
+    }
+]
