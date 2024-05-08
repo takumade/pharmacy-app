@@ -7,13 +7,16 @@ import Typography from '@mui/material/Typography';
 import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Download';
 import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
 import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
-import dayjs from 'dayjs';
 
 import { config } from '@/config';
-import type { Customer } from '@/components/dashboard/customer/customers-table';
 import { GeneralFilters } from '@/components/general/general-filter';
-import { Medicine, MedicineTable } from '@/components/dashboard/medicine/medicine-table';
+import {  MedicineTable } from '@/components/dashboard/medicine/medicine-table';
 import backendClient from '@/services/client';
+import { cookies } from 'next/headers';
+import { User } from '@/types/user';
+import {  RolePerm } from '@/types/permissions';
+import { getPermissions } from '@/permissions';
+import { APIResponse } from '@/types/api-response';
 
 export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -21,11 +24,15 @@ export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } 
 
 export default async function Page() {
 
-  let response = await backendClient('get', 'medicine/')
+  let response: APIResponse = await backendClient('get', 'medicine/')
   let medicine = response.data
 
+  let userObject = cookies().get("custom-auth-user")
+  let user: User = JSON.parse(userObject?.value as string)
+  let permissions: RolePerm = getPermissions(user.role, 'medicine')
 
-console.log(response)
+  console.log("User:", )
+
   return (
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
@@ -50,6 +57,7 @@ console.log(response)
       <MedicineTable
         count={medicine.length}
         rows={medicine}
+        permissions={permissions}
       />
     </Stack>
   );
