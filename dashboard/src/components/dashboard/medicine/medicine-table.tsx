@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Grid, IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -14,13 +15,12 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
-import dayjs from 'dayjs';
-
-import { useSelection } from '@/hooks/use-selection';
-import { Grid, IconButton } from '@mui/material';
-
 import { Eye, Trash } from '@phosphor-icons/react';
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
+import dayjs from 'dayjs';
+
+import { Permissions, RolePerm } from '@/types/permissions';
+import { useSelection } from '@/hooks/use-selection';
 
 function noop(): void {
   // do nothing
@@ -52,12 +52,10 @@ interface GeneralTableProps {
   page?: number;
   rows?: Medicine[];
   rowsPerPage?: number;
+  permissions: RolePerm;
 }
 
-export function MedicineTable({
-  count = 0,
-  rows = [],
-}: GeneralTableProps): React.JSX.Element {
+export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((medicine) => medicine._id);
   }, [rows]);
@@ -69,7 +67,7 @@ export function MedicineTable({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: { target: { value: string; }; }) => {
+  const handleChangeRowsPerPage = (event: { target: { value: string } }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -151,28 +149,24 @@ export function MedicineTable({
                   <TableCell>{row.expirationDate}</TableCell>
                   <TableCell>{row.manufacturer}</TableCell>
                   <TableCell>
-
-                    <div style={{display: "flex"}}>
-                    <IconButton>
-
-<Eye/>
-                    </IconButton>
-                      <IconButton>
-
-<PencilSimple />
-                    </IconButton>
-                     <IconButton color="error">
-
-<Trash />
-                    </IconButton>
+                    <div style={{ display: 'flex' }}>
+                      {permissions && permissions.view && (
+                        <IconButton>
+                          <Eye />
+                        </IconButton>
+                      )}
+                      {permissions && permissions.edit && (
+                        <IconButton>
+                          <PencilSimple />
+                        </IconButton>
+                      )}
+                      {permissions && permissions.delete && (
+                        <IconButton color="error">
+                          <Trash />
+                        </IconButton>
+                      )}
                     </div>
-
-
-
-
-
-
-                    </TableCell>
+                  </TableCell>
                 </TableRow>
               );
             })}
