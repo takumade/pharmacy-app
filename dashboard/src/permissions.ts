@@ -1,10 +1,10 @@
 
 
 
-import { RolePerms } from "./types/permissions"
+import { RolePerm } from "./types/permissions"
 
 
-export const medicinePerms: RolePerms[] = [
+export const medicinePerms: RolePerm[] = [
     {
       role: 'pharmacy',
       view: true,
