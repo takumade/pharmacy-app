@@ -22,6 +22,15 @@ export const orderPerms: RolePerm[] = [
     // edit: true
   }
 ]
+
+export const txnPerms: RolePerm[] = [
+  {
+    role: 'pharmacy',
+    view: true,
+    delete: true,
+    edit: true
+  }
+]
 export const prescriptionPerms: RolePerm[] = [
   {
     role: 'pharmacy',
@@ -53,6 +62,9 @@ export const getPermissions = (role:string, page: string): RolePerm => {
 
   if (role === "pharmacy" && page === "prescriptions")
     return prescriptionPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+  if (role === "pharmacy" && page === "txn")
+    return txnPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
  return {
   role: role,
