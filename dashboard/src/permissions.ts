@@ -63,7 +63,7 @@ export const getPermissions = (role:string, page: string): RolePerm => {
   if (role === "pharmacy" && page === "prescriptions")
     return prescriptionPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "txn")
+  if (role === "pharmacy" && page === "transactions")
     return txnPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
  return {
