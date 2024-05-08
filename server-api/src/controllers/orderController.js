@@ -117,7 +117,7 @@ const getOrders = async (req, res) => {
         // Optionally, you can filter orders based on other parameters
         // For example, you might want to filter orders by pharmacy
         if (req.user.role === userRoles.pharmacy) {
-            let pharmacy = await Pharmacy.find({owner: req.user._id})
+            let pharmacy = await Pharmacy.findOne({owner: req.user._id})
             criteria.pharmacyId = pharmacy._id;
         }
 
@@ -125,6 +125,8 @@ const getOrders = async (req, res) => {
         if (req.user.role === userRoles.admin)
             orders = await Order.find();
         else
+
+        
             orders = await Order.find(criteria);
 
         // Optionally, you can populate additional fields

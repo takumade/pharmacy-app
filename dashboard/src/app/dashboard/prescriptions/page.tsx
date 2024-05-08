@@ -10,13 +10,14 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 
 import { config } from '@/config';
 import { GeneralFilters } from '@/components/general/general-filter';
-import {  MedicineTable } from '@/components/dashboard/tables/medicine-table';
+
 import backendClient from '@/services/client';
 import { cookies } from 'next/headers';
 import { User } from '@/types/user';
 import {  RolePerm } from '@/types/permissions';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
+import { PrescriptionTable } from '@/components/dashboard/tables/prescriptions-table';
 
 export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -24,12 +25,12 @@ export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } 
 
 export default async function Page() {
 
-  let response: APIResponse = await backendClient('get', 'medicine/')
-  let medicine = response.data
+  let response: APIResponse = await backendClient('get', 'prescription/')
+  let prescriptions = response.data
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
-  let permissions: RolePerm = getPermissions(user.role, 'medicine')
+  let permissions: RolePerm = getPermissions(user.role, 'prescriptions')
 
   console.log("User:", )
 
@@ -37,7 +38,7 @@ export default async function Page() {
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Medicine</Typography>
+          <Typography variant="h4">Prescriptions</Typography>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
               Import
@@ -53,10 +54,10 @@ export default async function Page() {
           </Button>
         </div>
       </Stack>
-      <GeneralFilters item="medicine" />
-      <MedicineTable
-        count={medicine.length}
-        rows={medicine}
+      <GeneralFilters item="prescriptions" />
+      <PrescriptionTable
+        count={prescriptions.length}
+        rows={prescriptions}
         permissions={permissions}
       />
     </Stack>
