@@ -16,7 +16,7 @@ import { User } from '@/types/user';
 import {  RolePerm } from '@/types/permissions';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
-import { ApplicationsTable } from '@/components/dashboard/tables/applications';
+import { ApplicationsTable } from '@/components/dashboard/tables/applications-table';
 
 export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
