@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 // import DatePicker from 'react-native-date-picker';
 
@@ -13,7 +14,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import CustomButton from '../components/CustomButton';
-import  useStore  from '../store/store';
+import AuthContext, {useAuth} from '../contexts/AuthContext';
 
 
 interface UserData {
@@ -23,27 +24,26 @@ interface UserData {
 }
 
 const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
- const {signUpUser} = useStore();
-  const [date, setDate] = useState(new Date());
-  const [open, setOpen] = useState(false);
- 
+  const {onLogin, onRegister} = useAuth();
   const [name,setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
- const handleSignUp = async () => {
-    const userData: UserData = {
-        name,
-        email,
-        password,
-        
+  const login = async () => {
+    const result = await onLogin!(email, password);
+    if (result && result.error) {
+      console.log(result.msg);
     }
-    try{
-        await signUpUser(userData);
-    } catch(error) {
-        console.log(error);
+  };
+  const register = async () => {
+    const result = await onRegister!(name, email, password);
+    if (result && result.error) {
+      console.log("not registered")
+      console.log(result.msg);
+    } else {
+      login();
     }
- }
+  };
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <ScrollView
@@ -64,89 +64,75 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           Register
         </Text>
 
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 30,
-          }}>
-          <TouchableOpacity
-            onPress={() => {}}
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons
+            name="person-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5,paddingBottom: 8, marginBottom: 25 }} 
+          />
+          <TextInput
+            onChangeText={(text: string) => setName(text)}
+            value={name}
             style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <Text>Google svg</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+              flex: 1,
+            }}
+            placeholder="Full Name"
+          />
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons
+            name="mail-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5,paddingBottom: 8, marginBottom: 25 }} 
+          />
+          <TextInput
+            onChangeText={(text: string) => setEmail(text)}
+            value={email}
             style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-           <Text>Facebook svg</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+              flex: 1,
+            }}
+            placeholder="email"
+          />
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons
+            name="lock-closed-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5,paddingBottom: 8, marginBottom: 25 }} 
+          />
+          <TextInput
             style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-           <Text>Xs svg</Text>
-          </TouchableOpacity>
-        </View> */}
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+              flex: 1,
+            }}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(text: string) => setPassword(text)}
+            value={password}
+          />
+        </View>
 
-        {/* <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
-          Or, register with email ...
-        </Text> */}
+     
 
-        <InputField
-                  label={'Full Name'}
-                  icon={<Ionicons
-                      name="person-outline"
-                      size={20}
-                      color="#666"
-                      style={{ marginRight: 5 }} />}
-                  keyboardType={'email-address'}
-                  fieldButtonLabel={''}
-                  fieldButtonFunction={function (): void {
-                      throw new Error('Function not implemented.');
-                  } }
-                  value={name}   />
-
-        <InputField
-                  label={'Email ID'}
-                  icon={<Ionicons
-                      name="mail-outline"
-                      size={20}
-                      color="#666"
-                      style={{ marginRight: 5 }} />}
-                  keyboardType="email-address" fieldButtonLabel={''} fieldButtonFunction={function (): void {
-                      throw new Error('Function not implemented.');
-                  } } value={email}      />
-
-        <InputField
-                  label={'Password'}
-                  icon={<Ionicons
-                      name="lock-closed-outline"
-                      size={20}
-                      color="#666"
-                      style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
-                          throw new Error('Function not implemented.');
-                      } } value={password}    />
+      
 
 
 
-        <CustomButton label={'Register'} onPress={() => {handleSignUp}} />
+        <CustomButton label={'Register'} onPress={() => {register()}} />
 
         <View
           style={{

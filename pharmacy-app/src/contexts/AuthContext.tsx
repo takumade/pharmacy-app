@@ -9,7 +9,7 @@ interface AuthResponse {
 
 interface AuthProps {
   authState?: { token: string | null; authenticated: boolean | null };
-  onRegister?: (email: string, password: string) => Promise<AuthResponse | undefined>;
+  onRegister?: (name: string, email: string, password: string) => Promise<AuthResponse | undefined>;
   onLogin?: (email: string, password: string) => Promise<AuthResponse | undefined>;
   onLogout?: () => Promise<void>;
 }
@@ -19,7 +19,7 @@ const headers = {
   
 };
 const TOKEN_KEY = "token";
-export const API_URL = "{your ip address}:3000/api/user";
+export const API_URL = "http://192.168.100.5:3000/api/user";
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -49,9 +49,9 @@ const AuthProvider = ({ children }: any) => {
     loadToken();
   }, []);
 
-  const register = async (email: string, password: string) => {
+  const register = async (name: string, email: string, password: string) => {
     try {
-      const response = await axios.post(`${API_URL}/users`, { email, password });
+      const response = await axios.post(`${API_URL}/register `, {name, email, password });
       console.log("response", response);
     } catch (error) {
       return { error: true, msg: (error as any).response.data.message };

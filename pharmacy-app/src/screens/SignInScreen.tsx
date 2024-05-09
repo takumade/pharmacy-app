@@ -31,20 +31,13 @@ const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
     }
   };
 
-  const register = async () => {
-    const result = await onLogin!(email, password);
-    if (result && result.error) {
-      alert(result.msg);
-    } else {
-      login;
-    }
-  };
+
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <View style={{paddingHorizontal: 25}}>
         <View style={{alignItems: 'center'}}>
-          <Text>svg</Text>
+          {/* <Text>svg</Text> */}
         </View>
         <Text
           style={{
@@ -56,29 +49,47 @@ const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
           }}>
           Login
         </Text>
-        <TextInput
-          onChangeText={(text: string) => setEmail(text)}
-          value={email}
-          style={{
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-            paddingBottom: 8,
-            marginBottom: 25,
-          }}
-          placeholder="email"
-        />
-        <TextInput
-          style={{
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-            paddingBottom: 8,
-            marginBottom: 25,
-          }}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChangeText={(text: string) => setPassword(text)}
-          value={password}
-        />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons
+            name="mail-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5,paddingBottom: 8, marginBottom: 25 }} 
+          />
+          <TextInput
+            onChangeText={(text: string) => setEmail(text)}
+            value={email}
+            style={{
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+              flex: 1,
+            }}
+            placeholder="email"
+          />
+        </View>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Ionicons
+            name="lock-closed-outline"
+            size={20}
+            color="#666"
+            style={{ marginRight: 5,paddingBottom: 8, marginBottom: 25 }} 
+          />
+          <TextInput
+            style={{
+              borderBottomColor: '#ccc',
+              borderBottomWidth: 1,
+              paddingBottom: 8,
+              marginBottom: 25,
+              flex: 1,
+            }}
+            placeholder="Password"
+            secureTextEntry={true}
+            onChangeText={(text: string) => setPassword(text)}
+            value={password}
+          />
+        </View>
         <CustomButton label="Login" onPress={()=>login()} />
         
         <View
