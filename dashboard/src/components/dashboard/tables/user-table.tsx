@@ -36,7 +36,7 @@ interface GeneralTableProps {
   permissions: RolePerm;
 }
 
-export function PrescriptionTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
+export function UserTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((user) => user._id);
   }, [rows]);
