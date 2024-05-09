@@ -51,8 +51,9 @@ const getPharmacy = async (req, res) => {
     }
   }
   const getApplications = async (req, res) => {
+    
     try {
-      // Find all pharmacies
+      // Find all pharmacies applications
 
       if (req.user.role === userRoles.admin){
         const pharmacies = await Pharmacy.find({isApproved: false});

@@ -9,10 +9,11 @@ router.use(authMiddleware.authenticateUser);
 // Define your routes
 
 router.get('/search', pharmacyController.searchPharmacies);
+router.get('/applications', pharmacyController.getApplications);
 router.get('/:pharmacyId', pharmacyController.getPharmacy);
 router.get('/', pharmacyController.getPharmacies);
 router.get('/customers', pharmacyController.getCustomers);
-router.get('/applications', pharmacyController.getApplications);
+
 
 router.post('/create', pharmacyController.createPharmacy);
 router.post('/update/:pharmacyId', pharmacyController.editPharmacy);
