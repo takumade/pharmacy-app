@@ -55,6 +55,10 @@ const getPharmacy = async (req, res) => {
     try {
       // Find all pharmacies applications
 
+      if (req.user.role  !== userRoles.admin && req.user.role !== userRoles.pharmacy){
+        return res.status(403).json({ success: false, message: "You are not authorized to view  this information" });
+      }
+
       if (req.user.role === userRoles.admin){
         const pharmacies = await Pharmacy.find({isApproved: false});
         res.status(200).json({ success: true, data: pharmacies });
@@ -65,7 +69,7 @@ const getPharmacy = async (req, res) => {
         res.status(200).json({ success: true, data: pharmacies });
       }
 
-      return res.status(403).json({ success: false, message: "You are not authorized to view  this information" });
+     
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
