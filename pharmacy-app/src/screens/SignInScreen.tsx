@@ -69,10 +69,10 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
         
         <CustomButton label="Login" onPress={() => {() => navigation.navigate('Register')}} />
 
-        <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
+        {/* <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, login with ...
-        </Text>
-
+        </Text> */}
+{/* 
         <View
           style={{
             flexDirection: 'row',
@@ -100,7 +100,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-            {/* <FacebookSVG height={24} width={24} /> */}
+            <FacebookSVG height={24} width={24} />
             <Text>Facebook svg</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -112,10 +112,10 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-            {/* <TwitterSVG height={24} width={24} /> */}
+            <TwitterSVG height={24} width={24} />
             <Text>x SVG</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View
           style={{

@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import DatePicker from 'react-native-date-picker';
+// import DatePicker from 'react-native-date-picker';
 
 import InputField from '../components/InputField';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -26,7 +26,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
  const {signUpUser} = useStore();
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
-  const [dobLabel, setDobLabel] = useState('Date of Birth');
+ 
   const [name,setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,7 +48,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ paddingHorizontal: 25 }}>
+        style={{ paddingHorizontal: 25, marginTop: 30 }}>
         <View style={{ alignItems: 'center' }}>
         <Text>reg logo</Text>
         </View>
@@ -64,7 +64,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           Register
         </Text>
 
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -101,13 +101,13 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
               paddingHorizontal: 30,
               paddingVertical: 10,
             }}>
-           <Text>X svg</Text>
+           <Text>Xs svg</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
-        <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
+        {/* <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
           Or, register with email ...
-        </Text>
+        </Text> */}
 
         <InputField
                   label={'Full Name'}
@@ -144,53 +144,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                           throw new Error('Function not implemented.');
                       } } value={password}        />
 
-        <InputField
-                  label={'Confirm Password'}
-                  icon={<Ionicons
-                      name="lock-closed-outline"
-                      size={20}
-                      color="#666"
-                      style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
-                          throw new Error('Function not implemented.');
-                      } } value={password}        />
 
-        <View
-          style={{
-            flexDirection: 'row',
-            borderBottomColor: '#ccc',
-            borderBottomWidth: 1,
-            paddingBottom: 8,
-            marginBottom: 30,
-          }}>
-          <Ionicons
-            name="calendar-outline"
-            size={20}
-            color="#666"
-            style={{ marginRight: 5 }}
-          />
-          <TouchableOpacity onPress={() => setOpen(true)}>
-            <Text style={{ color: '#666', marginLeft: 5, marginTop: 5 }}>
-              {dobLabel}
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          mode={'date'}
-          maximumDate={new Date('2005-01-01')}
-          minimumDate={new Date('1980-01-01')}
-          onConfirm={date => {
-            setOpen(false);
-            setDate(date);
-            setDobLabel(date.toDateString());
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
 
         <CustomButton label={'Register'} onPress={() => {handleSignUp}} />
 
