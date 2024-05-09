@@ -5,7 +5,7 @@ import { Prescription } from '@phosphor-icons/react';
 export const navItems = [
   { key: 'overview', title: 'Overview', href: paths.dashboard.overview, icon: 'chart-pie' },
   { key: 'customers', title: 'Customers', href: paths.dashboard.customers, icon: 'users' },
-  { key: 'users', title: 'Users', href: paths.dashboard.customers, icon: 'user' },
+  { key: 'users', title: 'Users', href: paths.dashboard.users, icon: 'user' },
   { key: 'pharmacies', title: 'Pharmacies', href: paths.dashboard.customers, icon: 'pharmacy' },
   { key: 'medicine', title: 'Medicine', href: paths.dashboard.medicine, icon: 'pill' },
   { key: 'prescriptions', title: 'Prescriptions', href: paths.dashboard.prescriptions, icon: 'pescription'},
