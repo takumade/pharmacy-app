@@ -94,6 +94,7 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   }}
                 />
               </TableCell>
+              <TableCell>Image</TableCell>
               <TableCell>Owner</TableCell>
               <TableCell>Approved</TableCell>
               <TableCell>Used</TableCell>
