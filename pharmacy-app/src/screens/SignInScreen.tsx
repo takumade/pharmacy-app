@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
 import AuthContext, {useAuth} from '../contexts/AuthContext';
-
+import {ActivityIndicator} from 'react-native-paper'; 
 
 interface UserData {
   email: string;
@@ -23,9 +23,12 @@ const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const {onLogin, onRegister} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false); 
 
   const login = async () => {
+    setLoading(true); 
     const result = await onLogin!(email, password);
+    setLoading(false); 
     if (result && result.error) {
       alert(result.msg);
     }
@@ -90,6 +93,7 @@ const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
             value={password}
           />
         </View>
+        {loading && <ActivityIndicator size={"large"} animating={true} />} 
         <CustomButton label="Login" onPress={()=>login()} />
         
         <View
