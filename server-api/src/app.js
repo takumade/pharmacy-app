@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Define your routes here
 const userRoutes = require('./routes/userRoutes');
-const pharmacyRoutes = require('./routes/phamarcyRoutes');
+const pharmacyRoutes = require('./routes/pharmacyRoutes');
 const medicineRoutes = require('./routes/medicineRoutes');
 const prescriptionRoutes = require('./routes/prescriptionRoutes')
 const orderRoutes = require('./routes/ordersRoutes')
