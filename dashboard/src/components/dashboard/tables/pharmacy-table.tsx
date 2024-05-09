@@ -38,6 +38,8 @@ interface Pharmacy {
   longitude: number;
   contactInformation: {
     // Define properties for contact information object here
+    email:string;
+    phone: string;
   };
   operatingHours: {
     // Define properties for operating hours object here
@@ -115,12 +117,10 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
                   }}
                 />
               </TableCell>
-              <TableCell>Avatar</TableCell>
-              <TableCell>Username</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Phone</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Is Verified</TableCell>
+              <TableCell>Logo</TableCell>
+              <TableCell>Owner</TableCell>
+              <TableCell>Contact Info</TableCell>
+              <TableCell>Is Approved</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -145,15 +145,15 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
 
-                      <Avatar src={row.avatar} />
-                      <Typography variant="subtitle2">{row.fullName}</Typography>
+                      <Avatar src={row.logo} />
+                      <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell>{row.email}</TableCell>
-                  <TableCell>{row.phoneNumber}</TableCell>
-                  <TableCell>{row.role}</TableCell>
-                  <TableCell>{row.isVerified.toString()}</TableCell>
+                  <TableCell>{row.owner}</TableCell>
+                  <TableCell>
+                    {row.location}, {row.contactInformation.phone}, {row.contactInformation.email}
+                  </TableCell>
+                  <TableCell>{row.isApproved.toString()}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
