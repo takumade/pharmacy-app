@@ -51,6 +51,8 @@ interface Pharmacy {
   isBanned: boolean;
   bannedEnd: Date;
   isApproved: boolean;
+  applicationStatus: string;
+  applicationReason: string;
   isDeleted: boolean;
   onFreeTrial: boolean;
   trialEnds: Date;
@@ -122,7 +124,7 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
               <TableCell>Email</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Address</TableCell>
-              <TableCell>Is Approved</TableCell>
+              <TableCell>Application Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -155,7 +157,7 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
                   <TableCell>{row.contactInformation.email}</TableCell>
                   <TableCell>{row.contactInformation.phone}</TableCell>
                   <TableCell>{row.location}</TableCell>
-                  <TableCell>{row.isApproved.toString()}</TableCell>
+                  <TableCell>{row.isApproved ? "approved" : row.applicationStatus}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
