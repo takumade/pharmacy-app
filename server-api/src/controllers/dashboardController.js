@@ -1,3 +1,4 @@
+const { applicationStatus } = require("../constants");
 const Medicine = require("../models/medicineModel");
 const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
@@ -21,8 +22,10 @@ const getAdminStats = async (req, res) => {
         // Get total pharmacies
         const totalPharmacies = await Pharmacy.countDocuments();
 
+        const totalApplications = await Pharmacy.countDocuments({ isApproved: false, applicationStatus: applicationStatus.pending });
+
         // Get total approved pharmacies
-        const totalApprovedPharmacies = await Pharmacy.countDocuments({ approved: true });
+        const totalApprovedPharmacies = await Pharmacy.countDocuments({ isApproved: true });
 
         // Get total banned pharmacies
         const totalBannedPharmacies = await Pharmacy.countDocuments({ isBanned: true });
@@ -45,6 +48,7 @@ const getAdminStats = async (req, res) => {
             data: {
                 totalUsers,
                 totalPharmacies,
+                totalApplications,
                 totalApprovedPharmacies,
                 totalBannedPharmacies,
                 totalMedicines,
