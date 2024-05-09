@@ -1,10 +1,15 @@
 const { faker } = require("@faker-js/faker");
 const pharmacyData = require("./pharmacyData");
+const { applicationStatus } = require("../constants");
 
 // Generate seed object for pharmacy
 const pharmacySeed = (index, userId) => {
 
   let pharmacyRealistic = pharmacyData[index]
+
+  let isApproved = faker.datatype.boolean()
+
+
   return {
     owner: userId,
     name: pharmacyRealistic.name,
@@ -32,7 +37,8 @@ const pharmacySeed = (index, userId) => {
     medicinesControlAuthorityLicense: faker.image.url(),
     isBanned: faker.datatype.boolean(),
     bannedEnd: faker.date.future(),
-    isApproved: faker.datatype.boolean(),
+    isApproved: isApproved,
+    applicationStatus: isApproved ? applicationStatus.approved : applicationStatus.pending,
     isDeleted: faker.datatype.boolean(),
     onFreeTrial: faker.datatype.boolean(),
     trialEnds: faker.date.future(),
