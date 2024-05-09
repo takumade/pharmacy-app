@@ -68,11 +68,11 @@ const pharmacySchema = new mongoose.Schema({
     default: false
   },
   applicationStatus: {
-    type: string,
+    type: String,
     default: "pending"
   },
   applicationReason: {
-    type: string,
+    type: String,
     default: ""
   },
   isDeleted: {
