@@ -116,12 +116,12 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       size={20}
                       color="#666"
                       style={{ marginRight: 5 }} />}
-                       keyboardType={'email-address'}
-                        fieldButtonLabel={''} 
-                        fieldButtonFunction={function (): void {
-                          throw new Error('Function not implemented.');
-                      } }      
-                      value={name}  />
+                  keyboardType={'email-address'}
+                  fieldButtonLabel={''}
+                  fieldButtonFunction={function (): void {
+                      throw new Error('Function not implemented.');
+                  } }
+                  value={name}   />
 
         <InputField
                   label={'Email ID'}
@@ -132,7 +132,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       style={{ marginRight: 5 }} />}
                   keyboardType="email-address" fieldButtonLabel={''} fieldButtonFunction={function (): void {
                       throw new Error('Function not implemented.');
-                  } } value={email}        />
+                  } } value={email}      />
 
         <InputField
                   label={'Password'}
@@ -142,7 +142,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
                       color="#666"
                       style={{ marginRight: 5 }} />} keyboardType={'email-address'} fieldButtonLabel={''} fieldButtonFunction={function (): void {
                           throw new Error('Function not implemented.');
-                      } } value={password}        />
+                      } } value={password}    />
 
 
 

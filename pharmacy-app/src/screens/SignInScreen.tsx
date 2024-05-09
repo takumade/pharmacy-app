@@ -1,38 +1,51 @@
-
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
   SafeAreaView,
   View,
   Text,
   TextInput,
   TouchableOpacity,
+  Button
 } from 'react-native';
-
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Image } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import InputField from '../components/InputField';
-import  useStore  from '../store/store';
+import AuthContext, {useAuth} from '../contexts/AuthContext';
+
 
 interface UserData {
   email: string;
   password: string;
 }
-const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
-  const {signInUser} = useStore()
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
 
- 
+const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
+  const {onLogin, onRegister} = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const login = async () => {
+    const result = await onLogin!(email, password);
+    if (result && result.error) {
+      alert(result.msg);
+    }
+  };
+
+  const register = async () => {
+    const result = await onLogin!(email, password);
+    if (result && result.error) {
+      alert(result.msg);
+    } else {
+      login;
+    }
+  };
+
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
-      <View style={{ paddingHorizontal: 25 }}>
-        <View style={{ alignItems: 'center' }}>
-         
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <View style={{paddingHorizontal: 25}}>
+        <View style={{alignItems: 'center'}}>
           <Text>svg</Text>
         </View>
-
         <Text
           style={{
             fontFamily: 'Roboto-Medium',
@@ -43,80 +56,31 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           }}>
           Login
         </Text>
-
-        <InputField
-          label={'Email ID'}
-          icon={<Ionicons
-            name="mail-outline"
-            size={20}
-            color="#666"
-            style={{ marginRight: 5 }}
-            />}
-          keyboardType="email-address"
-          fieldButtonLabel=""
-          fieldButtonFunction={() => { } } value={''}        />
-
-        <InputField
-          label={'Password'}
-          icon={<Ionicons
-            name="lock-closed-outline"
-            size={20}
-            color="#666"
-            style={{ marginRight: 5 }} />}
-          keyboardType="default"
-          fieldButtonLabel="Forgot?"
-          fieldButtonFunction={() => { } } value={''}        />
-        
-        <CustomButton label="Login" onPress={() =>  navigation.navigate('Home')} />
-
-        {/* <Text style={{ textAlign: 'center', color: '#666', marginBottom: 30 }}>
-          Or, login with ...
-        </Text> */}
-{/* 
-        <View
+        <TextInput
+          onChangeText={(text: string) => setEmail(text)}
+          value={email}
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: 30,
-          }}>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            
-            <Text>google svg</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <FacebookSVG height={24} width={24} />
-            <Text>Facebook svg</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{
-              borderColor: '#ddd',
-              borderWidth: 2,
-              borderRadius: 10,
-              paddingHorizontal: 30,
-              paddingVertical: 10,
-            }}>
-            <TwitterSVG height={24} width={24} />
-            <Text>x SVG</Text>
-          </TouchableOpacity>
-        </View> */}
-
+            borderBottomColor: '#ccc',
+            borderBottomWidth: 1,
+            paddingBottom: 8,
+            marginBottom: 25,
+          }}
+          placeholder="email"
+        />
+        <TextInput
+          style={{
+            borderBottomColor: '#ccc',
+            borderBottomWidth: 1,
+            paddingBottom: 8,
+            marginBottom: 25,
+          }}
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(text: string) => setPassword(text)}
+          value={password}
+        />
+        <CustomButton label="Login" onPress={()=>login()} />
+        
         <View
           style={{
             flexDirection: 'row',
@@ -125,7 +89,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           }}>
           <Text>New to the app?</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={{ color: '#76A593', fontWeight: '700' }}> Register</Text>
+            <Text style={{color: '#76A593', fontWeight: '700'}}>Register</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -134,3 +98,7 @@ const LoginScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
 };
 
 export default LoginScreen;
+
+function alert(msg: any) {
+  throw new Error('Function not implemented.');
+}

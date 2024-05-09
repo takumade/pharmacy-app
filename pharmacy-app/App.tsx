@@ -10,31 +10,41 @@ import Map from './src/screens/Map';
 import StoreScreen from './src/screens/StoreScreen';
 import DrawerNavigator from './src/navigators/Drawer';
 import AuthStack from './src/navigators/AuthStack';
+import AuthProvider, {useAuth} from './src/contexts/AuthContext';
 const Stack = createNativeStackNavigator();
 
-const getIsSignedIn = () => {
-  // custom logic
-  return true;
-};
 const App = () => {
-  const isSignedIn = getIsSignedIn();
+  return (
+    <AuthProvider>
+      <Layout></Layout>
+    </AuthProvider>
+  );
+};
+export default App;
+
+export const Layout = () => {
+  const {authState, onLogout} = useAuth();
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
-            {isSignedIn ? (
-              <Stack.Screen
-                name="DrawerNavigator"
-                component={DrawerNavigator}
-                options={{animation: 'slide_from_bottom'}}
-              />
-            ) : (
-              <Stack.Screen
-                name="AuthStack"
-                component={AuthStack}
-                options={{animation: 'slide_from_bottom'}}
-              />
+            {authState?.authenticated ? (
+              <>
+                <Stack.Screen
+                  name="DrawerNavigator"
+                  component={DrawerNavigator}
+                  options={{animation: 'slide_from_bottom'}}
+                />
+                </>):(
+                  <>
+                <Stack.Screen
+                  name="AuthStack"
+                  component={AuthStack}
+                  options={{animation: 'slide_from_bottom'}}
+                />
+                </>
+              
             )}
           </Stack.Navigator>
         </NavigationContainer>
@@ -42,4 +52,3 @@ const App = () => {
     </GestureHandlerRootView>
   );
 };
-export default App;
