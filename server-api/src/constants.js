@@ -3,8 +3,15 @@ const userRoles = {
     pharmacy: 'pharmacy',
    customer: 'customer'
   }
+
+  const applicationStatus  = {
+    pending: 'pending',
+    denied: 'denied',
+    approved: 'approved'
+  }
   
   
   module.exports = {
-    userRoles
+    userRoles,
+    applicationStatus
   }
