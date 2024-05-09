@@ -156,7 +156,7 @@ const RegisterScreen: React.FC<{ navigation: any }> = ({ navigation }) => {
           }}>
           <Text>Already registered?</Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={{ color: '#AD40AF', fontWeight: '700' }}> Login</Text>
+            <Text style={{ color: '#76A593', fontWeight: '700' }}> Login</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
