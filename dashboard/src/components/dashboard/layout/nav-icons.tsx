@@ -8,7 +8,7 @@ import { Money as MoneyIcon } from '@phosphor-icons/react/dist/ssr/Money';
 import { ShoppingBag as ShoppingBagIcon } from '@phosphor-icons/react/dist/ssr/ShoppingBag';
 import { Pill as PillIcon } from '@phosphor-icons/react/dist/ssr/Pill';
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare';
-import { FirstAid, Prescription } from '@phosphor-icons/react/dist/ssr';
+import { Article, FirstAid, Prescription } from '@phosphor-icons/react/dist/ssr';
 
 export const navIcons = {
   'chart-pie': ChartPieIcon,
@@ -16,6 +16,7 @@ export const navIcons = {
   'plugs-connected': PlugsConnectedIcon,
   'shopping-bag': ShoppingBagIcon,
   'pescription': Prescription,
+  'aaplications': Article,
   'pharmacy': FirstAid,
   'money': MoneyIcon,
   'pill': PillIcon,
