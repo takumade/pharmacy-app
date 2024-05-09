@@ -1,4 +1,4 @@
-const { userRoles } = require("../constants");
+const { userRoles, applicationStatus } = require("../constants");
 const Medicine = require("../models/medicineModel");
 const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
@@ -177,6 +177,7 @@ const approvePharmacy = async (req, res) => {
   
       // Update the isApproved field to true
       pharmacy.isApproved = true;
+      pharmacy.applicationStatus = applicationStatus.approved;
       await pharmacy.save();
   
       res.status(200).json({ success: true, message: "Pharmacy approved successfully", data: pharmacy });
