@@ -119,7 +119,9 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
               </TableCell>
               <TableCell>Logo</TableCell>
               <TableCell>Owner</TableCell>
-              <TableCell>Contact Info</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Address</TableCell>
               <TableCell>Is Approved</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
@@ -150,9 +152,9 @@ export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTabl
                     </Stack>
                   </TableCell>
                   <TableCell>{row.owner}</TableCell>
-                  <TableCell>
-                    {row.location}, {row.contactInformation.phone}, {row.contactInformation.email}
-                  </TableCell>
+                  <TableCell>{row.contactInformation.email}</TableCell>
+                  <TableCell>{row.contactInformation.phone}</TableCell>
+                  <TableCell>{row.location}</TableCell>
                   <TableCell>{row.isApproved.toString()}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
