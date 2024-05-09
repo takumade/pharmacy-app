@@ -57,6 +57,14 @@ export const pharmaciesPerms: RolePerm[] = [
     // edit: true
   }
 ]
+export const applicationsPerms: RolePerm[] = [
+  {
+    role: 'pharmacy',
+    view: true,
+    delete: true,
+    edit: true
+  }
+]
 
 
 const defaultAdminRole: RolePerm = {
@@ -89,6 +97,9 @@ export const getPermissions = (role:string, page: string): RolePerm => {
 
   if (role === "pharmacy" && page === "pharmacies")
     return pharmaciesPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+  if (role === "pharmacy" && page === "applications")
+    return applicationsPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
  return {
   role: role,
