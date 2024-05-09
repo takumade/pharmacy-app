@@ -6,6 +6,7 @@ export const navItems = [
   { key: 'overview', title: 'Overview', href: paths.dashboard.overview, icon: 'chart-pie' },
   { key: 'customers', title: 'Customers', href: paths.dashboard.customers, icon: 'users' },
   { key: 'users', title: 'Users', href: paths.dashboard.users, icon: 'user' },
+  { key: 'applications', title: 'Applications', href: paths.dashboard.users, icon: 'applications' },
   { key: 'pharmacies', title: 'Pharmacies', href: paths.dashboard.pharmacies, icon: 'pharmacy' },
   { key: 'medicine', title: 'Medicine', href: paths.dashboard.medicine, icon: 'pill' },
   { key: 'prescriptions', title: 'Prescriptions', href: paths.dashboard.prescriptions, icon: 'pescription'},
