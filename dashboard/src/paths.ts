@@ -10,6 +10,7 @@ export const paths = {
     account: '/dashboard/account',
     customers: '/dashboard/customers',
     users: '/dashboard/users',
+    applications: '/dashboard/applications',
     pharmacies: '/dashboard/pharmacies',
     medicine: '/dashboard/medicine',
     prescriptions: '/dashboard/prescriptions',
