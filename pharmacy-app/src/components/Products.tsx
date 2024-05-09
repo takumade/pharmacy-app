@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {FONTSIZE, SPACING} from '../theme/theme';
+import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 
 import {Card, Button, Text} from 'react-native-paper';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
@@ -20,6 +20,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
+  cardHeaderStyle: {
+    fontFamily: FONTFAMILY.poppins_medium,
+  },
+  cardDescription: {
+    fontFamily: FONTFAMILY.poppins_regular,
+  },
 });
 
 const Products = () => (
@@ -31,8 +37,12 @@ const Products = () => (
           source={{uri: 'https://picsum.photos/700'}}
         />
         <Card.Content>
-          <Text variant="titleMedium">Vitamin D3</Text>
-          <Text variant="bodyMedium">Tablets, 240mg</Text>
+          <Text style={styles.cardHeaderStyle} variant="titleMedium">
+            Vitamin D3
+          </Text>
+          <Text style={styles.cardDescription} variant="bodyMedium">
+            Tablets, 240mg
+          </Text>
         </Card.Content>
         <Card.Actions>
           <Button>

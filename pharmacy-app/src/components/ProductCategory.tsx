@@ -7,9 +7,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import React from 'react';
-import {
-  SPACING,
-} from '../theme/theme';
+import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
 
 import {Button, Text} from 'react-native-paper';
 
@@ -19,20 +17,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: 'transparent',
     marginTop: SPACING.space_30,
-    alignItems: "center"
+    alignItems: 'center',
+  },
+  TextTitle: {
+    fontFamily: FONTFAMILY.poppins_semibold,
+    fontSize: FONTSIZE.size_16,
   },
 });
 
 const ProductCategory = ({title}: {title: string}) => {
   return (
     <View style={styles.ProductCategoryContainer}>
-      <Text variant="titleLarge">{title}</Text>
-
-      
+      <Text style={styles.TextTitle} variant="titleLarge">
+        {title}
+      </Text>
 
       <Button mode="text" onPress={() => console.log('Pressed')}>
-    See All
-  </Button>
+        See All
+      </Button>
     </View>
   );
 };
