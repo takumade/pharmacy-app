@@ -22,32 +22,23 @@ import dayjs from 'dayjs';
 import { Permissions, RolePerm } from '@/types/permissions';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
+import { User } from '@/types/user';
 
 function noop(): void {
   // do nothing
 }
 
-export interface Prescriptions {
-  _id: string;
-  owner: string;
-  src: string;
-  approved: boolean;
-  used: boolean;
-  date: string; // Assuming the date is represented as a string
-  __v: number;
-};
-
 interface GeneralTableProps {
   count?: number;
   page?: number;
-  rows?: Prescriptions[];
+  rows?: User[];
   rowsPerPage?: number;
   permissions: RolePerm;
 }
 
-export function PrescriptionTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
+export function UserTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
-    return rows.map((medicine) => medicine._id);
+    return rows.map((user) => user._id);
   }, [rows]);
 
   const [page, setPage] = React.useState(0);
@@ -62,7 +53,7 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
     setPage(0);
   };
 
-  function applyPagination(rows: Prescriptions[], page: number, rowsPerPage: number): Prescriptions[] {
+  function applyPagination(rows: User[], page: number, rowsPerPage: number): User[] {
     return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   }
 
@@ -94,11 +85,12 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   }}
                 />
               </TableCell>
-              <TableCell>Image</TableCell>
-              <TableCell>Owner</TableCell>
-              <TableCell>Approved</TableCell>
-              <TableCell>Used</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Avatar</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Is Verified</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -123,14 +115,15 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
 
-                      <Image src={row.src} style={{borderRadius: "10%"}} alt="" width={40} height={40}/>
-                      {/* <Typography variant="subtitle2">{row.medicineName}</Typography> */}
+                      <Avatar src={row.avatar} />
+                      <Typography variant="subtitle2">{row.fullName}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.owner}</TableCell>
-                  <TableCell>{row.approved.toString()}</TableCell>
-                  <TableCell>{row.used.toString()}</TableCell>
-                  <TableCell>{row.date}</TableCell>
+                  <TableCell>{row.username}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.phoneNumber}</TableCell>
+                  <TableCell>{row.role}</TableCell>
+                  <TableCell>{row.isVerified.toString()}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (

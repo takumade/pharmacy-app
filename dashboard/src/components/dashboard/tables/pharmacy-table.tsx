@@ -27,27 +27,52 @@ function noop(): void {
   // do nothing
 }
 
-export interface Prescriptions {
+
+interface Pharmacy {
   _id: string;
   owner: string;
-  src: string;
-  approved: boolean;
-  used: boolean;
-  date: string; // Assuming the date is represented as a string
+  name: string;
+  logo: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  contactInformation: {
+    // Define properties for contact information object here
+    email:string;
+    phone: string;
+  };
+  operatingHours: {
+    // Define properties for operating hours object here
+  };
+  cityCouncilLicense: string;
+  pharmacistCouncilLicense: string;
+  healthProfessionsAuthorityLicense: string;
+  medicinesControlAuthorityLicense: string;
+  isBanned: boolean;
+  bannedEnd: Date;
+  isApproved: boolean;
+  applicationStatus: string;
+  applicationReason: string;
+  isDeleted: boolean;
+  onFreeTrial: boolean;
+  trialEnds: Date;
+  isSubscribed: boolean;
+  subscriptionsEnds: Date;
+  additionalNotes: string;
   __v: number;
-};
+}
 
 interface GeneralTableProps {
   count?: number;
   page?: number;
-  rows?: Prescriptions[];
+  rows?: Pharmacy[];
   rowsPerPage?: number;
   permissions: RolePerm;
 }
 
-export function PrescriptionTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
+export function PharmacyTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
-    return rows.map((medicine) => medicine._id);
+    return rows.map((user) => user._id);
   }, [rows]);
 
   const [page, setPage] = React.useState(0);
@@ -62,7 +87,7 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
     setPage(0);
   };
 
-  function applyPagination(rows: Prescriptions[], page: number, rowsPerPage: number): Prescriptions[] {
+  function applyPagination(rows: Pharmacy[], page: number, rowsPerPage: number): Pharmacy[] {
     return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   }
 
@@ -94,11 +119,12 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   }}
                 />
               </TableCell>
-              <TableCell>Image</TableCell>
+              <TableCell>Logo</TableCell>
               <TableCell>Owner</TableCell>
-              <TableCell>Approved</TableCell>
-              <TableCell>Used</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Address</TableCell>
+              <TableCell>Application Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -123,14 +149,15 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
 
-                      <Image src={row.src} style={{borderRadius: "10%"}} alt="" width={40} height={40}/>
-                      {/* <Typography variant="subtitle2">{row.medicineName}</Typography> */}
+                      <Avatar src={row.logo} />
+                      <Typography variant="subtitle2">{row.name}</Typography>
                     </Stack>
                   </TableCell>
                   <TableCell>{row.owner}</TableCell>
-                  <TableCell>{row.approved.toString()}</TableCell>
-                  <TableCell>{row.used.toString()}</TableCell>
-                  <TableCell>{row.date}</TableCell>
+                  <TableCell>{row.contactInformation.email}</TableCell>
+                  <TableCell>{row.contactInformation.phone}</TableCell>
+                  <TableCell>{row.location}</TableCell>
+                  <TableCell>{row.isApproved ? "approved" : row.applicationStatus}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
