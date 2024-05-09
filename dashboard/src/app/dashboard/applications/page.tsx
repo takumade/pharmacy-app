@@ -32,6 +32,7 @@ export default async function Page() {
   let permissions: RolePerm = getPermissions(user.role, 'applications')
 
 
+
   return (
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
