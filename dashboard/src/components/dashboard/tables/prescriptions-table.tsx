@@ -122,7 +122,7 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
 
-                      <Image src={row.src} alt=""/>
+                      <Image src={row.src} style={{borderRadius: "10%"}} alt="" width={40} height={40}/>
                       {/* <Typography variant="subtitle2">{row.medicineName}</Typography> */}
                     </Stack>
                   </TableCell>
