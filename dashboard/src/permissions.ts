@@ -2,11 +2,12 @@
 
 
 import { RolePerm } from "./types/permissions"
+import { UserRoles } from "./types/user"
 
 
 export const medicinePerms: RolePerm[] = [
     {
-      role: 'pharmacy',
+      role: UserRoles.pharmacy,
       view: true,
       delete: true,
       edit: true
@@ -16,7 +17,7 @@ export const medicinePerms: RolePerm[] = [
 
 export const orderPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: true,
     delete: true,
     // edit: true
@@ -25,7 +26,7 @@ export const orderPerms: RolePerm[] = [
 
 export const txnPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: true,
     delete: true,
     edit: true
@@ -33,7 +34,7 @@ export const txnPerms: RolePerm[] = [
 ]
 export const prescriptionPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: true,
     delete: true,
     // edit: true
@@ -42,7 +43,7 @@ export const prescriptionPerms: RolePerm[] = [
 
 export const userPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: false,
     delete: false
     // edit: true
@@ -51,18 +52,25 @@ export const userPerms: RolePerm[] = [
 
 export const pharmaciesPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: false,
-    delete: false
-    // edit: true
-  }
+    delete: false,
+    edit: true
+  },
+
 ]
 export const applicationsPerms: RolePerm[] = [
   {
-    role: 'pharmacy',
+    role: UserRoles.pharmacy,
     view: true,
     delete: true,
     edit: true
+  },
+  {
+    role: UserRoles.admin,
+    view: true,
+    delete: true
+    // edit: true
   }
 ]
 
@@ -77,29 +85,44 @@ const defaultAdminRole: RolePerm = {
 
 export const getPermissions = (role:string, page: string): RolePerm => {
 
-  if (role == "admin") return defaultAdminRole
+  console.log("Permissions: ", {
+    role, page
+  })
 
 
-  if (role === "pharmacy" && page === "medicine")
-        return medicinePerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "orders")
-    return orderPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "prescriptions")
-    return prescriptionPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+  if (role === UserRoles.pharmacy){
 
-  if (role === "pharmacy" && page === "transactions")
-    return txnPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+    if (page === "medicine")
+      return medicinePerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "users")
-    return userPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+    if (page === "orders")
+      return orderPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "pharmacies")
-    return pharmaciesPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+    if (page === "prescriptions")
+      return prescriptionPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
 
-  if (role === "pharmacy" && page === "applications")
-    return applicationsPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+    if (page === "transactions")
+      return txnPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+    if (page === "users")
+      return userPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+    if (page === "pharmacies")
+      return pharmaciesPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+    if (page === "applications")
+      return applicationsPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+  }
+
+
+  if (role === UserRoles.admin){
+      if (page === "applications")
+        return applicationsPerms.find((p:RolePerm)=> p.role === role) as RolePerm;
+
+      return defaultAdminRole
+   }
 
  return {
   role: role,
