@@ -115,7 +115,7 @@ export function UserTable({ count = 0, rows = [], permissions }: GeneralTablePro
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
 
-                      <Image src={row.avatar} style={{borderRadius: "10%"}} alt="" width={40} height={40}/>
+                      <Avatar src={row.avatar} />
                       <Typography variant="subtitle2">{row.fullName}</Typography>
                     </Stack>
                   </TableCell>
@@ -123,7 +123,7 @@ export function UserTable({ count = 0, rows = [], permissions }: GeneralTablePro
                   <TableCell>{row.email}</TableCell>
                   <TableCell>{row.phoneNumber}</TableCell>
                   <TableCell>{row.role}</TableCell>
-                  <TableCell>{row.isVerified}</TableCell>
+                  <TableCell>{row.isVerified.toString()}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
