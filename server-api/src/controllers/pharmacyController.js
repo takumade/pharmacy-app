@@ -22,6 +22,7 @@ const searchPharmacies = async (req, res) => {
 
 }
 
+
 const getPharmacy = async (req, res) => {
     const pharmacyId = req.params.pharmacyId;
   
@@ -44,6 +45,26 @@ const getPharmacy = async (req, res) => {
       // Find all pharmacies
       const pharmacies = await Pharmacy.find();
       res.status(200).json({ success: true, data: pharmacies });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+  const getApplications = async (req, res) => {
+    try {
+      // Find all pharmacies
+
+      if (req.user.role === userRoles.admin){
+        const pharmacies = await Pharmacy.find({isApproved: false});
+        res.status(200).json({ success: true, data: pharmacies });
+      }
+
+      if (req.user.role === userRoles.pharmacy){
+        const pharmacies = await Pharmacy.find({isApproved: false, owner: req.user._id});
+        res.status(200).json({ success: true, data: pharmacies });
+      }
+
+      return res.status(403).json({ success: false, message: "You are not authorized to view  this information" });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -204,6 +225,7 @@ const approvePharmacy = async (req, res) => {
 module.exports = {
   searchPharmacies,
     getPharmacies,
+    getApplications,
     getPharmacy,
     createPharmacy,
     editPharmacy,
