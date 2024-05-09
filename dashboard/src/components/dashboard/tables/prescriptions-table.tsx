@@ -127,8 +127,8 @@ export function PrescriptionTable({ count = 0, rows = [], permissions }: General
                     </Stack>
                   </TableCell>
                   <TableCell>{row.owner}</TableCell>
-                  <TableCell>{row.approved}</TableCell>
-                  <TableCell>{row.used}</TableCell>
+                  <TableCell>{row.approved.toString()}</TableCell>
+                  <TableCell>{row.used.toString()}</TableCell>
                   <TableCell>{row.date}</TableCell>
                   <TableCell>
                     <div style={{ display: 'flex' }}>
