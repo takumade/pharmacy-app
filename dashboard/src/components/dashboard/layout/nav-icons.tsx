@@ -16,7 +16,7 @@ export const navIcons = {
   'plugs-connected': PlugsConnectedIcon,
   'shopping-bag': ShoppingBagIcon,
   'pescription': Prescription,
-  'aaplications': Article,
+  'applications': Article,
   'pharmacy': FirstAid,
   'money': MoneyIcon,
   'pill': PillIcon,
