@@ -14,8 +14,12 @@ interface AuthProps {
   onLogout?: () => Promise<void>;
 }
 
+const headers = {
+  "Content-Type": "application/json",
+  
+};
 const TOKEN_KEY = "token";
-export const API_URL = "";
+export const API_URL = "{your ip address}:3000/api/user";
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -54,16 +58,19 @@ const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const login = async (email: string, password: string) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth`, { email, password });
-      console.log("failed to login", response);
+ const login = async (email: string, password: string) => {
+    try {  const response = await axios.post(
+        `${API_URL}/login`, 
+        { email, password },
+        { headers: headers }
+      );
+      console.log("Login successful", response);
       const { token } = response.data;
       setAuthState({ token, authenticated: true });
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       await EncryptedStorage.setItem(TOKEN_KEY, token);
     } catch (error) {
-        console.log("user not found")
+        console.log("Login failed")
         console.log(error)
       return { error: true, msg: (error as any).response.data.message };
     }
