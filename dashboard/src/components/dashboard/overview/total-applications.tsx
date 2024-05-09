@@ -22,7 +22,7 @@ export function TotalApplications({ value, sx }: TasksProgressProps): React.JSX.
           <Stack direction="row" sx={{ alignItems: 'flex-start', justifyContent: 'space-between' }} spacing={3}>
             <Stack spacing={1}>
               <Typography color="text.secondary" gutterBottom variant="overline">
-                Total Applications
+                Pharmacy Applications
               </Typography>
               <Typography variant="h4">{value}%</Typography>
             </Stack>
