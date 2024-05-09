@@ -187,6 +187,37 @@ const approvePharmacy = async (req, res) => {
     }
   }
 
+  const declinePharmacy = async (req, res) => {
+    const currentUser = req.user;
+
+    const { reason } = req.body
+  
+    try {
+      // Check if the user making the request is an admin
+      if (currentUser.role !== userRoles.admin) {
+        return res.status(403).json({ success: false, message: "Only an admin can decline a pharmacy" });
+      }
+  
+      // Find the pharmacy by ID
+      const pharmacyId = req.params.pharmacyId;
+      const pharmacy = await Pharmacy.findById(pharmacyId);
+      if (!pharmacy) {
+        return res.status(404).json({ success: false, message: "Pharmacy not found" });
+      }
+  
+      // Update the isApproved field to true
+      pharmacy.isApproved = false;
+      pharmacy.applicationStatus = applicationStatus.decline;
+      pharmacy.applicationReason = reason ? reason : ""
+      await pharmacy.save();
+  
+      res.status(200).json({ success: true, message: "Pharmacy denied successfully", data: pharmacy });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
   const getCustomers = async (req, res) => {
     try {
         // Retrieve the pharmacy ID from the request parameters
@@ -232,5 +263,6 @@ module.exports = {
     editPharmacy,
     deletePharmacy,
     getCustomers,
-    approvePharmacy
+    approvePharmacy,
+    declinePharmacy
 }
