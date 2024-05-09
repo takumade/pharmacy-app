@@ -13,3 +13,10 @@ export interface User {
   verificationImage: string;
 };
 
+
+export enum UserRoles {
+  admin = "admin",
+  pharmacy = "pharmacy",
+  customer = "customer"
+}
+
