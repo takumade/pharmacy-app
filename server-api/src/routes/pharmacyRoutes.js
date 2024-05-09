@@ -17,6 +17,7 @@ router.get('/applications', pharmacyController.getApplications);
 router.post('/create', pharmacyController.createPharmacy);
 router.post('/update/:pharmacyId', pharmacyController.editPharmacy);
 router.post('/approve/:pharmacyId', pharmacyController.approvePharmacy);
+router.post('/decline/:pharmacyId', pharmacyController.declinePharmacy);
 router.post('/delete/:pharmacyId', pharmacyController.deletePharmacy);
 // Add more routes as needed
 
