@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 import { Permissions, RolePerm } from '@/types/permissions';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
+import ApplicationModal from '../modals/application-modal';
 
 function noop(): void {
   // do nothing
@@ -77,6 +78,11 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -102,6 +108,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   return (
     <Card>
+      <ApplicationModal open={open} setOpen={setOpen}/>
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
@@ -161,7 +168,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
-                        <IconButton>
+                        <IconButton onClick={()=> setOpen(true)}>
                           <Eye />
                         </IconButton>
                       )}
