@@ -84,7 +84,23 @@ export default function ApplicationModal({ open, setOpen, application }: Applica
 
 
   const decline =async (reason: string) => {
-    // await backendClient('post', `pharmacy/approve/${application._id}`, {reason})
+    let response = await frontendClient('post', `pharmacy/decline/${application._id}`, {reason})
+
+    if (response.success){
+
+      updateMessage({
+        title: 'Decline Applicaton',
+        body: response.message,
+        type: "success"
+      })
+      }else{
+        updateMessage({
+          title: 'Decline Applicaton',
+          body: response.message,
+          type: "error"
+        })
+
+      }
   }
 
 
