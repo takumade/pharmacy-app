@@ -58,6 +58,17 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
     setOpen(false);
   };
 
+  const approve = () => {
+
+  }
+
+
+  const decline = (reason: string) => {
+
+  }
+
+
+
   return (
     <React.Fragment>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -69,12 +80,6 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Pharmacy Application
             </Typography>
-            <Button autoFocus color="success" onClick={handleClose}>
-              Approve
-            </Button>
-            <Button autoFocus color="warning" onClick={handleClose}>
-              Decline
-            </Button>
           </Toolbar>
         </AppBar>
         <Stack spacing={3} style={{ padding: '5rem' }}>
@@ -83,7 +88,7 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
               <MainInfo application={application} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <PharmacyLicenses  application={application} />
+              <PharmacyLicenses  application={application} handleApprove={approve} handleDecline={decline} />
             </Grid>
           </Grid>
 
@@ -138,11 +143,12 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
 }
 
 
-export function PharmacyLicenses({ application }: { application: Pharmacy }): React.JSX.Element {
+export function PharmacyLicenses({ application, handleApprove, handleDecline }: { application: Pharmacy, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
 
   const [currentImage, setCurrentImage] = React.useState(0);
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
+  const [reason, setReason] = React.useState<string>("");
 
 
   const openImageViewer = (image:string) => {
@@ -155,6 +161,11 @@ export function PharmacyLicenses({ application }: { application: Pharmacy }): Re
     setCurrentImage(0);
     setIsViewerOpen(false);
   };
+
+  const handleChange = (event: Event) => {
+    // @ts-ignore
+      setReason(event.target.value)
+  }
 
 
 
@@ -208,7 +219,9 @@ export function PharmacyLicenses({ application }: { application: Pharmacy }): Re
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Next</Button>
+          <Button variant="contained" color="error" onDoubleClick={() => handleDecline(reason)}>Decline</Button>
+          <Button variant="contained" onDoubleClick={handleApprove}>Approve</Button>
+
         </CardActions>
       </Card>
     </React.Fragment>
