@@ -1,4 +1,4 @@
-const { userRoles } = require("../constants");
+const { userRoles, applicationStatus } = require("../constants");
 const Medicine = require("../models/medicineModel");
 const Order = require("../models/orderModel");
 const Pharmacy = require("../models/pharmacyModel");
@@ -22,6 +22,7 @@ const searchPharmacies = async (req, res) => {
 
 }
 
+
 const getPharmacy = async (req, res) => {
     const pharmacyId = req.params.pharmacyId;
   
@@ -44,6 +45,31 @@ const getPharmacy = async (req, res) => {
       // Find all pharmacies
       const pharmacies = await Pharmacy.find();
       res.status(200).json({ success: true, data: pharmacies });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+  const getApplications = async (req, res) => {
+    
+    try {
+      // Find all pharmacies applications
+
+      if (req.user.role  !== userRoles.admin && req.user.role !== userRoles.pharmacy){
+        return res.status(403).json({ success: false, message: "You are not authorized to view  this information" });
+      }
+
+      if (req.user.role === userRoles.admin){
+        const pharmacies = await Pharmacy.find({isApproved: false});
+        res.status(200).json({ success: true, data: pharmacies });
+      }
+
+      if (req.user.role === userRoles.pharmacy){
+        const pharmacies = await Pharmacy.find({isApproved: false, owner: req.user._id});
+        res.status(200).json({ success: true, data: pharmacies });
+      }
+
+     
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -156,9 +182,41 @@ const approvePharmacy = async (req, res) => {
   
       // Update the isApproved field to true
       pharmacy.isApproved = true;
+      pharmacy.applicationStatus = applicationStatus.approved;
       await pharmacy.save();
   
       res.status(200).json({ success: true, message: "Pharmacy approved successfully", data: pharmacy });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
+  const declinePharmacy = async (req, res) => {
+    const currentUser = req.user;
+
+    const { reason } = req.body
+  
+    try {
+      // Check if the user making the request is an admin
+      if (currentUser.role !== userRoles.admin) {
+        return res.status(403).json({ success: false, message: "Only an admin can decline a pharmacy" });
+      }
+  
+      // Find the pharmacy by ID
+      const pharmacyId = req.params.pharmacyId;
+      const pharmacy = await Pharmacy.findById(pharmacyId);
+      if (!pharmacy) {
+        return res.status(404).json({ success: false, message: "Pharmacy not found" });
+      }
+  
+      // Update the isApproved field to true
+      pharmacy.isApproved = false;
+      pharmacy.applicationStatus = applicationStatus.decline;
+      pharmacy.applicationReason = reason ? reason : ""
+      await pharmacy.save();
+  
+      res.status(200).json({ success: true, message: "Pharmacy denied successfully", data: pharmacy });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -204,10 +262,12 @@ const approvePharmacy = async (req, res) => {
 module.exports = {
   searchPharmacies,
     getPharmacies,
+    getApplications,
     getPharmacy,
     createPharmacy,
     editPharmacy,
     deletePharmacy,
     getCustomers,
-    approvePharmacy
+    approvePharmacy,
+    declinePharmacy
 }

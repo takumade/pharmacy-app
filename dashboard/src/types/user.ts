@@ -1,8 +1,22 @@
 export interface User {
-  id: string;
-  name?: string;
-  avatar?: string;
-  email?: string;
+  _id: string;
+  username: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  clearText: string;
+  role: string;
+  isVerified: boolean;
+  isDeleted: boolean;
+  avatar: string;
+  verificationImage: string;
+};
 
-  [key: string]: unknown;
+
+export enum UserRoles {
+  admin = "admin",
+  pharmacy = "pharmacy",
+  customer = "customer"
 }
+

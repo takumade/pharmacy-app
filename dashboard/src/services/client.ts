@@ -1,10 +1,11 @@
+import { APIResponse } from '@/types/api-response';
 import { setCookie, getCookie, getCookies } from 'cookies-next';
 import { cookies } from 'next/headers';
 import fetch from 'node-fetch';
 
 
 
-const backendClient = async (method:string, path:string, body: any = {}) => {
+const backendClient = async (method:string, path:string, body: any = {}): Promise<APIResponse> => {
   try {
 
     let options: any = {
@@ -31,7 +32,7 @@ const backendClient = async (method:string, path:string, body: any = {}) => {
 
 
     const response = await fetch(`${serverUrl}/api/${path}`, options);
-    const data = await response.json();
+    const data: APIResponse = await response.json() as APIResponse;
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);

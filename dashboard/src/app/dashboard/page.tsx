@@ -8,10 +8,14 @@ import { Budget } from '@/components/dashboard/overview/budget';
 import { LatestOrders } from '@/components/dashboard/overview/latest-orders';
 import { LatestProducts } from '@/components/dashboard/overview/latest-products';
 import { Sales } from '@/components/dashboard/overview/sales';
-import { TasksProgress } from '@/components/dashboard/overview/tasks-progress';
-import { TotalCustomers } from '@/components/dashboard/overview/total-customers';
-import { TotalProfit } from '@/components/dashboard/overview/total-profit';
 import { Traffic } from '@/components/dashboard/overview/traffic';
+import { Pharmacies } from '@/components/dashboard/overview/pharmacies';
+import { TotalUsers } from '@/components/dashboard/overview/total-users';
+import { TotalApplications } from '@/components/dashboard/overview/total-applications';
+import { TotalOrders } from '@/components/dashboard/overview/total-orders';
+import { Medicine } from '@/components/dashboard/overview/medicine';
+import { TotalPrescriptions } from '@/components/dashboard/overview/total-prescriptions';
+import { TotalTransactions } from '@/components/dashboard/overview/total-txns';
 
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -19,16 +23,27 @@ export default function Page(): React.JSX.Element {
   return (
     <Grid container spacing={3}>
       <Grid lg={3} sm={6} xs={12}>
-        <Budget diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
+        <TotalUsers diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
+        <Pharmacies diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
+      </Grid>
+
+      <Grid lg={3} sm={6} xs={12}>
+        <TotalApplications sx={{ height: '100%' }} value={75.5} />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TasksProgress sx={{ height: '100%' }} value={75.5} />
+        <TotalOrders sx={{ height: '100%' }} value="$15k" />
+      </Grid>
+
+      <Grid lg={3} sm={6} xs={12}>
+        <TotalTransactions sx={{ height: '100%' }} value="$15k" />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalProfit sx={{ height: '100%' }} value="$15k" />
+        <Medicine diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
+      </Grid>
+      <Grid lg={3} sm={6} xs={12}>
+        <TotalPrescriptions diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
       </Grid>
       <Grid lg={8} xs={12}>
         <Sales

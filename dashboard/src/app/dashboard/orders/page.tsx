@@ -17,6 +17,7 @@ import { User } from '@/types/user';
 import {  RolePerm } from '@/types/permissions';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
+import { OrderTable } from '@/components/dashboard/tables/orders-table';
 
 export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -24,20 +25,19 @@ export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } 
 
 export default async function Page() {
 
-  let response: APIResponse = await backendClient('get', 'medicine/')
-  let medicine = response.data
+  let response: APIResponse = await backendClient('get', 'order/')
+  let orders = response.data
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
-  let permissions: RolePerm = getPermissions(user.role, 'medicine')
+  let permissions: RolePerm = getPermissions(user.role, 'orders')
 
-  console.log("User:", )
 
   return (
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Medicine</Typography>
+          <Typography variant="h4">Orders</Typography>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
               Import
@@ -53,10 +53,10 @@ export default async function Page() {
           </Button>
         </div>
       </Stack>
-      <GeneralFilters item="medicine" />
-      <MedicineTable
-        count={medicine.length}
-        rows={medicine}
+      <GeneralFilters item="orders" />
+      <OrderTable
+        count={orders.length}
+        rows={orders}
         permissions={permissions}
       />
     </Stack>

@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Grid, IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -14,48 +15,30 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
+import { Eye, Trash } from '@phosphor-icons/react';
+import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
+import { Permissions, RolePerm } from '@/types/permissions';
 import { useSelection } from '@/hooks/use-selection';
+import Image from 'next/image';
+import { User } from '@/types/user';
 
 function noop(): void {
   // do nothing
 }
 
-export interface Medicine {
-  _id: string;
-  medicineName: string;
-  image: string;
-  brandName: string;
-  genericName: string;
-  dosageForm: string;
-  dosageStrength: string;
-  batchNumber: string;
-  expirationDate: string; // Should be of type Date, but string for simplicity
-  quantity: number;
-  unitPrice: number;
-  manufacturer: string;
-  supplier: string;
-  storageConditions: string;
-  notes: string;
-  lastUpdated: string; // Should be of type Date, but string for simplicity
-  prescriptionRequired: boolean;
-  owner: string;
-}
-
 interface GeneralTableProps {
   count?: number;
   page?: number;
-  rows?: Medicine[];
+  rows?: User[];
   rowsPerPage?: number;
+  permissions: RolePerm;
 }
 
-export function MedicineTable({
-  count = 0,
-  rows = [],
-}: GeneralTableProps): React.JSX.Element {
+export function UserTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
-    return rows.map((medicine) => medicine._id);
+    return rows.map((user) => user._id);
   }, [rows]);
 
   const [page, setPage] = React.useState(0);
@@ -65,12 +48,12 @@ export function MedicineTable({
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: { target: { value: string; }; }) => {
+  const handleChangeRowsPerPage = (event: { target: { value: string } }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
-  function applyPagination(rows: Medicine[], page: number, rowsPerPage: number): Medicine[] {
+  function applyPagination(rows: User[], page: number, rowsPerPage: number): User[] {
     return rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   }
 
@@ -102,16 +85,13 @@ export function MedicineTable({
                   }}
                 />
               </TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Brand Name</TableCell>
-              <TableCell>Generic Name</TableCell>
-              <TableCell>Dosage Form</TableCell>
-              <TableCell>Dosage Strength</TableCell>
-              <TableCell>Batch Number</TableCell>
-              <TableCell>Unit Price</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Expiration Date</TableCell>
-              <TableCell>Manufacturer</TableCell>
+              <TableCell>Avatar</TableCell>
+              <TableCell>Username</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Phone</TableCell>
+              <TableCell>Role</TableCell>
+              <TableCell>Is Verified</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -134,19 +114,35 @@ export function MedicineTable({
                   </TableCell>
                   <TableCell>
                     <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-                      <Avatar src={row.image} />
-                      <Typography variant="subtitle2">{row.medicineName}</Typography>
+
+                      <Avatar src={row.avatar} />
+                      <Typography variant="subtitle2">{row.fullName}</Typography>
                     </Stack>
                   </TableCell>
-                  <TableCell>{row.brandName}</TableCell>
-                  <TableCell>{row.genericName}</TableCell>
-                  <TableCell>{row.dosageForm}</TableCell>
-                  <TableCell>{row.dosageStrength}</TableCell>
-                  <TableCell>{row.batchNumber}</TableCell>
-                  <TableCell>{row.unitPrice}</TableCell>
-                  <TableCell>{row.quantity}</TableCell>
-                  <TableCell>{row.expirationDate}</TableCell>
-                  <TableCell>{row.manufacturer}</TableCell>
+                  <TableCell>{row.username}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.phoneNumber}</TableCell>
+                  <TableCell>{row.role}</TableCell>
+                  <TableCell>{row.isVerified.toString()}</TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex' }}>
+                      {permissions && permissions.view && (
+                        <IconButton>
+                          <Eye />
+                        </IconButton>
+                      )}
+                      {permissions && permissions.edit && (
+                        <IconButton>
+                          <PencilSimple />
+                        </IconButton>
+                      )}
+                      {permissions && permissions.delete && (
+                        <IconButton color="error">
+                          <Trash />
+                        </IconButton>
+                      )}
+                    </div>
+                  </TableCell>
                 </TableRow>
               );
             })}
