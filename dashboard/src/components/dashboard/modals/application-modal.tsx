@@ -162,7 +162,7 @@ export function PharmacyLicenses({ application, handleApprove, handleDecline }: 
     setIsViewerOpen(false);
   };
 
-  const handleChange = (event: Event) => {
+  const handleChange = (event: any) => {
     // @ts-ignore
       setReason(event.target.value)
   }
@@ -213,15 +213,14 @@ export function PharmacyLicenses({ application, handleApprove, handleDecline }: 
             <InputLabel htmlFor="decline-reason">Decline Reason</InputLabel>
               <FormControl id="decline-reason" fullWidth>
 
-                <TextareaAutosize minRows={5} />
+                <TextareaAutosize minRows={5} onChange={handleChange}/>
               </FormControl>
           </Stack>
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           <Button variant="contained" color="error" onDoubleClick={() => handleDecline(reason)}>Decline</Button>
-          <Button variant="contained" onDoubleClick={handleApprove}>Approve</Button>
-
+          <Button variant="contained" onDoubleClick={() => handleApprove()}>Approve</Button>
         </CardActions>
       </Card>
     </React.Fragment>
