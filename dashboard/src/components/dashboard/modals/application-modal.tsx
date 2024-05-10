@@ -65,9 +65,6 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
           </Toolbar>
         </AppBar>
         <Stack spacing={3} style={{ padding: '5rem' }}>
-          <div>
-            <Typography variant="h4">Register Pharmacy</Typography>
-          </div>
           <Grid container spacing={3}>
             <Grid lg={4} md={6} xs={12}>
               <MainInfo application={application} />
