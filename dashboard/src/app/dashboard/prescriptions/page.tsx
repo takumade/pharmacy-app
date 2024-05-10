@@ -11,7 +11,7 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import { config } from '@/config';
 import { GeneralFilters } from '@/components/general/general-filter';
 
-import backendClient from '@/services/client';
+import backendClient from '@/services/backend-client';
 import { cookies } from 'next/headers';
 import { User } from '@/types/user';
 import {  RolePerm } from '@/types/permissions';

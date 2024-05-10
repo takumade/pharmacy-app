@@ -3,21 +3,21 @@ import { Transition } from 'react-transition-group';
 import { styled } from '@mui/system';
 import { Snackbar } from '@mui/base/Snackbar';
 import { SnackbarCloseReason } from '@mui/base/useSnackbar';
-import { Check, X } from '@phosphor-icons/react/dist/ssr';
+import { Check, X, XCircle } from '@phosphor-icons/react/dist/ssr';
 import { Avatar, Typography } from '@mui/material';
+import { SnackbarProps } from '@/types/snackbar.type';
 
 
-interface SnackbarProps {
-  open: boolean,
-  setOpen: Function;
-  type: string;
-  title: string;
-  body:string;
-}
 
-export default function GeneralSnackbar({open, setOpen, title, body, type}: SnackbarProps) {
+
+export default function GeneralSnackbar({open, setOpen, snackOptions}: SnackbarProps) {
+
+  const {title, body, type} = snackOptions
+
   const [exited, setExited] = React.useState(true);
   const nodeRef = React.useRef(null);
+
+
 
   const handleClose = (_: any, reason?: SnackbarCloseReason) => {
     if (reason === 'clickaway') {
@@ -41,9 +41,6 @@ export default function GeneralSnackbar({open, setOpen, title, body, type}: Snac
 
   return (
     <React.Fragment>
-      <TriggerButton type="button" onClick={handleClick}>
-        Open snackbar
-      </TriggerButton>
       <StyledSnackbar
         autoHideDuration={5000}
         open={open}
@@ -67,7 +64,7 @@ export default function GeneralSnackbar({open, setOpen, title, body, type}: Snac
               }}
               ref={nodeRef}
             >
-              <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)'}}>
+              {type == "success" && <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)'}}>
               <Check
                 style={{
                   flexShrink: 0,
@@ -75,10 +72,19 @@ export default function GeneralSnackbar({open, setOpen, title, body, type}: Snac
                   height: '1.5rem',
                 }}
               />
-              </Avatar>
+              </Avatar>}
+              {type == "error" && <Avatar sx={{ backgroundColor: 'var(--mui-palette-error-main)'}}>
+              <X
+                style={{
+                  flexShrink: 0,
+                  width: '1.25rem',
+                  height: '1.5rem',
+                }}
+              />
+              </Avatar>}
               <div className="snackbar-message">
-                <Typography color="text.primary" className="snackbar-title" variant="body2"><b>Notifications sent</b></Typography>
-                <Typography color="text.secondary" className="snackbar-description" variant="body2">Notifications sent</Typography>
+                <Typography color="text.primary" className="snackbar-title" variant="body2"><b>{title}</b></Typography>
+                <Typography color="text.secondary" className="snackbar-description" variant="body2">{body}</Typography>
               </div>
               <X onClick={handleClose} className="snackbar-close-icon" />
             </SnackbarContent>

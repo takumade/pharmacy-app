@@ -19,12 +19,12 @@ import { Eye, Trash } from '@phosphor-icons/react';
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
-import { Permissions, RolePerm } from '@/types/permissions';
-import { Pharmacy } from '@/types/pharmacy';
+import { Permissions, RolePerm } from '@/types/permissions.type';
+import { Pharmacy } from '@/types/pharmacy.type';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
 import ApplicationModal from '../modals/application-modal';
-import GeneralSnackbar from '@/components/general/snackbar';
+
 
 function noop(): void {
   // do nothing
@@ -79,7 +79,6 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   return (
     <Card>
-      <GeneralSnackbar />
       <ApplicationModal open={open} setOpen={setOpen}  application={targetRow as Pharmacy} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>

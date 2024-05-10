@@ -1,8 +1,8 @@
 
 
 
-import { RolePerm } from "./types/permissions"
-import { UserRoles } from "./types/user"
+import { RolePerm } from "./types/permissions.type"
+import { UserRoles } from "./types/user.type"
 
 
 export const medicinePerms: RolePerm[] = [

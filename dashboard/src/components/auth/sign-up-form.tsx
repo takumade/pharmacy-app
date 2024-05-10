@@ -52,20 +52,18 @@ export function SignUpForm(): React.JSX.Element {
     async (values: Values): Promise<void> => {
       setIsPending(true);
 
-      const { error } = await authClient.signUp(values);
+      const response = await authClient.signUp(values);
 
-      if (error) {
-        setError('root', { type: 'server', message: error });
+      if (!response.success) {
+        setError('root', { type: 'server', message: response.message });
         setIsPending(false);
         return;
       }
 
       // Refresh the auth state
-      await checkSession?.();
 
       // UserProvider, for this case, will not refresh the router
       // After refresh, GuestGuard will handle the redirect
-      router.refresh();
 
       router.replace(paths.auth.registerPharmacy);
     },

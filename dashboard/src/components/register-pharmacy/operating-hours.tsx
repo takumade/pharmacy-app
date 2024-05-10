@@ -28,12 +28,23 @@ const states = [
 ] as const;
 
 
-export function PharmacyOperatingHours(): React.JSX.Element {
+export function PharmacyOperatingHours({ handleApply }: { handleApply: Function }): React.JSX.Element {
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
+    onSubmit={(event) => {
+      event.preventDefault();
+
+      // @ts-ignore
+      const formData = new FormData(event.target);
+      const data = {};
+      formData.forEach((value, key) => {
+        //@ts-ignore
+        data[key] = value;
+      });
+      // Now you can use the 'data' object to access form values
+      console.log(data);
+      handleApply(data)
+    }}
     >
       <Card>
         <CardHeader subheader="Add you pharmacy operating hours" title="Step 3: Operating Hours" />

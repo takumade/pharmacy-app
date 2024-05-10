@@ -17,12 +17,23 @@ import { FormLabel } from '@mui/material';
 
 
 
-export function PharmacyLicense(): React.JSX.Element {
+export function PharmacyLicense({ handleNextStep }: { handleNextStep: Function }): React.JSX.Element {
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
+    onSubmit={(event) => {
+      event.preventDefault();
+
+      // @ts-ignore
+      const formData = new FormData(event.target);
+      const data = {};
+      formData.forEach((value, key) => {
+        //@ts-ignore
+        data[key] = value;
+      });
+      // Now you can use the 'data' object to access form values
+      console.log(data);
+      handleNextStep(data)
+    }}
     >
       <Card>
         <CardHeader subheader="Upload your licenses below" title="Step 2: Licenses" />
