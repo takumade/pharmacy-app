@@ -20,6 +20,7 @@ import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
 import { Permissions, RolePerm } from '@/types/permissions';
+import { Pharmacy } from '@/types/pharmacy';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
 import ApplicationModal from '../modals/application-modal';
@@ -29,39 +30,6 @@ function noop(): void {
 }
 
 
-interface Pharmacy {
-  _id: string;
-  owner: string;
-  name: string;
-  logo: string;
-  location: string;
-  latitude: number;
-  longitude: number;
-  contactInformation: {
-    // Define properties for contact information object here
-    email:string;
-    phone: string;
-  };
-  operatingHours: {
-    // Define properties for operating hours object here
-  };
-  cityCouncilLicense: string;
-  pharmacistCouncilLicense: string;
-  healthProfessionsAuthorityLicense: string;
-  medicinesControlAuthorityLicense: string;
-  isBanned: boolean;
-  bannedEnd: Date;
-  isApproved: boolean;
-  applicationStatus: string;
-  applicationReason: string;
-  isDeleted: boolean;
-  onFreeTrial: boolean;
-  trialEnds: Date;
-  isSubscribed: boolean;
-  subscriptionsEnds: Date;
-  additionalNotes: string;
-  __v: number;
-}
 
 interface GeneralTableProps {
   count?: number;
@@ -79,9 +47,11 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [open, setOpen] = React.useState(false);
+  const [targetRow, setTargetRow] = React.useState<Pharmacy | null>(null)
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (row: Pharmacy) => {
     setOpen(true);
+    setTargetRow(row)
   };
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
@@ -108,7 +78,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   return (
     <Card>
-      <ApplicationModal open={open} setOpen={setOpen}/>
+      <ApplicationModal open={open} setOpen={setOpen}  application={targetRow} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
@@ -168,7 +138,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
-                        <IconButton onClick={()=> setOpen(true)}>
+                        <IconButton onClick={()=> handleClickOpen(row)}>
                           <Eye />
                         </IconButton>
                       )}
