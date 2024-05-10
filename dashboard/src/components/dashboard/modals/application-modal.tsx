@@ -61,13 +61,13 @@ export default function ApplicationModal({ open, setOpen, application }: Applica
 
   const approve = async () => {
 
-    await backendClient('post', `pharmacy/approve/${application._id}`, {})
+    // await backendClient('post', `pharmacy/approve/${application._id}`, {})
 
   }
 
 
   const decline =async (reason: string) => {
-    await backendClient('post', `pharmacy/approve/${application._id}`, {reason})
+    // await backendClient('post', `pharmacy/approve/${application._id}`, {reason})
   }
 
 
