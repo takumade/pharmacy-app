@@ -1,8 +1,7 @@
 'use client';
 
 import { setCookie, deleteCookie, getCookie } from 'cookies-next';
-import backendClient from '@/services/client';
-import type { User } from '@/types/user';
+import type { User } from '@/types/user.type';
 
 
 function generateToken(): string {
