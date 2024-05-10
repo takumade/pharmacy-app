@@ -7,7 +7,15 @@ import { Check, X } from '@phosphor-icons/react/dist/ssr';
 import { Avatar, Typography } from '@mui/material';
 
 
-export default function GeneralSnackbar() {
+interface SnackbarProps {
+  open: boolean,
+  setOpen: Function;
+  type: string;
+  title: string;
+  body:string;
+}
+
+export default function GeneralSnackbar({open, setOpen, title, body, type}: SnackbarProps) {
   const [open, setOpen] = React.useState(false);
   const [exited, setExited] = React.useState(true);
   const nodeRef = React.useRef(null);

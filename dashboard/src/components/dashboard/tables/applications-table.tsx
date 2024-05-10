@@ -24,6 +24,7 @@ import { Pharmacy } from '@/types/pharmacy';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
 import ApplicationModal from '../modals/application-modal';
+import GeneralSnackbar from '@/components/general/snackbar';
 
 function noop(): void {
   // do nothing
@@ -78,6 +79,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   return (
     <Card>
+      <GeneralSnackbar />
       <ApplicationModal open={open} setOpen={setOpen}  application={targetRow as Pharmacy} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
