@@ -35,6 +35,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
+import backendClient from '@/services/client';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -51,20 +52,22 @@ interface ApplicationModalProps {
   application: Pharmacy;
 }
 
-export default function ApplicationModal({ open, setOpen, application }: any) {
+export default function ApplicationModal({ open, setOpen, application }: ApplicationModalProps) {
   console.log('App: ', application);
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const approve = () => {
+  const approve = async () => {
+
+    await backendClient('post', `pharmacy/approve/${application._id}`, {})
 
   }
 
 
-  const decline = (reason: string) => {
-
+  const decline =async (reason: string) => {
+    await backendClient('post', `pharmacy/approve/${application._id}`, {reason})
   }
 
 
