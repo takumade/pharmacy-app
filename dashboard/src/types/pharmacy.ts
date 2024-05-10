@@ -13,6 +13,15 @@ export interface Pharmacy {
   };
   operatingHours: {
     // Define properties for operating hours object here
+     weekdays: {
+      start: string;
+      end: string
+     },
+     weekends: {
+      start: string;
+      end: string
+     },
+
   };
   cityCouncilLicense: string;
   pharmacistCouncilLicense: string;
