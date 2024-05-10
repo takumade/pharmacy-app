@@ -78,7 +78,7 @@ export function ApplicationsTable({ count = 0, rows = [], permissions }: General
 
   return (
     <Card>
-      <ApplicationModal open={open} setOpen={setOpen}  application={targetRow} />
+      <ApplicationModal open={open} setOpen={setOpen}  application={targetRow as Pharmacy} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
