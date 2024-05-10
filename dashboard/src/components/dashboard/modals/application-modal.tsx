@@ -48,7 +48,7 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
   return (
     <React.Fragment>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-        <AppBar sx={{ position: 'relative' }}>
+        <AppBar sx={{ position: 'relative' }} color="secondary">
           <Toolbar>
             <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
               <X />
@@ -56,20 +56,20 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Pharmacy Application
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="success" onClick={handleClose}>
               Approve
             </Button>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button autoFocus color="warning" onClick={handleClose}>
               Decline
             </Button>
           </Toolbar>
         </AppBar>
         <Stack spacing={3} style={{ padding: '5rem' }}>
           <Grid container spacing={3}>
-            <Grid lg={4} md={6} xs={12}>
+            <Grid item lg={4} md={6} xs={12}>
               <MainInfo application={application} />
             </Grid>
-            <Grid lg={8} md={6} xs={12}>
+            <Grid item lg={8} md={6} xs={12}>
               <PharmacyProfile />
             </Grid>
           </Grid>
@@ -108,20 +108,26 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
               <Stack spacing={1} sx={{ textAlign: 'left' }}>
                 <Typography variant="h5">{application.name}</Typography>
                 <Typography color="text.secondary" variant="body2">
-                  <b>Address:</b> {application.location} ( {application.latitude} , {application.longitude} )
+                   {application.location}
                 </Typography>
                 <Typography color="text.secondary" variant="body2">
+                  Lat: {application.latitude} , Long: {application.longitude}
+                </Typography>
+
+              </Stack>
+            </Grid>
+          </Grid>
+          <Stack spacing={1} >
+          <Typography color="text.secondary" variant="body2">
                   <b>Phone:</b> {application.contactInformation.phone}
                 </Typography>
                 <Typography color="text.secondary" variant="body2">
                   <b>Email:</b> {application.contactInformation.email}
                 </Typography>
-                {/* <Typography color="text.secondary" variant="body2">
-              {user.timezone}
-            </Typography> */}
-              </Stack>
-            </Grid>
-          </Grid>
+                <Typography color="text.secondary" variant="body2">
+                 <b>Operating Hours: </b> {application.operatingHours.weekdays.start} - {application.operatingHours.weekdays.end} (Weekdays) / {application.operatingHours.weekends.start} - {application.operatingHours.weekends.end} (Weekends)
+            </Typography>
+          </Stack>
         </Stack>
       </CardContent>
       <Divider />
