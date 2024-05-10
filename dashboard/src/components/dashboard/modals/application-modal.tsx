@@ -2,6 +2,8 @@ import * as React from 'react';
 import { FormControlLabel, Grid, Stack } from '@mui/material';
 import { TextareaAutosize } from '@mui/base/TextareaAutosize';
 
+import ImageViewer from 'react-simple-image-viewer'
+
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -85,7 +87,7 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
             </Grid>
           </Grid>
 
-  
+
         </Stack>
       </Dialog>
     </React.Fragment>
@@ -137,31 +139,58 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
 
 
 export function PharmacyLicenses({ application }: { application: Pharmacy }): React.JSX.Element {
+
+  const [currentImage, setCurrentImage] = React.useState(0);
+  const [isViewerOpen, setIsViewerOpen] = React.useState(false);
+  const [images, setImages] = React.useState<string[]>([]);
+
+
+  const openImageViewer = (image:string) => {
+    setImages([image])
+    setCurrentImage(0);
+    setIsViewerOpen(true);
+  }
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
+
+
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
+    <React.Fragment
+
     >
+
+{isViewerOpen && (
+        <ImageViewer
+          src={ images }
+          currentIndex={ currentImage }
+          disableScroll={ false }
+          closeOnClickOutside={ true }
+          onClose={ closeImageViewer }
+        />
+      )}
       <Card>
         <CardHeader subheader="Click item to view" title="Licenses" />
         <Divider />
         <CardContent>
 
         <List>
-          <ListItemButton>
+          <ListItemButton onClick={() => openImageViewer(application.cityCouncilLicense)}>
             <ListItemText primary="City Council License" secondary="" />
           </ListItemButton>
           <Divider />
-          <ListItemButton>
+          <ListItemButton onClick={() => openImageViewer(application.pharmacistCouncilLicense)}>
             <ListItemText primary="Pharmacist Council License" secondary="" />
           </ListItemButton>
           <Divider />
-          <ListItemButton>
+          <ListItemButton onClick={() => openImageViewer(application.medicinesControlAuthorityLicense)}>
             <ListItemText primary="Medicines Control Authority License" secondary="" />
           </ListItemButton>
           <Divider />
-          <ListItemButton>
+          <ListItemButton onClick={() => openImageViewer(application.healthProfessionsAuthorityLicense)}>
             <ListItemText primary="Health Professional Authority License" secondary="" />
           </ListItemButton>
         </List>
@@ -180,6 +209,6 @@ export function PharmacyLicenses({ application }: { application: Pharmacy }): Re
           <Button variant="contained">Next</Button>
         </CardActions>
       </Card>
-    </form>
+    </React.Fragment>
   );
 }
