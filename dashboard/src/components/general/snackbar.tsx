@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Transition } from 'react-transition-group';
 import { styled } from '@mui/system';
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import CloseIcon from '@mui/icons-material/Close';
 import { Snackbar } from '@mui/base/Snackbar';
 import { SnackbarCloseReason } from '@mui/base/useSnackbar';
+import { Check, X } from '@phosphor-icons/react/dist/ssr';
+import { Avatar, Typography } from '@mui/material';
 
-export default function UnstyledSnackbarIntroduction() {
+
+export default function GeneralSnackbar() {
   const [open, setOpen] = React.useState(false);
   const [exited, setExited] = React.useState(true);
   const nodeRef = React.useRef(null);
@@ -59,21 +60,20 @@ export default function UnstyledSnackbarIntroduction() {
               }}
               ref={nodeRef}
             >
-              <CheckRoundedIcon
-                sx={{
-                  color: 'success.main',
+              <Avatar sx={{ backgroundColor: 'var(--mui-palette-success-main)'}}>
+              <Check
+                style={{
                   flexShrink: 0,
                   width: '1.25rem',
                   height: '1.5rem',
                 }}
               />
+              </Avatar>
               <div className="snackbar-message">
-                <p className="snackbar-title">Notifications sent</p>
-                <p className="snackbar-description">
-                  Everything was sent to the desired address.
-                </p>
+                <Typography color="text.primary" className="snackbar-title" variant="body2"><b>Notifications sent</b></Typography>
+                <Typography color="text.secondary" className="snackbar-description" variant="body2">Notifications sent</Typography>
               </div>
-              <CloseIcon onClick={handleClose} className="snackbar-close-icon" />
+              <X onClick={handleClose} className="snackbar-close-icon" />
             </SnackbarContent>
           )}
         </Transition>
