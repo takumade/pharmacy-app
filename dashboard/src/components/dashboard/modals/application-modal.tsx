@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Grid, Stack } from '@mui/material';
+import { FormControlLabel, Grid, Stack } from '@mui/material';
+import { TextareaAutosize } from '@mui/base/TextareaAutosize';
+
 import AppBar from '@mui/material/AppBar';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -22,6 +24,15 @@ import { Pharmacy } from '@/types/pharmacy';
 import { PharmacyOperatingHours } from '@/components/register-pharmacy/operating-hours';
 import { PharmacyLicense } from '@/components/register-pharmacy/pharmacy-license';
 import { PharmacyProfile } from '@/components/register-pharmacy/pharmacy-profile';
+
+
+
+import CardHeader from '@mui/material/CardHeader';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select from '@mui/material/Select';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -70,22 +81,11 @@ export default function ApplicationModal({ open, setOpen, application }: any) {
               <MainInfo application={application} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <PharmacyProfile />
+              <PharmacyLicenses  application={application} />
             </Grid>
           </Grid>
 
-          <Grid container spacing={3}>
-            <Grid lg={4} md={6} xs={12}></Grid>
-            <Grid lg={8} md={6} xs={12}>
-              <PharmacyLicense />
-            </Grid>
-          </Grid>
-          <Grid container spacing={3}>
-            <Grid lg={4} md={6} xs={12}></Grid>
-            <Grid lg={8} md={6} xs={12}>
-              <PharmacyOperatingHours />
-            </Grid>
-          </Grid>
+  
         </Stack>
       </Dialog>
     </React.Fragment>
@@ -132,5 +132,54 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
       </CardContent>
       <Divider />
     </Card>
+  );
+}
+
+
+export function PharmacyLicenses({ application }: { application: Pharmacy }): React.JSX.Element {
+  return (
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
+    >
+      <Card>
+        <CardHeader subheader="Click item to view" title="Licenses" />
+        <Divider />
+        <CardContent>
+
+        <List>
+          <ListItemButton>
+            <ListItemText primary="City Council License" secondary="" />
+          </ListItemButton>
+          <Divider />
+          <ListItemButton>
+            <ListItemText primary="Pharmacist Council License" secondary="" />
+          </ListItemButton>
+          <Divider />
+          <ListItemButton>
+            <ListItemText primary="Medicines Control Authority License" secondary="" />
+          </ListItemButton>
+          <Divider />
+          <ListItemButton>
+            <ListItemText primary="Health Professional Authority License" secondary="" />
+          </ListItemButton>
+        </List>
+
+          <Stack  spacing={1}>
+
+            <InputLabel htmlFor="decline-reason">Decline Reason</InputLabel>
+              <FormControl id="decline-reason" fullWidth>
+
+                <TextareaAutosize minRows={5} />
+              </FormControl>
+          </Stack>
+        </CardContent>
+        <Divider />
+        <CardActions sx={{ justifyContent: 'flex-end' }}>
+          <Button variant="contained">Next</Button>
+        </CardActions>
+      </Card>
+    </form>
   );
 }
