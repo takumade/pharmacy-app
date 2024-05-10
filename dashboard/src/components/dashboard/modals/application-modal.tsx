@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import { X } from '@phosphor-icons/react/dist/ssr';
+import { Pharmacy } from '@/types/pharmacy';
 
 
 
@@ -24,7 +25,16 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ApplicationModal({open, setOpen}: any) {
+
+interface ApplicationModalProps {
+  open: boolean
+  setOpen: any;
+  application: Pharmacy;
+}
+
+export default function ApplicationModal({open, setOpen, application}: any) {
+
+  console.log("App: ", application)
 
 
   const handleClose = () => {
