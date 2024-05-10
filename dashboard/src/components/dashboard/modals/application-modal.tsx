@@ -49,7 +49,7 @@ interface ApplicationModalProps {
 }
 
 export default function ApplicationModal({ open, setOpen, application }: ApplicationModalProps) {
-  console.log('App: ', application);
+  // TODO: When user removes user successfully denies or approve request....remove it from list
 
 
   const { updateMessage } = useSnackbar()
