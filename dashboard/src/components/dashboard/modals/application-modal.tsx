@@ -163,7 +163,13 @@ export function PharmacyLicenses({ application }: { application: Pharmacy }): Re
 
     >
 
-{isViewerOpen && (
+
+      <Card>
+        <CardHeader subheader="Click item to view. Click outside image to close" title="Licenses" />
+        <Divider />
+        <CardContent>
+
+        {isViewerOpen && (
         <ImageViewer
           src={ images }
           currentIndex={ currentImage }
@@ -172,10 +178,6 @@ export function PharmacyLicenses({ application }: { application: Pharmacy }): Re
           onClose={ closeImageViewer }
         />
       )}
-      <Card>
-        <CardHeader subheader="Click item to view" title="Licenses" />
-        <Divider />
-        <CardContent>
 
         <List>
           <ListItemButton onClick={() => openImageViewer(application.cityCouncilLicense)}>
