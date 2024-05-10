@@ -79,6 +79,8 @@ export default function ApplicationModal({ open, setOpen, application }: Applica
 
     }
 
+    handleClose()
+
 
   }
 
@@ -101,6 +103,8 @@ export default function ApplicationModal({ open, setOpen, application }: Applica
         })
 
       }
+
+      handleClose()
   }
 
 
