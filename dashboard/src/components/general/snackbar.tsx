@@ -16,7 +16,6 @@ interface SnackbarProps {
 }
 
 export default function GeneralSnackbar({open, setOpen, title, body, type}: SnackbarProps) {
-  const [open, setOpen] = React.useState(false);
   const [exited, setExited] = React.useState(true);
   const nodeRef = React.useRef(null);
 
