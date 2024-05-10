@@ -22,7 +22,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography';
 import { X } from '@phosphor-icons/react/dist/ssr';
 
-import { Pharmacy } from '@/types/pharmacy';
+import { Pharmacy } from '@/types/pharmacy.type';
 import { PharmacyOperatingHours } from '@/components/register-pharmacy/operating-hours';
 import { PharmacyLicense } from '@/components/register-pharmacy/pharmacy-license';
 import { PharmacyProfile } from '@/components/register-pharmacy/pharmacy-profile';
@@ -36,6 +36,8 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import backendClient from '@/services/client';
+import GeneralSnackbar from '@/components/general/snackbar';
+import { useSnackbar } from '@/contexts/snackbar-context';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -55,6 +57,10 @@ interface ApplicationModalProps {
 export default function ApplicationModal({ open, setOpen, application }: ApplicationModalProps) {
   console.log('App: ', application);
 
+
+  const { updateMessage } = useSnackbar()
+
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,6 +68,12 @@ export default function ApplicationModal({ open, setOpen, application }: Applica
   const approve = async () => {
 
     // await backendClient('post', `pharmacy/approve/${application._id}`, {})
+
+    updateMessage({
+      title: 'Approve Applicaiton',
+      body: "Fuck you",
+      type: "error"
+    })
 
   }
 
@@ -222,8 +234,8 @@ export function PharmacyLicenses({ application, handleApprove, handleDecline }: 
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained" color="error" onDoubleClick={() => handleDecline(reason)}>Decline</Button>
-          <Button variant="contained" onDoubleClick={() => handleApprove()}>Approve</Button>
+          <Button variant="contained" color="error" onClick={() => handleDecline(reason)}>Decline</Button>
+          <Button variant="contained" onClick={() => handleApprove()}>Approve</Button>
         </CardActions>
       </Card>
     </React.Fragment>
