@@ -14,10 +14,11 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import { FormLabel } from '@mui/material';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 
 
-export function PharmacyLicense({ handleNextStep }: { handleNextStep: Function }): React.JSX.Element {
+export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
   return (
     <form
     onSubmit={(event) => {
