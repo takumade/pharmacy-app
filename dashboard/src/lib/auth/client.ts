@@ -1,8 +1,9 @@
 'use client';
 
 import { setCookie, deleteCookie, getCookie } from 'cookies-next';
-import backendClient from '@/services/client';
-import type { User } from '@/types/user';
+import type { User } from '@/types/user.type';
+import frontendClient from '@/services/frontend-client';
+import { APIResponse } from '@/types/api-response';
 
 
 function generateToken(): string {
@@ -34,14 +35,19 @@ export interface ResetPasswordParams {
 }
 
 class AuthClient {
-  async signUp(_: SignUpParams): Promise<{ error?: string }> {
+  async signUp(params: SignUpParams): Promise<APIResponse> {
     // Make API request
 
-    // We do not handle the API, so we'll just generate a token and store it in localStorage.
-    const token = generateToken();
-    setCookie('custom-auth-token', token);
+    let response = await frontendClient('post', 'user/register', {
+      ...params,
+      name: params.fullName
+    })
+    await this.signInWithPassword({email: params.email, password: params.password})
 
-    return {};
+    // We do not handle the API, so we'll just generate a token and store it in localStorage.
+
+
+    return response;
   }
 
   async signInWithOAuth(_: SignInWithOAuthParams): Promise<{ error?: string }> {

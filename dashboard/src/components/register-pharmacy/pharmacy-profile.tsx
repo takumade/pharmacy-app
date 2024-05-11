@@ -13,6 +13,8 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
+import {  FormLabel } from '@mui/material';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 const states = [
   { value: 'harare', label: 'Harare' },
@@ -26,12 +28,22 @@ const states = [
   { value: 'kwekwe', label: 'Kwekwe' },
 ] as const;
 
-
-export function PharmacyProfile(): React.JSX.Element {
+export function PharmacyProfile({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
+
+        // @ts-ignore
+        const formData = new FormData(event.target);
+        const data = {};
+        formData.forEach((value, key) => {
+          //@ts-ignore
+          data[key] = value;
+        });
+        // Now you can use the 'data' object to access form values
+        console.log(data);
+        handleNextStep(data)
       }}
     >
       <Card>
@@ -41,8 +53,14 @@ export function PharmacyProfile(): React.JSX.Element {
           <Grid container spacing={3}>
             <Grid md={12} xs={12}>
               <FormControl fullWidth required>
+                <FormLabel>Logo</FormLabel>
+                <OutlinedInput type="file" label="Logo" name="logo" />
+              </FormControl>
+            </Grid>
+            <Grid md={12} xs={12}>
+              <FormControl fullWidth required>
                 <InputLabel>First name</InputLabel>
-                <OutlinedInput placeholder="MediCare" label="Name" name="firstName" />
+                <OutlinedInput placeholder="MediCare" label="Name" name="name" />
               </FormControl>
             </Grid>
             <Grid md={12} xs={12}>
@@ -72,7 +90,7 @@ export function PharmacyProfile(): React.JSX.Element {
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Phone number</InputLabel>
-                <OutlinedInput placeholder='+263778123123' label="Phone number" name="phone" type="tel" />
+                <OutlinedInput placeholder="+263778123123" label="Phone number" name="phone" type="tel" />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
@@ -97,7 +115,9 @@ export function PharmacyProfile(): React.JSX.Element {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Next</Button>
+          <Button type="submit" variant="contained">
+            Next
+          </Button>
         </CardActions>
       </Card>
     </form>

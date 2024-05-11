@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import backendClient from '@/services/client';
+import backendClient from '@/services/backend-client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { setCookie } from 'cookies-next';
 

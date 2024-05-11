@@ -1,3 +1,5 @@
+'use client'
+
 import * as React from 'react';
 import type { Metadata } from 'next';
 import Stack from '@mui/material/Stack';
@@ -10,38 +12,70 @@ import { PharmacyLicense } from '@/components/register-pharmacy/pharmacy-license
 import { PharmacyOperatingHours } from '@/components/register-pharmacy/operating-hours';
 import { PharamcyInfo } from '@/components/register-pharmacy/pharmacy-info';
 
-export const metadata = { title: `Account | Dashboard | ${config.site.name}` } satisfies Metadata;
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+
+
 
 export default function Page(): React.JSX.Element {
+
+
+  const supabase = createClientComponentClient()
+
+  const [step, changeStep] = React.useState(0)
+  const [pharmacyData, setPharmacyData] = React.useState<any>({})
+
+  const handleNextStep = (data:any) => {
+    setPharmacyData({
+      ...pharmacyData,
+      ...data
+    })
+
+    changeStep(currStep => currStep + 1 )
+  }
+
+  const handleApply = (data:any) => {
+
+    let applicationData = {
+      ...pharmacyData,
+      ...data
+    }
+
+
+
+
+  }
+
   return (
     <Stack spacing={3} style={{padding:"5rem"}}>
       <div>
         <Typography variant="h4">Register Pharmacy</Typography>
       </div>
-      <Grid container spacing={3}>
+      {step === 0 &&<Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
           <PharamcyInfo />
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-          <PharmacyProfile />
+          <PharmacyProfile handleNextStep={handleNextStep} supabaseClient={supabase}/>
         </Grid>
-      </Grid>
+      </Grid>}
 
-      <Grid container spacing={3}>
+      {step === 1 && <Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-        <PharmacyLicense />
+        <PharmacyLicense handleNextStep={handleNextStep} supabaseClient={supabase}/>
         </Grid>
-      </Grid>
-      <Grid container spacing={3}>
+      </Grid>}
+
+
+      {step === 2 && <Grid container spacing={3}>
         <Grid lg={4} md={6} xs={12}>
 
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-        <PharmacyOperatingHours/>
+        <PharmacyOperatingHours handleApply={handleApply}/>
         </Grid>
-      </Grid>
+      </Grid>}
     </Stack>
   );
 }
