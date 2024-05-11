@@ -10,6 +10,7 @@ const searchMedicine = async (req, res) => {
     try {
 
       let medicines = await Medicine.find({medicineName: {$regex : name, $options : "i"}})
+                                    .populate('owner')
 
       res.status(200).json({ success: true, data:medicines });
      
