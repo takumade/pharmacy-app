@@ -31,6 +31,7 @@
     "@mui/x-date-pickers": "6.19.6",
     "@phosphor-icons/react": "2.0.15",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.1",
     "apexcharts": "3.46.0",
     "cookies-next": "^4.1.1",
