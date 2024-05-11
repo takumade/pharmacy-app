@@ -24,7 +24,7 @@ const LoginScreen: React.FC<{navigation: any}> = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false); 
-
+  const [text, setText] = React.useState('');
   const login = async () => {
     setLoading(true); 
     const result = await onLogin!(email, password);

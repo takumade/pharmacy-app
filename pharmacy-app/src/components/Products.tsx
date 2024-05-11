@@ -1,32 +1,21 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
-import {FONTFAMILY, FONTSIZE, SPACING} from '../theme/theme';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
 
 import {Card, Button, Text} from 'react-native-paper';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 
-const styles = StyleSheet.create({
-  productsContainer: {
-    marginTop: SPACING.space_30,
-    marginBottom: SPACING.space_15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    backgroundColor: 'transparent',
-    gap: 12,
-  },
-  productCard: {width: 180, height: 240},
-  productPicture: {
-    height: 130,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-  },
-  cardHeaderStyle: {
-    fontFamily: FONTFAMILY.poppins_medium,
-  },
-  cardDescription: {
-    fontFamily: FONTFAMILY.poppins_regular,
-  },
-});
+interface ProductsCardProps {
+  id: string;
+  index: number;
+  type: string;
+}
 
 const Products = () => (
   <ScrollView horizontal>
@@ -46,7 +35,11 @@ const Products = () => (
         </Card.Content>
         <Card.Actions>
           <Button>
-            <FontAwesomeIcon name="plus" size={FONTSIZE.size_16} />
+            <FontAwesomeIcon
+              name="plus"
+              size={FONTSIZE.size_16}
+              color={'#76A593'}
+            />
           </Button>
         </Card.Actions>
       </Card>
@@ -85,5 +78,34 @@ const Products = () => (
     </View>
   </ScrollView>
 );
+
+const styles = StyleSheet.create({
+  productsContainer: {
+    marginTop: SPACING.space_30,
+    marginBottom: SPACING.space_15,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent',
+    gap: 12,
+  },
+  productCard: {
+    width: 158,
+    height: 240,
+    borderRadius: BORDERRADIUS.radius_15,
+  },
+  productPicture: {
+    height: 130,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  cardHeaderStyle: {
+    fontFamily: FONTFAMILY.poppins_medium,
+    fontSize: FONTSIZE.size_18,
+    color: COLORS.primaryBlackHex,
+  },
+  cardDescription: {
+    fontFamily: FONTFAMILY.poppins_regular,
+  },
+});
 
 export default Products;
