@@ -14,14 +14,31 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import { FormLabel } from '@mui/material';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 
 
-export function PharmacyLicense({ handleNextStep }: { handleNextStep: Function }): React.JSX.Element {
+export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
   return (
     <form
-    onSubmit={(event) => {
+    onSubmit={async (event) => {
       event.preventDefault();
+
+
+
+      // @ts-ignore
+      const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
+      if (logoFile) {
+          // Get the FileList from the file input
+          const files = logoFile.files;
+
+          const { data, error } = await supabaseClient.storage.from('logos').upload(`public/somefile.png`, files[0])
+
+          // TODO: Finish off here
+      }
+
+
+
 
       // @ts-ignore
       const formData = new FormData(event.target);
