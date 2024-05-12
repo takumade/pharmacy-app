@@ -7,10 +7,21 @@ const User = require("../models/userModel");
 
 const searchPharmacies = async (req, res) => {
   const name = req.query.name
+  const owner = req.query.owner
 
   try {
 
-    let pharmacies = await Pharmacy.find({name: {$regex : name, $options : "i"}})
+    let pharmacies = []
+
+    if (name){
+      pharmacies = await Pharmacy.find({name: {$regex : name, $options : "i"}})
+    }
+      
+      
+    if (owner){
+      pharmacies = await Pharmacy.find({owner: {$regex : owner, $options : "i"}})
+    }
+       
 
     res.status(200).json({ success: true, data:pharmacies });
    
