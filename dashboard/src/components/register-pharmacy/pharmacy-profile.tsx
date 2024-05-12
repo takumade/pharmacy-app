@@ -32,12 +32,10 @@ const states = [
 ] as const;
 
 interface PharmacyProfileProps {
-  user: User | null;
   handleNextStep: Function;
-  supabaseClient: SupabaseClient;
 }
 
-export function PharmacyProfile({ user, handleNextStep, supabaseClient }: PharmacyProfileProps): React.JSX.Element {
+export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): React.JSX.Element {
 
 
   return (
@@ -55,7 +53,7 @@ export function PharmacyProfile({ user, handleNextStep, supabaseClient }: Pharma
           // Get the FileList from the file input
           const file = logoFile.files[0];
 
-          let url = await uploadFileToSupabase(user as User, file, 'logos')
+          let url = await uploadFileToSupabase( file, 'logos')
           data.logo = url as string
         }
 
