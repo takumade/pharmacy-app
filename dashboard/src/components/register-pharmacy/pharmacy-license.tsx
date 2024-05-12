@@ -19,7 +19,7 @@ import { User } from '@/types/user.type';
 
 
 interface PharmacyLicenseProps {
-  user: User;
+  user: User | null;
   handleNextStep: Function;
   supabaseClient: SupabaseClient;
 }
