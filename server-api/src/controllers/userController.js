@@ -1,4 +1,5 @@
 const { userRoles } = require("../constants");
+const Pharmacy = require("../models/pharmacyModel");
 const User = require("../models/userModel");
 
 
@@ -107,6 +108,12 @@ const userLogin = async (req, res) => {
   try {
     // Check if user exists
     const user = await User.findOne({ email, isDeleted: false });
+    let pharmacy = null
+
+    if (user.role === userRoles.pharmacy)
+        pharmacy = await Pharmacy.findOne({ owner: user._id})
+
+
     if (!user) {
       return res
         .status(400)
@@ -132,10 +139,14 @@ const userLogin = async (req, res) => {
     // Generate auth token
     const token = user.generateAuthToken();
 
-    res.status(200).json({ success: true, data: {
+    let finalData =  {
       token,
       user
-    } });
+    }
+     
+    if (pharmacy) finalData.pharmacy = pharmacy
+
+    res.status(200).json({ success: true, data:finalData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
