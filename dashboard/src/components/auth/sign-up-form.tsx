@@ -23,6 +23,7 @@ import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
+  role: zod.string().min(1, { message: 'required' }),
   fullName: zod.string().min(1, { message: 'Full name is required' }),
   username: zod.string().min(1, { message: 'Username is required' }),
   email: zod.string().min(1, { message: 'Email is required' }).email(),
@@ -33,7 +34,7 @@ const schema = zod.object({
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { fullName: '', username: '', email: '', phone: '', password: '', terms: false } satisfies Values;
+const defaultValues = { role: 'pharmacy', fullName: '', username: '', email: '', phone: '', password: '', terms: false } satisfies Values;
 
 export function SignUpForm(): React.JSX.Element {
   const router = useRouter();
@@ -84,6 +85,20 @@ export function SignUpForm(): React.JSX.Element {
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
+
+
+        <Controller
+            control={control}
+            name="role"
+            render={({ field }) => (
+              <FormControl style={{display: "none"}} error={Boolean(errors.role)}>
+                <InputLabel style={{display: "none"}}>Role</InputLabel>
+                <OutlinedInput style={{display: "none"}} {...field} label="Role" />
+                {errors.role ? <FormHelperText style={{display: "none"}}>{errors.role.message}</FormHelperText> : null}
+              </FormControl>
+            )}
+          />
+
           <Controller
             control={control}
             name="fullName"
