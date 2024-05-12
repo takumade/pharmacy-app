@@ -27,7 +27,7 @@ export interface SupabaseProviderProps {
   children: React.ReactNode;
 }
 
-export function SnackbarProvider({ children }: SupabaseProviderProps): React.JSX.Element {
+export function SupabaseProvider({ children }: SupabaseProviderProps): React.JSX.Element {
 
   return <SupabaseContext.Provider value={{ supabaseClient: supabase }}>
     {children}</SupabaseContext.Provider>;
