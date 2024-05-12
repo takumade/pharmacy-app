@@ -16,44 +16,62 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { User } from '@/types/user.type';
+import { uploadFileToSupabase } from '@/lib/supabase/frontend-client';
 
 
 interface PharmacyLicenseProps {
   user: User | null;
   handleNextStep: Function;
-  supabaseClient: SupabaseClient;
+}
+
+
+const uploadFile = async (user:User, event: any, name: string, bucket: string) => {
+  const fileObject = event.target.querySelector(`input[type="file"][name="${name}"]`);
+  if (fileObject) {
+    // Get the FileList from the file input
+    const file = fileObject.files[0];
+
+    let url = await uploadFileToSupabase(user as User, file, 'logos')
+    return url as string
+  }
 }
 
 
 
-export function PharmacyLicense({ user, handleNextStep, supabaseClient }: PharmacyLicenseProps): React.JSX.Element {
+export function PharmacyLicense({ user, handleNextStep }: PharmacyLicenseProps): React.JSX.Element {
   return (
     <form
     onSubmit={async (event) => {
       event.preventDefault();
 
+      const data:any = {};
 
 
-      // @ts-ignore
-      const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
-      if (logoFile) {
-          // Get the FileList from the file input
-          const files = logoFile.files;
+      let cclUrl = await uploadFile(user as User, event, "cityCouncilLicense", "licenses")
+      data['cityCouncilLicense'] = cclUrl
 
-          const { data, error } = await supabaseClient.storage.from('logos').upload(`public/somefile.png`, files[0])
+      let pclUrl = await uploadFile(user as User, event, "pharmacistCouncilLicense", "licenses")
+      data['pharmacistCouncilLicense'] = pclUrl
 
-          // TODO: Finish off here
-      }
+      let hplUrl = await uploadFile(user as User, event, "healthProfessionsAuthorityLicense", "licenses")
+      data['healthProfessionsAuthorityLicense'] = hplUrl
+
+      let mcazlUrl = await uploadFile(user as User, event, "medicinesControlAuthorityLicense", "licenses")
+      data['medicinesControlAuthorityLicense'] = mcazlUrl
+
 
 
 
 
       // @ts-ignore
       const formData = new FormData(event.target);
-      const data = {};
+
+      let skipKeys = ["cityCouncilLicense", "pharmacistCouncilLicense", "healthProfessionsAuthorityLicense", "medicinesControlAuthorityLicense"  ]
+
       formData.forEach((value, key) => {
-        //@ts-ignore
-        data[key] = value;
+
+        // @ts-ignore
+        if (!skipKeys.includes(key)) data[key] = value;
       });
       // Now you can use the 'data' object to access form values
       console.log(data);
