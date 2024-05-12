@@ -26,6 +26,9 @@ import { paths } from '@/paths';
 export default function Page(): React.JSX.Element {
 
 
+  const {user} = useUser()
+
+
  const router = useRouter()
   const {updateMessage} = useSnackbar()
 
@@ -46,7 +49,8 @@ export default function Page(): React.JSX.Element {
 
     let applicationData = {
       ...pharmacyData,
-      ...data
+      ...data,
+      owner: user?._id
     }
 
     let response = await frontendClient('post', 'pharmacy/create', applicationData)

@@ -15,7 +15,7 @@ export const uploadFileToSupabase = async (subaseClient: SupabaseClient, file:an
 
 
 
-const { data:uploadData, error:uploadError } = await subaseClient.storage.from(bucket).upload(`${user?._id}-${file.name}`, file, {
+const { data:uploadData, error:uploadError } = await subaseClient.storage.from(bucket).upload(`${user?._id}-${new Date().getTime()}-${file.name}`, file, {
  cacheControl: '3600',
  upsert: false,
 });
