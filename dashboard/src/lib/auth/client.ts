@@ -73,9 +73,11 @@ class AuthClient {
 
     if (response.success){
         setCookie('custom-auth-token', response.data.token);
-        setCookie('custom-auth-user', JSON.stringify(response.data.user));
+        setCookie('custom-auth-user', JSON.stringify({
+          ...response.data.user,
+          pharmacy: response.data.pharmacy
+        }));
     }
-
 
 
     return response;
@@ -100,7 +102,6 @@ class AuthClient {
     }
 
     let user = JSON.parse(getCookie('custom-auth-user') as string);
-
     return { data: user };
   }
 

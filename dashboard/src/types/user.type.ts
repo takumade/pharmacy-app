@@ -1,3 +1,5 @@
+import { Pharmacy } from "./pharmacy.type";
+
 export interface User {
   _id: string;
   username: string;
@@ -11,6 +13,7 @@ export interface User {
   isDeleted: boolean;
   avatar: string;
   verificationImage: string;
+  pharmacy: Pharmacy | undefined
 };
 
 

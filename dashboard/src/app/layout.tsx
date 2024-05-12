@@ -7,6 +7,7 @@ import { UserProvider } from '@/contexts/user-context';
 import { LocalizationProvider } from '@/components/core/localization-provider';
 import { ThemeProvider } from '@/components/core/theme-provider/theme-provider';
 import { SnackbarProvider } from '@/contexts/snackbar-context';
+import { SupabaseProvider } from '@/contexts/supbase-context';
 
 export const viewport = { width: 'device-width', initialScale: 1 } satisfies Viewport;
 
@@ -19,11 +20,13 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
     <html lang="en">
       <body>
         <LocalizationProvider>
+          <SupabaseProvider>
           <SnackbarProvider>
           <UserProvider>
             <ThemeProvider>{children}</ThemeProvider>
           </UserProvider>
           </SnackbarProvider>
+          </SupabaseProvider>
         </LocalizationProvider>
       </body>
     </html>

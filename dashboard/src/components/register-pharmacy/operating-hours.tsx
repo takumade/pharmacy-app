@@ -36,13 +36,31 @@ export function PharmacyOperatingHours({ handleApply }: { handleApply: Function 
 
       // @ts-ignore
       const formData = new FormData(event.target);
-      const data = {};
+      const data = {
+        operatingHours: {},
+        weekdaystart: '',
+        weekdaysend: '',
+        weekendstart: '',
+        weekendend: ''
+      };
+
       formData.forEach((value, key) => {
         //@ts-ignore
         data[key] = value;
       });
       // Now you can use the 'data' object to access form values
       console.log(data);
+
+      data.operatingHours = {
+        weekdays: {
+            start: data.weekdaystart,
+            end: data.weekdaysend
+        },
+        weekends: {
+            start: data.weekendstart,
+            end: data.weekendend
+        }
+    }
       handleApply(data)
     }}
     >
@@ -82,7 +100,7 @@ export function PharmacyOperatingHours({ handleApply }: { handleApply: Function 
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Apply</Button>
+          <Button type="submit" variant="contained">Apply</Button>
         </CardActions>
       </Card>
     </form>

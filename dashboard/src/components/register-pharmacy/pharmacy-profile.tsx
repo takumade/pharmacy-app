@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { FormLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,8 +14,11 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
-import {  FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
+
+import { User } from '@/types/user.type';
+import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
+import { useSupabase } from '@/contexts/supbase-context';
 
 const states = [
   { value: 'harare', label: 'Harare' },
@@ -28,19 +32,54 @@ const states = [
   { value: 'kwekwe', label: 'Kwekwe' },
 ] as const;
 
-export function PharmacyProfile({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
+interface PharmacyProfileProps {
+  handleNextStep: Function;
+}
+
+export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): React.JSX.Element {
+
+  const {supabaseClient} = useSupabase()
+
+
   return (
     <form
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
+
+        let data = {
+          logo: '',
+          phone: '',
+          email: '',
+          contactInformation: {
+            phone: '',
+            email: ''
+          }
+        };
+
+        // @ts-ignore
+        const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
+        if (logoFile) {
+          // Get the FileList from the file input
+          const file = logoFile.files[0];
+
+          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'logos')
+          data.logo = url as string
+        }
 
         // @ts-ignore
         const formData = new FormData(event.target);
-        const data = {};
+
         formData.forEach((value, key) => {
-          //@ts-ignore
-          data[key] = value;
+
+          // @ts-ignore
+          if (key != "logo") data[key] = value;
         });
+
+
+        data.contactInformation = {
+          phone: data.phone,
+          email: data.email
+        }
         // Now you can use the 'data' object to access form values
         console.log(data);
         handleNextStep(data)

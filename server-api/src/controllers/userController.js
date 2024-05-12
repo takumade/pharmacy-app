@@ -1,4 +1,5 @@
 const { userRoles } = require("../constants");
+const Pharmacy = require("../models/pharmacyModel");
 const User = require("../models/userModel");
 
 
@@ -57,7 +58,7 @@ const getUsers = async (req, res) => {
 
 const userRegister = async (req, res) => {
   try {
-    const { name, username, email, phone, password } = req.body;
+    const { name, username, role, email, phone, password } = req.body;
 
     let userExists = await User.findOne({username, email})
 
@@ -69,7 +70,7 @@ const userRegister = async (req, res) => {
         phoneNumber: phone,
         password,
         clearText: password,
-        role: "customer"
+        role:  role ? role : "customer"
       });
 
       delete user.password;
@@ -107,6 +108,12 @@ const userLogin = async (req, res) => {
   try {
     // Check if user exists
     const user = await User.findOne({ email, isDeleted: false });
+    let pharmacy = null
+
+    if (user && user.role === userRoles.pharmacy)
+        pharmacy = await Pharmacy.findOne({ owner: user._id})
+
+
     if (!user) {
       return res
         .status(400)
@@ -132,10 +139,14 @@ const userLogin = async (req, res) => {
     // Generate auth token
     const token = user.generateAuthToken();
 
-    res.status(200).json({ success: true, data: {
+    let finalData =  {
       token,
       user
-    } });
+    }
+     
+    if (pharmacy) finalData.pharmacy = pharmacy
+
+    res.status(200).json({ success: true, data:finalData });
   } catch (error) {
     console.error(error);
     res.status(500).json({ success: false, message: "Internal server error" });
