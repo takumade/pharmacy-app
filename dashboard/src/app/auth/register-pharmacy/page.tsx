@@ -13,10 +13,13 @@ import { PharmacyOperatingHours } from '@/components/register-pharmacy/operating
 import { PharamcyInfo } from '@/components/register-pharmacy/pharmacy-info';
 
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import { useUser } from '@/hooks/use-user';
 
 
 
 export default function Page(): React.JSX.Element {
+
+  const {user} = useUser()
 
 
   const supabase = createClientComponentClient()
@@ -55,7 +58,7 @@ export default function Page(): React.JSX.Element {
           <PharamcyInfo />
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-          <PharmacyProfile handleNextStep={handleNextStep} supabaseClient={supabase}/>
+          <PharmacyProfile user={user} handleNextStep={handleNextStep} supabaseClient={supabase}/>
         </Grid>
       </Grid>}
 
@@ -63,7 +66,7 @@ export default function Page(): React.JSX.Element {
         <Grid lg={4} md={6} xs={12}>
         </Grid>
         <Grid lg={8} md={6} xs={12}>
-        <PharmacyLicense handleNextStep={handleNextStep} supabaseClient={supabase}/>
+        <PharmacyLicense user={user} handleNextStep={handleNextStep} supabaseClient={supabase}/>
         </Grid>
       </Grid>}
 
