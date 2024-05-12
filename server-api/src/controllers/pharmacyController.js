@@ -19,7 +19,7 @@ const searchPharmacies = async (req, res) => {
       
       
     if (owner){
-      pharmacies = await Pharmacy.find({owner: {$regex : owner, $options : "i"}})
+      pharmacies = await Pharmacy.find({owner: owner})
     }
        
 
