@@ -15,6 +15,9 @@ import { PharamcyInfo } from '@/components/register-pharmacy/pharmacy-info';
 
 import { useUser } from '@/hooks/use-user';
 import supabase from '@/lib/supabase/frontend-client';
+import frontendClient from '@/services/frontend-client';
+import { useSnackbar } from '@/contexts/snackbar-context';
+import { title } from 'process';
 
 
 
@@ -22,7 +25,7 @@ export default function Page(): React.JSX.Element {
 
 
 
-  const {user} = useUser()
+  const {updateMessage} = useSnackbar()
 
 
   const [step, changeStep] = React.useState(0)
@@ -37,16 +40,28 @@ export default function Page(): React.JSX.Element {
     changeStep(currStep => currStep + 1 )
   }
 
-  const handleApply = (data:any) => {
+  const handleApply = async (data:any) => {
 
     let applicationData = {
       ...pharmacyData,
       ...data
     }
 
+    let response = await frontendClient('post', 'pharmacy/create', applicationData)
 
-
-
+    if (response.success){
+      updateMessage({
+        title: "Register Pharmacy",
+        type: 'success',
+        message: response.message
+      })
+    }else{
+      updateMessage({
+        title: "Register Pharmacy",
+        type: 'error',
+        message: response.message
+      })
+    }
   }
 
   return (

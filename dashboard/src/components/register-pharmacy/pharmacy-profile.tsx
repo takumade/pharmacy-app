@@ -44,7 +44,13 @@ export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): Reac
         event.preventDefault();
 
         let data = {
-          logo: ''
+          logo: '',
+          phone: '',
+          email: '',
+          contactInformation: {
+            phone: '',
+            email: ''
+          }
         };
 
         // @ts-ignore
@@ -65,6 +71,12 @@ export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): Reac
           // @ts-ignore
           if (key != "logo") data[key] = value;
         });
+
+
+        data.contactInformation = {
+          phone: data.phone,
+          email: data.email
+        }
         // Now you can use the 'data' object to access form values
         console.log(data);
         handleNextStep(data)
