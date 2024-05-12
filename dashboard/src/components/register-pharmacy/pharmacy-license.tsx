@@ -15,10 +15,18 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import { FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { User } from '@/types/user.type';
+
+
+interface PharmacyLicenseProps {
+  user: User;
+  handleNextStep: Function;
+  supabaseClient: SupabaseClient;
+}
 
 
 
-export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
+export function PharmacyLicense({ user, handleNextStep, supabaseClient }: PharmacyLicenseProps): React.JSX.Element {
   return (
     <form
     onSubmit={async (event) => {
