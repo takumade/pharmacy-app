@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { LoadingButton } from '@mui/lab';
+import { FormLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,69 +15,72 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
-import { FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { User } from '@/types/user.type';
-import { uploadFileToSupabase } from '@/lib/supabase/frontend-client';
 
+import { User } from '@/types/user.type';
+import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
+import { useSupabase } from '@/contexts/supbase-context';
 
 interface PharmacyLicenseProps {
   handleNextStep: Function;
 }
 
-
-const uploadFile = async ( event: any, name: string, bucket: string) => {
+const uploadFile = async (supabaseClient: SupabaseClient | undefined, event: any, name: string, bucket: string) => {
   const fileObject = event.target.querySelector(`input[type="file"][name="${name}"]`);
   if (fileObject) {
     // Get the FileList from the file input
     const file = fileObject.files[0];
 
-    let url = await uploadFileToSupabase( file, 'logos')
-    return url as string
+    let url = await uploadFileToSupabase(supabaseClient as SupabaseClient, file, bucket);
+    return url as string;
   }
-}
-
-
+};
 
 export function PharmacyLicense({ handleNextStep }: PharmacyLicenseProps): React.JSX.Element {
+  const { supabaseClient } = useSupabase();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
   return (
     <form
-    onSubmit={async (event) => {
-      event.preventDefault();
+      onSubmit={async (event) => {
+        event.preventDefault();
 
-      const data:any = {};
+        setIsLoading(true);
 
+        const data: any = {};
 
-      let cclUrl = await uploadFile( event, "cityCouncilLicense", "licenses")
-      data['cityCouncilLicense'] = cclUrl
+        let cclUrl = await uploadFile(supabaseClient, event, 'cityCouncilLicense', 'licenses');
+        data['cityCouncilLicense'] = cclUrl;
 
-      let pclUrl = await uploadFile( event, "pharmacistCouncilLicense", "licenses")
-      data['pharmacistCouncilLicense'] = pclUrl
+        let pclUrl = await uploadFile(supabaseClient, event, 'pharmacistCouncilLicense', 'licenses');
+        data['pharmacistCouncilLicense'] = pclUrl;
 
-      let hplUrl = await uploadFile( event, "healthProfessionsAuthorityLicense", "licenses")
-      data['healthProfessionsAuthorityLicense'] = hplUrl
+        let hplUrl = await uploadFile(supabaseClient, event, 'healthProfessionsAuthorityLicense', 'licenses');
+        data['healthProfessionsAuthorityLicense'] = hplUrl;
 
-      let mcazlUrl = await uploadFile( event, "medicinesControlAuthorityLicense", "licenses")
-      data['medicinesControlAuthorityLicense'] = mcazlUrl
-
-
-
-
-
-      // @ts-ignore
-      const formData = new FormData(event.target);
-
-      let skipKeys = ["cityCouncilLicense", "pharmacistCouncilLicense", "healthProfessionsAuthorityLicense", "medicinesControlAuthorityLicense"  ]
-
-      formData.forEach((value, key) => {
+        let mcazlUrl = await uploadFile(supabaseClient, event, 'medicinesControlAuthorityLicense', 'licenses');
+        data['medicinesControlAuthorityLicense'] = mcazlUrl;
 
         // @ts-ignore
-        if (!skipKeys.includes(key)) data[key] = value;
-      });
-      // Now you can use the 'data' object to access form values
-      console.log(data);
-      handleNextStep(data)
-    }}
+        const formData = new FormData(event.target);
+
+        let skipKeys = [
+          'cityCouncilLicense',
+          'pharmacistCouncilLicense',
+          'healthProfessionsAuthorityLicense',
+          'medicinesControlAuthorityLicense',
+        ];
+
+        formData.forEach((value, key) => {
+          // @ts-ignore
+          if (!skipKeys.includes(key)) data[key] = value;
+        });
+        // Now you can use the 'data' object to access form values
+        console.log(data);
+        setIsLoading(false);
+        handleNextStep(data);
+      }}
     >
       <Card>
         <CardHeader subheader="Upload your licenses below" title="Step 2: Licenses" />
@@ -99,7 +104,11 @@ export function PharmacyLicense({ handleNextStep }: PharmacyLicenseProps): React
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Health Professionals License</FormLabel>
-                <OutlinedInput type="file" label="Health Professionals License" name="healthProfessionsAuthorityLicense" />
+                <OutlinedInput
+                  type="file"
+                  label="Health Professionals License"
+                  name="healthProfessionsAuthorityLicense"
+                />
               </FormControl>
             </Grid>
 
@@ -113,7 +122,15 @@ export function PharmacyLicense({ handleNextStep }: PharmacyLicenseProps): React
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Next</Button>
+          {isLoading ? (
+            <LoadingButton loading variant="outlined">
+              Saving...
+            </LoadingButton>
+          ) : (
+            <Button type="submit" variant="contained">
+              Next
+            </Button>
+          )}
         </CardActions>
       </Card>
     </form>
