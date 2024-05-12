@@ -18,13 +18,15 @@ import supabase from '@/lib/supabase/frontend-client';
 import frontendClient from '@/services/frontend-client';
 import { useSnackbar } from '@/contexts/snackbar-context';
 import { title } from 'process';
+import { useRouter } from 'next/navigation';
+import { paths } from '@/paths';
 
 
 
 export default function Page(): React.JSX.Element {
 
 
-
+ const router = useRouter()
   const {updateMessage} = useSnackbar()
 
 
@@ -55,6 +57,8 @@ export default function Page(): React.JSX.Element {
         type: 'success',
         message: response.message
       })
+
+      router.replace(paths.registration.pending)
     }else{
       updateMessage({
         title: "Register Pharmacy",
