@@ -75,8 +75,8 @@ export function SignInForm(): React.JSX.Element {
           let response = await frontendClient('get', `pharmacy/search?owner=${user._id}`, {})
 
           if (response.success){
-            if (response.data.length > 0){
-              let pharmacy: Pharmacy = response.data[0]
+            if (response.data.pharmacy){
+              let pharmacy: Pharmacy =  response.data.pharmacy
 
               if (pharmacy.applicationStatus === "pending"){
                 router.replace(paths.registration.pending)
