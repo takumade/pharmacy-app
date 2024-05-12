@@ -1,8 +1,9 @@
 import { User } from '@/types/user.type';
 import { paths } from '@/paths';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 
-export const checkUserPermissions = (user: User, router: any) => {
+export const checkUserPermissions = (user: User, router: AppRouterInstance) => {
   if (user) {
 
     if (user.role === 'pharmacy') {
@@ -20,5 +21,5 @@ export const checkUserPermissions = (user: User, router: any) => {
     if (user.role === 'admin') router.replace(paths.dashboard.overview);
   }
 
-  return 
+  return
 };
