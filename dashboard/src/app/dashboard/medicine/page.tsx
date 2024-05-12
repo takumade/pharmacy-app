@@ -25,15 +25,13 @@ export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } 
 export default async function Page() {
 
   let response: APIResponse = await backendClient('get', 'medicine/')
-  let medicine = response.data ? response.data : []
+  let medicine = response.data
 
-  console.log("medicine: ", medicine)
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
   let permissions: RolePerm = getPermissions(user.role, 'medicine')
 
-  console.log("User:", )
 
   return (
     <Stack spacing={3}>
