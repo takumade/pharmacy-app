@@ -21,6 +21,9 @@ import { z as zod } from 'zod';
 import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
+import { User } from '@/types/user.type';
+import frontendClient from '@/services/frontend-client';
+import { Pharmacy } from '@/types/pharmacy.type';
 
 const schema = zod.object({
   email: zod.string().min(1, { message: 'Email is required' }).email(),
@@ -59,12 +62,49 @@ export function SignInForm(): React.JSX.Element {
         setIsPending(false);
         return;
       }
-      // Refresh the auth state
+
+
+       // Refresh the auth state
       await checkSession?.();
 
-      // UserProvider, for this case, will not refresh the router
+      if (response.data.user){
+
+
+        let user:User = response.data.user
+        if (user.role === "pharmacy"){
+          let response = await frontendClient('get', `pharmacy/search?owner=${user._id}`, {})
+
+          if (response.success){
+            if (response.data.length > 0){
+              let pharmacy: Pharmacy = response.data[0]
+
+              if (pharmacy.applicationStatus === "pending"){
+                router.replace(paths.registration.pending)
+              }
+
+              if (pharmacy.applicationStatus === "declined"){
+                router.replace(paths.registration.declined)
+              }
+
+              // UserProvider, for this case, will not refresh the router
+              // After refresh, GuestGuard will handle the redirect
+                router.refresh();
+
+            }else{
+              router.replace(paths.auth.registerPharmacy)
+            }
+          }
+        }
+      }else{
+       // UserProvider, for this case, will not refresh the router
       // After refresh, GuestGuard will handle the redirect
-      router.refresh();
+        router.refresh();
+      }
+
+
+
+
+
     },
     [checkSession, router, setError]
   );
