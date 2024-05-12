@@ -18,6 +18,7 @@ import { Logo } from '@/components/core/logo';
 
 import { navItems } from './config';
 import { navIcons } from './nav-icons';
+import { useUser } from '@/hooks/use-user';
 
 export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
@@ -115,10 +116,15 @@ export function SideNav(): React.JSX.Element {
 }
 
 function renderNavItems({ items = [], pathname }: { items?: NavItemConfig[]; pathname: string }): React.JSX.Element {
+
+  const {user } = useUser()
   const children = items.reduce((acc: React.ReactNode[], curr: NavItemConfig): React.ReactNode[] => {
     const { key, ...item } = curr;
 
-    acc.push(<NavItem key={key} pathname={pathname} {...item} />);
+
+    // Hide admin routes from pharmacy
+    if ((item.admin && user?.role == "admin") || !item.admin )
+      acc.push(<NavItem key={key} pathname={pathname} {...item} />);
 
     return acc;
   }, []);
