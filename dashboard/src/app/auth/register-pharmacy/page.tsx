@@ -55,7 +55,7 @@ export default function Page(): React.JSX.Element {
       updateMessage({
         title: "Register Pharmacy",
         type: 'success',
-        message: response.message
+        body: response.message
       })
 
       router.replace(paths.registration.pending)
@@ -63,7 +63,7 @@ export default function Page(): React.JSX.Element {
       updateMessage({
         title: "Register Pharmacy",
         type: 'error',
-        message: response.message
+        body: response.message
       })
     }
   }
