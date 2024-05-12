@@ -17,7 +17,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 import { User } from '@/types/user.type';
-import { uploadFileToSupabase } from '@/lib/supabase/frontend-client';
+import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
+import { useSupabase } from '@/contexts/supbase-context';
 
 const states = [
   { value: 'harare', label: 'Harare' },
@@ -36,6 +37,8 @@ interface PharmacyProfileProps {
 }
 
 export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): React.JSX.Element {
+
+  const {supabaseClient} = useSupabase()
 
 
   return (
@@ -59,7 +62,7 @@ export function PharmacyProfile({  handleNextStep }: PharmacyProfileProps): Reac
           // Get the FileList from the file input
           const file = logoFile.files[0];
 
-          let url = await uploadFileToSupabase( file, 'logos')
+          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'logos')
           data.logo = url as string
         }
 
