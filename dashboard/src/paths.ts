@@ -1,7 +1,8 @@
 export const paths = {
   home: '/',
   registration: {
-    pending: '/registration/pending'
+    pending: '/registration/pending',
+    declined: '/registration/declined'
   },
   auth: {
     signIn: '/auth/sign-in',
