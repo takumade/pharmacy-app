@@ -110,7 +110,7 @@ const userLogin = async (req, res) => {
     const user = await User.findOne({ email, isDeleted: false });
     let pharmacy = null
 
-    if (user.role === userRoles.pharmacy)
+    if (user && user.role === userRoles.pharmacy)
         pharmacy = await Pharmacy.findOne({ owner: user._id})
 
 
