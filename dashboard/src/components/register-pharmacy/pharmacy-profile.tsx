@@ -15,6 +15,7 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import {  FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { User } from '@/types/user.type';
 
 const states = [
   { value: 'harare', label: 'Harare' },
@@ -28,7 +29,14 @@ const states = [
   { value: 'kwekwe', label: 'Kwekwe' },
 ] as const;
 
-export function PharmacyProfile({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
+interface PharmacyProfileProps {
+  user: User;
+  handleNextStep: Function;
+  supabaseClient: SupabaseClient;
+}
+
+
+export function PharmacyProfile({ user, handleNextStep, supabaseClient }: PharmacyProfileProps): React.JSX.Element {
   return (
     <form
       onSubmit={(event) => {
