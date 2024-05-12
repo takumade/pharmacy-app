@@ -74,6 +74,10 @@ class AuthClient {
     if (response.success){
         setCookie('custom-auth-token', response.data.token);
         setCookie('custom-auth-user', JSON.stringify(response.data.user));
+
+        if (response.data.pharmacy){
+          setCookie('custom-auth-user-pharmacy',JSON.stringify(response.data.pharmacy));
+        }
     }
 
 
