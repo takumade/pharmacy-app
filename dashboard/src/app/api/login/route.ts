@@ -12,7 +12,12 @@ export async function POST(request:any, response:any) {
 
   let res = await backendClient('post','user/login', {email, password});
 
-  console.log("response: ", res)
+  if (res.success && res.data.user.role === "customer"){
+      res.success = false
+      res.message = "You are not allowed here"
+      delete res.data
+  }
+
 
   if (res.success){
     cookies().set('custom-auth-token', res.data.token);

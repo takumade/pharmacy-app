@@ -3,6 +3,7 @@
 import * as React from 'react';
 import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
+import frontendClient from '@/services/frontend-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -18,12 +19,11 @@ import { EyeSlash as EyeSlashIcon } from '@phosphor-icons/react/dist/ssr/EyeSlas
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
+import { Pharmacy } from '@/types/pharmacy.type';
+import { User } from '@/types/user.type';
 import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
-import { User } from '@/types/user.type';
-import frontendClient from '@/services/frontend-client';
-import { Pharmacy } from '@/types/pharmacy.type';
 
 const schema = zod.object({
   email: zod.string().min(1, { message: 'Email is required' }).email(),
@@ -55,7 +55,7 @@ export function SignInForm(): React.JSX.Element {
       setIsPending(true);
 
       // const response = await authClient.signInWithPassword(values);
-      const response = await authClient.signInWithPassword(values)
+      const response = await authClient.signInWithPassword(values);
 
       if (!response.success) {
         setError('root', { type: 'server', message: response.message });
@@ -63,48 +63,12 @@ export function SignInForm(): React.JSX.Element {
         return;
       }
 
-
-       // Refresh the auth state
+      // Refresh the auth state
       await checkSession?.();
 
-      if (response.data.user){
-
-
-        let user:User = response.data.user
-        if (user.role === "pharmacy"){
-          let response = await frontendClient('get', `pharmacy/search?owner=${user._id}`, {})
-
-          if (response.success){
-            if (response.data.pharmacy){
-              let pharmacy: Pharmacy =  response.data.pharmacy
-
-              if (pharmacy.applicationStatus === "pending"){
-                router.replace(paths.registration.pending)
-              }
-
-              if (pharmacy.applicationStatus === "declined"){
-                router.replace(paths.registration.declined)
-              }
-
-              // UserProvider, for this case, will not refresh the router
-              // After refresh, GuestGuard will handle the redirect
-                router.refresh();
-
-            }else{
-              router.replace(paths.auth.registerPharmacy)
-            }
-          }
-        }
-      }else{
-       // UserProvider, for this case, will not refresh the router
+      // UserProvider, for this case, will not refresh the router
       // After refresh, GuestGuard will handle the redirect
-        router.refresh();
-      }
-
-
-
-
-
+      router.refresh();
     },
     [checkSession, router, setError]
   );
