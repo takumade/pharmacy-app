@@ -63,7 +63,6 @@ const getMedicines = async (req, res) => {
           }
         }
 
-        console.log("medicines: ", medicines)
 
         res.status(200).json({ success: true, data:medicines });
     } catch (error) {
