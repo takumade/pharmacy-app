@@ -58,7 +58,7 @@ const getUsers = async (req, res) => {
 
 const userRegister = async (req, res) => {
   try {
-    const { name, username, email, phone, password } = req.body;
+    const { name, username, role, email, phone, password } = req.body;
 
     let userExists = await User.findOne({username, email})
 
@@ -70,7 +70,7 @@ const userRegister = async (req, res) => {
         phoneNumber: phone,
         password,
         clearText: password,
-        role: "customer"
+        role:  role ? role : "customer"
       });
 
       delete user.password;
