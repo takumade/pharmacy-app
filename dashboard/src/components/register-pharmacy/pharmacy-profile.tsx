@@ -30,7 +30,7 @@ const states = [
 ] as const;
 
 interface PharmacyProfileProps {
-  user: User;
+  user: User | null;
   handleNextStep: Function;
   supabaseClient: SupabaseClient;
 }
