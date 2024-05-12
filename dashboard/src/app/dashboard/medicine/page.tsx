@@ -13,8 +13,8 @@ import { GeneralFilters } from '@/components/general/general-filter';
 import {  MedicineTable } from '@/components/dashboard/tables/medicine-table';
 import backendClient from '@/services/backend-client';
 import { cookies } from 'next/headers';
-import { User } from '@/types/user';
-import {  RolePerm } from '@/types/permissions';
+import { User } from '@/types/user.type';
+import {  RolePerm } from '@/types/permissions.type';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
 
@@ -25,7 +25,9 @@ export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } 
 export default async function Page() {
 
   let response: APIResponse = await backendClient('get', 'medicine/')
-  let medicine = response.data
+  let medicine = response.data ? response.data : []
+
+  console.log("medicine: ", medicine)
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
