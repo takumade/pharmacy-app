@@ -26,6 +26,7 @@ import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
 import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
 import { GeneralFilters } from '@/components/general/general-filter';
+import AddMedicineModal from '../modals/addmedicine-modal';
 
 function noop(): void {
   // do nothing
@@ -67,6 +68,7 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [openAddMedicine, setOpenAddMedicne] = React.useState(false)
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -92,6 +94,8 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
 
   return (
     <React.Fragment>
+
+      <AddMedicineModal open={openAddMedicine} setOpen={setOpenAddMedicne} />
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
           <Typography variant="h4">Medicine</Typography>
@@ -105,7 +109,7 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
           </Stack>
         </Stack>
         <div>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
+          <Button onClick={()=> setOpenAddMedicne(true)} startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
             Add
           </Button>
         </div>
