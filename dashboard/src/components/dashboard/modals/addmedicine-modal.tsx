@@ -93,10 +93,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         handleClose()
       }}
     >
-      <Card>
-        <CardHeader subheader="Add you pharmcy information below" title="Step 1: Profile" />
-        <Divider />
-        <CardContent>
+
           <Grid container spacing={3}>
           <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
@@ -189,14 +186,6 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         </FormControl>
       </Grid>
           </Grid>
-        </CardContent>
-        <Divider />
-        <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button type="submit" variant="contained">
-            Next
-          </Button>
-        </CardActions>
-      </Card>
     </form>
         </DialogContent>
         <DialogActions>
