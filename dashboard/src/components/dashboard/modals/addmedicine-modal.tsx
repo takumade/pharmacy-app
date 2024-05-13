@@ -60,7 +60,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"Add Medicine"}
         </DialogTitle>
         <DialogContent>
         <form
