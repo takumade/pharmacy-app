@@ -13,7 +13,7 @@ import CardHeader from '@mui/material/CardHeader';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -101,91 +101,91 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-          <Grid item md={12} xs={12}>
+          <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Medicine Name</FormLabel>
           <OutlinedInput name="medicineName" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Image</FormLabel>
           <OutlinedInput name="image" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Brand Name</FormLabel>
           <OutlinedInput name="brandName" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Generic Name</FormLabel>
           <OutlinedInput name="genericName" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Form</FormLabel>
           <OutlinedInput name="dosageForm" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Strength</FormLabel>
           <OutlinedInput name="dosageStrength" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Batch Number</FormLabel>
           <OutlinedInput name="batchNumber" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Expiration Date</FormLabel>
           <OutlinedInput name="expirationDate" type="date" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Quantity</FormLabel>
           <OutlinedInput name="quantity" type="number" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Unit Price</FormLabel>
           <OutlinedInput name="unitPrice" type="number" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Manufacturer</FormLabel>
           <OutlinedInput name="manufacturer" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Supplier</FormLabel>
           <OutlinedInput name="supplier" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Storage Conditions</FormLabel>
           <OutlinedInput name="storageConditions" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Notes</FormLabel>
           <OutlinedInput name="notes" type="text" />
         </FormControl>
       </Grid>
-      <Grid item md={12} xs={12}>
+      <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Prescription Required</FormLabel>
           <OutlinedInput name="prescriptionRequired" type="checkbox" />
