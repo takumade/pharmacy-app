@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FormLabel } from '@mui/material';
+import { FormLabel, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -23,6 +23,18 @@ import { User } from '@/types/user.type';
 import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
 import { useSupabase } from '@/contexts/supbase-context';
 import frontendClient from '@/services/frontend-client';
+
+
+const dosageFormTypes = [
+  { value: 'tablet', label: 'Tablet' },
+  { value: 'capsule', label: 'Capsule' },
+  { value: 'liquid', label: 'Liquid' },
+  { value: 'injectable', label: 'Injectable' },
+  { value: 'topical', label: 'Topical' },
+  { value: 'inhalant', label: 'Inhalant' },
+  { value: 'suppository', label: 'Suppository' },
+  { value: 'implant', label: 'Implant' },
+];
 
 
 export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
@@ -128,13 +140,13 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Strength</FormLabel>
-          <OutlinedInput name="dosageStrength" type="text" />
+          <OutlinedInput placeholder="500mg" name="dosageStrength" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Batch Number</FormLabel>
-          <OutlinedInput name="batchNumber" type="text" />
+          <OutlinedInput placeholder='ABC123456' name="batchNumber" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -146,7 +158,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Quantity</FormLabel>
-          <OutlinedInput name="quantity" type="number" />
+          <OutlinedInput placeholder='30' name="quantity" type="number" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -158,7 +170,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Manufacturer</FormLabel>
-          <OutlinedInput name="manufacturer" type="text" />
+          <OutlinedInput placeholder='Pfizer' name="manufacturer" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -182,7 +194,10 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Prescription Required</FormLabel>
-          <OutlinedInput name="prescriptionRequired" type="checkbox" />
+          <Select name="prescriptionRequired" defaultValue={"false"}>
+            <MenuItem value="true">Yes</MenuItem>
+            <MenuItem value="false" >No</MenuItem>
+          </Select>
         </FormControl>
       </Grid>
           </Grid>
