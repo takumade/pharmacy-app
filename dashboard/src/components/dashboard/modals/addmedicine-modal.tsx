@@ -32,7 +32,124 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
           {"Use Google's location service?"}
         </DialogTitle>
         <DialogContent>
-             
+        <form
+      onSubmit={async (event) => {
+        event.preventDefault();
+
+        let data = {
+          logo: '',
+          phone: '',
+          email: '',
+          contactInformation: {
+            phone: '',
+            email: ''
+          }
+        };
+
+        // @ts-ignore
+        const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
+        if (logoFile) {
+          // Get the FileList from the file input
+          const file = logoFile.files[0];
+
+          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'logos')
+          data.logo = url as string
+        }
+
+        // @ts-ignore
+        const formData = new FormData(event.target);
+
+        formData.forEach((value, key) => {
+
+          // @ts-ignore
+          if (key != "logo") data[key] = value;
+        });
+
+
+        data.contactInformation = {
+          phone: data.phone,
+          email: data.email
+        }
+        // Now you can use the 'data' object to access form values
+        console.log(data);
+        handleNextStep(data)
+      }}
+    >
+      <Card>
+        <CardHeader subheader="Add you pharmcy information below" title="Step 1: Profile" />
+        <Divider />
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid md={12} xs={12}>
+              <FormControl fullWidth required>
+                <FormLabel>Logo</FormLabel>
+                <OutlinedInput type="file" label="Logo" name="logo" />
+              </FormControl>
+            </Grid>
+            <Grid md={12} xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>First name</InputLabel>
+                <OutlinedInput placeholder="MediCare" label="Name" name="name" />
+              </FormControl>
+            </Grid>
+            <Grid md={12} xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>Address</InputLabel>
+                <OutlinedInput placeholder="Address here" label="Address" name="location" />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>Latitude</InputLabel>
+                <OutlinedInput placeholder="-17.234343" label="Latitude" name="latitude" />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>Longitude</InputLabel>
+                <OutlinedInput placeholder="-31.23232" label="Longitude" name="longitude" />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth required>
+                <InputLabel>Email address</InputLabel>
+                <OutlinedInput placeholder="sofia@devias.io" label="Email address" name="email" />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>Phone number</InputLabel>
+                <OutlinedInput placeholder="+263778123123" label="Phone number" name="phone" type="tel" />
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>State</InputLabel>
+                <Select defaultValue="New York" label="State" name="state" variant="outlined">
+                  {states.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid md={6} xs={12}>
+              <FormControl fullWidth>
+                <InputLabel>City</InputLabel>
+                <OutlinedInput label="City" />
+              </FormControl>
+            </Grid>
+          </Grid>
+        </CardContent>
+        <Divider />
+        <CardActions sx={{ justifyContent: 'flex-end' }}>
+          <Button type="submit" variant="contained">
+            Next
+          </Button>
+        </CardActions>
+      </Card>
+    </form>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Disagree</Button>
