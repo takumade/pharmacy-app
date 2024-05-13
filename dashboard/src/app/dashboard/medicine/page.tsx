@@ -32,7 +32,7 @@ export default async function Page() {
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
 
-  let pharmacy: Pharmacy = medicine.length > 0 ? medicine[0].pharmacy : null
+  let pharmacy: Pharmacy = medicine.length > 0 ? medicine[0].owner : null
   let permissions: RolePerm = getPermissions(user.role, 'medicine')
 
 
