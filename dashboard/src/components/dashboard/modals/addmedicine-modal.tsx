@@ -4,36 +4,38 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { FormLabel } from '@mui/material';
+import { FormLabel, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Menu from '@mui/material/Menu';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
 import { SupabaseClient } from '@supabase/supabase-js';
 
-import { User } from '@/types/user.type';
 import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
 import { useSupabase } from '@/contexts/supbase-context';
 import frontendClient from '@/services/frontend-client';
+import { Pharmacy } from '@/types/pharmacy.type';
+import { useSnackbar } from '@/contexts/snackbar-context';
+import { title } from 'process';
 
 
-export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
+const dosageFormTypes = [
+  { value: 'tablet', label: 'Tablet' },
+  { value: 'capsule', label: 'Capsule' },
+  { value: 'liquid', label: 'Liquid' },
+  { value: 'injectable', label: 'Injectable' },
+  { value: 'topical', label: 'Topical' },
+  { value: 'inhalant', label: 'Inhalant' },
+  { value: 'suppository', label: 'Suppository' },
+  { value: 'implant', label: 'Implant' },
+];
+
+
+export default function AddMedicineModal({open, setOpen, pharmacy}: {open: boolean, setOpen: Function, pharmacy:Pharmacy}) {
 
   const {supabaseClient} = useSupabase()
-
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const {updateMessage} = useSnackbar()
 
   const handleClose = () => {
     setOpen(false);
@@ -47,32 +49,23 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-        <form
-      onSubmit={async (event) => {
+         <form
+      onSubmit={async (event:any) => {
         event.preventDefault();
 
         let data = {
-          logo: '',
-          phone: '',
-          email: '',
-          contactInformation: {
-            phone: '',
-            email: ''
-          }
+          image: "",
+          owner: pharmacy._id
         };
 
         // @ts-ignore
-        const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
-        if (logoFile) {
+        const imageFile = event.target.querySelector('input[type="file"][name="image"]');
+        if (imageFile) {
           // Get the FileList from the file input
-          const file = logoFile.files[0];
+          const file = imageFile.files[0];
 
-          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'logos')
-          data.logo = url as string
+          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'medicine')
+          data.image = url as string
         }
 
         // @ts-ignore
@@ -81,60 +74,89 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         formData.forEach((value, key) => {
 
           // @ts-ignore
-          if (key != "logo") data[key] = value;
+          if (key != "image") data[key] = value;
         });
 
+        let response = await frontendClient('post', 'medicine/create', data)
 
-        data.contactInformation = {
-          phone: data.phone,
-          email: data.email
+        if (response.success){
+          updateMessage({
+            type: "success",
+            title: "Add Medicine",
+            body: response.message
+          })
+
+          handleClose()
+        }else{
+          updateMessage({
+            type: "error",
+            title: "Add Medicine",
+            body: response.message
+          })
+
+          handleClose()
         }
+
+
         // Now you can use the 'data' object to access form values
-        handleClose()
+
       }}
     >
+        <DialogTitle id="alert-dialog-title">
+          {"Add Medicine"}
+        </DialogTitle>
+        <DialogContent>
+
 
           <Grid container spacing={3}>
           <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Medicine Name</FormLabel>
-          <OutlinedInput name="medicineName" type="text" />
+          <OutlinedInput placeholder="Penicillin" name="medicineName" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Image</FormLabel>
-          <OutlinedInput name="image" type="text" />
+          <OutlinedInput name="image" type="file" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Brand Name</FormLabel>
-          <OutlinedInput name="brandName" type="text" />
+          <OutlinedInput placeholder="Pfizerpen" name="brandName" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Generic Name</FormLabel>
-          <OutlinedInput name="genericName" type="text" />
+          <OutlinedInput placeholder='Penicillin' name="genericName" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Form</FormLabel>
-          <OutlinedInput name="dosageForm" type="text" />
+          {/* <OutlinedInput placeholder="capsules" name="dosageForm" type="text" /> */}
+
+          <Select name="dosageForm" defaultValue={"capsule"}>
+    {dosageFormTypes.map(({ value, label }) => (
+      <MenuItem key={value} value={value}>
+        {label}
+      </MenuItem>
+    ))}
+  </Select>
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Strength</FormLabel>
-          <OutlinedInput name="dosageStrength" type="text" />
+          <OutlinedInput placeholder="500mg" name="dosageStrength" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Batch Number</FormLabel>
-          <OutlinedInput name="batchNumber" type="text" />
+          <OutlinedInput placeholder='ABC123456' name="batchNumber" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -146,7 +168,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Quantity</FormLabel>
-          <OutlinedInput name="quantity" type="number" />
+          <OutlinedInput placeholder='30' name="quantity" type="number" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -158,7 +180,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Manufacturer</FormLabel>
-          <OutlinedInput name="manufacturer" type="text" />
+          <OutlinedInput placeholder='Pfizer' name="manufacturer" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
@@ -182,18 +204,22 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Prescription Required</FormLabel>
-          <OutlinedInput name="prescriptionRequired" type="checkbox" />
+          <Select name="prescriptionRequired" defaultValue={"false"}>
+            <MenuItem value="true">Yes</MenuItem>
+            <MenuItem value="false" >No</MenuItem>
+          </Select>
         </FormControl>
       </Grid>
           </Grid>
-    </form>
+
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button color="error" onClick={handleClose}>Cancel</Button>
+          <Button type="submit" onClick={handleClose} autoFocus>
+            Add
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   );
