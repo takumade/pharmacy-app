@@ -54,7 +54,9 @@ const getMedicines = async (req, res) => {
             let pharmacy = await Pharmacy.findOne({ owner: req.user._id });
 
             if (pharmacy)
-              medicines = await Medicine.find({ owner: pharmacy._id });
+              medicines = await Medicine.find({ owner: pharmacy._id }).populate("owner");
+
+              
         } else {
           if (req.user.role === userRoles.admin) {
             medicines = await Medicine.find();
