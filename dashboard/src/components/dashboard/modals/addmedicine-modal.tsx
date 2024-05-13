@@ -134,7 +134,15 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Dosage Form</FormLabel>
-          <OutlinedInput placeholder="capsules" name="dosageForm" type="text" />
+          {/* <OutlinedInput placeholder="capsules" name="dosageForm" type="text" /> */}
+
+          <Select name="dosageForm" defaultValue={"capsule"}>
+    {dosageFormTypes.map(({ value, label }) => (
+      <MenuItem key={value} value={value}>
+        {label}
+      </MenuItem>
+    ))}
+  </Select>
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
