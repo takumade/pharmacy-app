@@ -85,17 +85,21 @@ export default function AddMedicineModal({open, setOpen, pharmacy}: {open: boole
             title: "Add Medicine",
             body: response.message
           })
+
+          handleClose()
         }else{
           updateMessage({
             type: "error",
             title: "Add Medicine",
             body: response.message
           })
+
+          handleClose()
         }
 
 
         // Now you can use the 'data' object to access form values
-        handleClose()
+
       }}
     >
         <DialogTitle id="alert-dialog-title">
