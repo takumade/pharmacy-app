@@ -23,6 +23,7 @@ import { User } from '@/types/user.type';
 import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
 import { useSupabase } from '@/contexts/supbase-context';
 import frontendClient from '@/services/frontend-client';
+import { Pharmacy } from '@/types/pharmacy.type';
 
 
 const dosageFormTypes = [
@@ -37,7 +38,7 @@ const dosageFormTypes = [
 ];
 
 
-export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
+export default function AddMedicineModal({open, setOpen, pharmacy}: {open: boolean, setOpen: Function, pharmacy:Pharmacy}) {
 
   const {supabaseClient} = useSupabase()
 
@@ -60,27 +61,22 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         aria-describedby="alert-dialog-description"
       >
          <form
-      onSubmit={async (event) => {
+      onSubmit={async (event:any) => {
         event.preventDefault();
 
         let data = {
-          logo: '',
-          phone: '',
-          email: '',
-          contactInformation: {
-            phone: '',
-            email: ''
-          }
+          image: "",
+          owner: pharmacy._id
         };
 
         // @ts-ignore
-        const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
-        if (logoFile) {
+        const imageFile = event.target.querySelector('input[type="file"][name="image"]');
+        if (imageFile) {
           // Get the FileList from the file input
-          const file = logoFile.files[0];
+          const file = imageFile.files[0];
 
-          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'logos')
-          data.logo = url as string
+          let url = await uploadFileToSupabase( supabaseClient as SupabaseClient, file, 'medicine')
+          data.image = url as string
         }
 
         // @ts-ignore
@@ -89,14 +85,12 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         formData.forEach((value, key) => {
 
           // @ts-ignore
-          if (key != "logo") data[key] = value;
+          if (key != "image") data[key] = value;
         });
 
+        await frontendClient('post', '/medicine/create', data)
 
-        data.contactInformation = {
-          phone: data.phone,
-          email: data.email
-        }
+
         // Now you can use the 'data' object to access form values
         handleClose()
       }}
