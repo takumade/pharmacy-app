@@ -27,6 +27,7 @@ import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
 import { GeneralFilters } from '@/components/general/general-filter';
 import AddMedicineModal from '../modals/addmedicine-modal';
+import { Pharmacy } from '@/types/pharmacy.type';
 
 function noop(): void {
   // do nothing
@@ -57,11 +58,12 @@ interface GeneralTableProps {
   count?: number;
   page?: number;
   rows?: Medicine[];
+  pharmacy: Pharmacy,
   rowsPerPage?: number;
   permissions: RolePerm;
 }
 
-export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
+export function MedicineTable({ count = 0, rows = [], permissions, pharmacy }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((medicine) => medicine._id);
   }, [rows]);
@@ -95,7 +97,7 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
   return (
     <React.Fragment>
 
-      <AddMedicineModal open={openAddMedicine} setOpen={setOpenAddMedicne} />
+      <AddMedicineModal open={openAddMedicine} setOpen={setOpenAddMedicne} pharmacy={pharmacy}/>
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
           <Typography variant="h4">Medicine</Typography>
