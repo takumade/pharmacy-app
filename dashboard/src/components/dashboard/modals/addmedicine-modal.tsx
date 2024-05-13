@@ -101,54 +101,96 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         <Divider />
         <CardContent>
           <Grid container spacing={3}>
-            <Grid md={12} xs={12}>
-              <FormControl fullWidth required>
-                <FormLabel>Logo</FormLabel>
-                <OutlinedInput type="file" label="Logo" name="logo" />
-              </FormControl>
-            </Grid>
-            <Grid md={12} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>First name</InputLabel>
-                <OutlinedInput placeholder="MediCare" label="Name" name="name" />
-              </FormControl>
-            </Grid>
-            <Grid md={12} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Address</InputLabel>
-                <OutlinedInput placeholder="Address here" label="Address" name="location" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Latitude</InputLabel>
-                <OutlinedInput placeholder="-17.234343" label="Latitude" name="latitude" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Longitude</InputLabel>
-                <OutlinedInput placeholder="-31.23232" label="Longitude" name="longitude" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth required>
-                <InputLabel>Email address</InputLabel>
-                <OutlinedInput placeholder="sofia@devias.io" label="Email address" name="email" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>Phone number</InputLabel>
-                <OutlinedInput placeholder="+263778123123" label="Phone number" name="phone" type="tel" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>City</InputLabel>
-                <OutlinedInput label="City" />
-              </FormControl>
-            </Grid>
+          <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Medicine Name</FormLabel>
+          <OutlinedInput name="medicineName" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Image</FormLabel>
+          <OutlinedInput name="image" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Brand Name</FormLabel>
+          <OutlinedInput name="brandName" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Generic Name</FormLabel>
+          <OutlinedInput name="genericName" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Dosage Form</FormLabel>
+          <OutlinedInput name="dosageForm" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Dosage Strength</FormLabel>
+          <OutlinedInput name="dosageStrength" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Batch Number</FormLabel>
+          <OutlinedInput name="batchNumber" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Expiration Date</FormLabel>
+          <OutlinedInput name="expirationDate" type="date" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Quantity</FormLabel>
+          <OutlinedInput name="quantity" type="number" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Unit Price</FormLabel>
+          <OutlinedInput name="unitPrice" type="number" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Manufacturer</FormLabel>
+          <OutlinedInput name="manufacturer" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Supplier</FormLabel>
+          <OutlinedInput name="supplier" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Storage Conditions</FormLabel>
+          <OutlinedInput name="storageConditions" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Notes</FormLabel>
+          <OutlinedInput name="notes" type="text" />
+        </FormControl>
+      </Grid>
+      <Grid item md={12} xs={12}>
+        <FormControl fullWidth required>
+          <FormLabel>Prescription Required</FormLabel>
+          <OutlinedInput name="prescriptionRequired" type="checkbox" />
+        </FormControl>
+      </Grid>
           </Grid>
         </CardContent>
         <Divider />
