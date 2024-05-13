@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 import { paths } from '@/paths';
 import { logger } from '@/lib/default-logger';
 import { useUser } from '@/hooks/use-user';
+import { checkUserPermissions } from '@/lib/auth/auth.utils';
 
 export interface AuthGuardProps {
   children: React.ReactNode;
@@ -17,7 +18,11 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
   const { user, error, isLoading } = useUser();
   const [isChecking, setIsChecking] = React.useState<boolean>(true);
 
+
+
+
   const checkPermissions = async (): Promise<void> => {
+
     if (isLoading) {
       return;
     }
@@ -32,6 +37,8 @@ export function AuthGuard({ children }: AuthGuardProps): React.JSX.Element | nul
       router.replace(paths.auth.signIn);
       return;
     }
+
+    checkUserPermissions(user, router)
 
     setIsChecking(false);
   };

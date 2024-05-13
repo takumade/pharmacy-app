@@ -3,6 +3,7 @@
 import * as React from 'react';
 import RouterLink from 'next/link';
 import { useRouter } from 'next/navigation';
+import frontendClient from '@/services/frontend-client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -18,6 +19,8 @@ import { EyeSlash as EyeSlashIcon } from '@phosphor-icons/react/dist/ssr/EyeSlas
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
 
+import { Pharmacy } from '@/types/pharmacy.type';
+import { User } from '@/types/user.type';
 import { paths } from '@/paths';
 import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
@@ -52,13 +55,14 @@ export function SignInForm(): React.JSX.Element {
       setIsPending(true);
 
       // const response = await authClient.signInWithPassword(values);
-      const response = await authClient.signInWithPassword(values)
+      const response = await authClient.signInWithPassword(values);
 
       if (!response.success) {
         setError('root', { type: 'server', message: response.message });
         setIsPending(false);
         return;
       }
+
       // Refresh the auth state
       await checkSession?.();
 

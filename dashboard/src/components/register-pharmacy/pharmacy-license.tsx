@@ -1,6 +1,8 @@
 'use client';
 
 import * as React from 'react';
+import { LoadingButton } from '@mui/lab';
+import { FormLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -13,44 +15,72 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
-import { FormLabel } from '@mui/material';
 import { SupabaseClient } from '@supabase/supabase-js';
 
+import { User } from '@/types/user.type';
+import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
+import { useSupabase } from '@/contexts/supbase-context';
 
+interface PharmacyLicenseProps {
+  handleNextStep: Function;
+}
 
-export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNextStep: Function, supabaseClient: SupabaseClient }): React.JSX.Element {
+const uploadFile = async (supabaseClient: SupabaseClient | undefined, event: any, name: string, bucket: string) => {
+  const fileObject = event.target.querySelector(`input[type="file"][name="${name}"]`);
+  if (fileObject) {
+    // Get the FileList from the file input
+    const file = fileObject.files[0];
+
+    let url = await uploadFileToSupabase(supabaseClient as SupabaseClient, file, bucket);
+    return url as string;
+  }
+};
+
+export function PharmacyLicense({ handleNextStep }: PharmacyLicenseProps): React.JSX.Element {
+  const { supabaseClient } = useSupabase();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
   return (
     <form
-    onSubmit={async (event) => {
-      event.preventDefault();
+      onSubmit={async (event) => {
+        event.preventDefault();
 
+        setIsLoading(true);
 
+        const data: any = {};
 
-      // @ts-ignore
-      const logoFile = event.target.querySelector('input[type="file"][name="logo"]');
-      if (logoFile) {
-          // Get the FileList from the file input
-          const files = logoFile.files;
+        let cclUrl = await uploadFile(supabaseClient, event, 'cityCouncilLicense', 'licenses');
+        data['cityCouncilLicense'] = cclUrl;
 
-          const { data, error } = await supabaseClient.storage.from('logos').upload(`public/somefile.png`, files[0])
+        let pclUrl = await uploadFile(supabaseClient, event, 'pharmacistCouncilLicense', 'licenses');
+        data['pharmacistCouncilLicense'] = pclUrl;
 
-          // TODO: Finish off here
-      }
+        let hplUrl = await uploadFile(supabaseClient, event, 'healthProfessionsAuthorityLicense', 'licenses');
+        data['healthProfessionsAuthorityLicense'] = hplUrl;
 
+        let mcazlUrl = await uploadFile(supabaseClient, event, 'medicinesControlAuthorityLicense', 'licenses');
+        data['medicinesControlAuthorityLicense'] = mcazlUrl;
 
+        // @ts-ignore
+        const formData = new FormData(event.target);
 
+        let skipKeys = [
+          'cityCouncilLicense',
+          'pharmacistCouncilLicense',
+          'healthProfessionsAuthorityLicense',
+          'medicinesControlAuthorityLicense',
+        ];
 
-      // @ts-ignore
-      const formData = new FormData(event.target);
-      const data = {};
-      formData.forEach((value, key) => {
-        //@ts-ignore
-        data[key] = value;
-      });
-      // Now you can use the 'data' object to access form values
-      console.log(data);
-      handleNextStep(data)
-    }}
+        formData.forEach((value, key) => {
+          // @ts-ignore
+          if (!skipKeys.includes(key)) data[key] = value;
+        });
+        // Now you can use the 'data' object to access form values
+        console.log(data);
+        setIsLoading(false);
+        handleNextStep(data);
+      }}
     >
       <Card>
         <CardHeader subheader="Upload your licenses below" title="Step 2: Licenses" />
@@ -74,7 +104,11 @@ export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNext
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <FormLabel>Health Professionals License</FormLabel>
-                <OutlinedInput type="file" label="Health Professionals License" name="healthProfessionsAuthorityLicense" />
+                <OutlinedInput
+                  type="file"
+                  label="Health Professionals License"
+                  name="healthProfessionsAuthorityLicense"
+                />
               </FormControl>
             </Grid>
 
@@ -88,7 +122,15 @@ export function PharmacyLicense({ handleNextStep, supabaseClient }: { handleNext
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">Next</Button>
+          {isLoading ? (
+            <LoadingButton loading variant="outlined">
+              Saving...
+            </LoadingButton>
+          ) : (
+            <Button type="submit" variant="contained">
+              Next
+            </Button>
+          )}
         </CardActions>
       </Card>
     </form>

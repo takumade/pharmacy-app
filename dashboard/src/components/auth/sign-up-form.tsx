@@ -23,16 +23,18 @@ import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
+  role: zod.string().min(1, { message: 'required' }),
   fullName: zod.string().min(1, { message: 'Full name is required' }),
   username: zod.string().min(1, { message: 'Username is required' }),
   email: zod.string().min(1, { message: 'Email is required' }).email(),
+  phone: zod.string().min(1, { message: 'Phone is required' }),
   password: zod.string().min(6, { message: 'Password should be at least 6 characters' }),
   terms: zod.boolean().refine((value) => value, 'You must accept the terms and conditions'),
 });
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { fullName: '', username: '', email: '', password: '', terms: false } satisfies Values;
+const defaultValues = { role: 'pharmacy', fullName: '', username: '', email: '', phone: '', password: '', terms: false } satisfies Values;
 
 export function SignUpForm(): React.JSX.Element {
   const router = useRouter();
@@ -83,6 +85,20 @@ export function SignUpForm(): React.JSX.Element {
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
+
+
+        <Controller
+            control={control}
+            name="role"
+            render={({ field }) => (
+              <FormControl style={{display: "none"}} error={Boolean(errors.role)}>
+                <InputLabel style={{display: "none"}}>Role</InputLabel>
+                <OutlinedInput style={{display: "none"}} {...field} label="Role" />
+                {errors.role ? <FormHelperText style={{display: "none"}}>{errors.role.message}</FormHelperText> : null}
+              </FormControl>
+            )}
+          />
+
           <Controller
             control={control}
             name="fullName"
@@ -113,6 +129,17 @@ export function SignUpForm(): React.JSX.Element {
                 <InputLabel>Email address</InputLabel>
                 <OutlinedInput {...field} label="Email address" type="email" />
                 {errors.email ? <FormHelperText>{errors.email.message}</FormHelperText> : null}
+              </FormControl>
+            )}
+          />
+          <Controller
+            control={control}
+            name="phone"
+            render={({ field }) => (
+              <FormControl error={Boolean(errors.phone)}>
+                <InputLabel>Phone Number</InputLabel>
+                <OutlinedInput {...field} label="Phone Number" type="tel" />
+                {errors.phone ? <FormHelperText>{errors.phone.message}</FormHelperText> : null}
               </FormControl>
             )}
           />
@@ -150,7 +177,6 @@ export function SignUpForm(): React.JSX.Element {
           </Button>
         </Stack>
       </form>
-      <Alert color="warning">Created users are not persisted</Alert>
     </Stack>
   );
 }
