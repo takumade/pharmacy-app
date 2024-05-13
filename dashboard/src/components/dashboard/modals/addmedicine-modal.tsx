@@ -98,19 +98,19 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
           <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Medicine Name</FormLabel>
-          <OutlinedInput name="medicineName" type="text" />
+          <OutlinedInput placeholder="Penicillin" name="medicineName" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Image</FormLabel>
-          <OutlinedInput name="image" type="text" />
+          <OutlinedInput name="image" type="file" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
         <FormControl fullWidth required>
           <FormLabel>Brand Name</FormLabel>
-          <OutlinedInput name="brandName" type="text" />
+          <OutlinedInput placeholder="Pfizerpen" name="brandName" type="text" />
         </FormControl>
       </Grid>
       <Grid  md={12} xs={12}>
