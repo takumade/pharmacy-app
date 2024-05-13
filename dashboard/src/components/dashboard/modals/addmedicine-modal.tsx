@@ -1,12 +1,32 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
+import { FormLabel } from '@mui/material';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardHeader from '@mui/material/CardHeader';
+import Divider from '@mui/material/Divider';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import Select from '@mui/material/Select';
+import Grid from '@mui/material/Unstable_Grid2';
+import { SupabaseClient } from '@supabase/supabase-js';
+
+import { User } from '@/types/user.type';
+import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
+import { useSupabase } from '@/contexts/supbase-context';
+
+
 export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
+
+  const {supabaseClient} = useSupabase()
 
 
   const handleClickOpen = () => {
@@ -71,8 +91,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
           email: data.email
         }
         // Now you can use the 'data' object to access form values
-        console.log(data);
-        handleNextStep(data)
+        handleClose()
       }}
     >
       <Card>
