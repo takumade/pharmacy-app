@@ -212,9 +212,9 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
     </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
+          <Button color="error" onClick={handleClose}>Cancel</Button>
           <Button onClick={handleClose} autoFocus>
-            Agree
+            Add
           </Button>
         </DialogActions>
       </Dialog>
