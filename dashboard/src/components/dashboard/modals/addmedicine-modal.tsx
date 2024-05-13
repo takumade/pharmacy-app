@@ -22,11 +22,13 @@ import { SupabaseClient } from '@supabase/supabase-js';
 import { User } from '@/types/user.type';
 import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
 import { useSupabase } from '@/contexts/supbase-context';
+import frontendClient from '@/services/frontend-client';
 
 
 export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
 
   const {supabaseClient} = useSupabase()
+  
 
 
   const handleClickOpen = () => {
