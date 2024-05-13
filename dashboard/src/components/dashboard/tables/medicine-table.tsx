@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Grid, IconButton } from '@mui/material';
+import { Button, Grid, IconButton } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -19,8 +19,14 @@ import { Eye, Trash } from '@phosphor-icons/react';
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
-import { Permissions, RolePerm } from '@/types/permissions';
+import { Download as DownloadIcon } from '@phosphor-icons/react/dist/ssr/Download';
+import { Plus as PlusIcon } from '@phosphor-icons/react/dist/ssr/Plus';
+import { Upload as UploadIcon } from '@phosphor-icons/react/dist/ssr/Upload';
+
+import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
+import { GeneralFilters } from '@/components/general/general-filter';
+import AddMedicineModal from '../modals/addmedicine-modal';
 
 function noop(): void {
   // do nothing
@@ -62,6 +68,7 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [openAddMedicine, setOpenAddMedicne] = React.useState(false)
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -86,7 +93,30 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
   };
 
   return (
+    <React.Fragment>
+
+      <AddMedicineModal open={openAddMedicine} setOpen={setOpenAddMedicne} />
+      <Stack direction="row" spacing={3}>
+        <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
+          <Typography variant="h4">Medicine</Typography>
+          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+            <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
+              Import
+            </Button>
+            <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
+              Export
+            </Button>
+          </Stack>
+        </Stack>
+        <div>
+          <Button onClick={()=> setOpenAddMedicne(true)} startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
+            Add
+          </Button>
+        </div>
+      </Stack>
+      <GeneralFilters item="medicine" />
     <Card>
+
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
@@ -184,5 +214,6 @@ export function MedicineTable({ count = 0, rows = [], permissions }: GeneralTabl
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </Card>
+    </React.Fragment>
   );
 }

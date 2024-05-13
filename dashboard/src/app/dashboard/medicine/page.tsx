@@ -33,27 +33,10 @@ export default async function Page() {
   let permissions: RolePerm = getPermissions(user.role, 'medicine')
 
 
+
   return (
     <Stack spacing={3}>
-      <Stack direction="row" spacing={3}>
-        <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Medicine</Typography>
-          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-            <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Import
-            </Button>
-            <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Export
-            </Button>
-          </Stack>
-        </Stack>
-        <div>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
-            Add
-          </Button>
-        </div>
-      </Stack>
-      <GeneralFilters item="medicine" />
+      
       <MedicineTable
         count={medicine.length}
         rows={medicine}
