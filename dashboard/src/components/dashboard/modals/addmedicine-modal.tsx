@@ -28,7 +28,7 @@ import frontendClient from '@/services/frontend-client';
 export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpen: Function}) {
 
   const {supabaseClient} = useSupabase()
-  
+
 
 
   const handleClickOpen = () => {
@@ -141,18 +141,6 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
               <FormControl fullWidth>
                 <InputLabel>Phone number</InputLabel>
                 <OutlinedInput placeholder="+263778123123" label="Phone number" name="phone" type="tel" />
-              </FormControl>
-            </Grid>
-            <Grid md={6} xs={12}>
-              <FormControl fullWidth>
-                <InputLabel>State</InputLabel>
-                <Select defaultValue="New York" label="State" name="state" variant="outlined">
-                  {states.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
