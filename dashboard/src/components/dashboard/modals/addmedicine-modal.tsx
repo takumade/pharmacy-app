@@ -16,6 +16,8 @@ import { uploadFileToSupabase } from '@/lib/supabase/subapase.utils';
 import { useSupabase } from '@/contexts/supbase-context';
 import frontendClient from '@/services/frontend-client';
 import { Pharmacy } from '@/types/pharmacy.type';
+import { useSnackbar } from '@/contexts/snackbar-context';
+import { title } from 'process';
 
 
 const dosageFormTypes = [
@@ -33,12 +35,7 @@ const dosageFormTypes = [
 export default function AddMedicineModal({open, setOpen, pharmacy}: {open: boolean, setOpen: Function, pharmacy:Pharmacy}) {
 
   const {supabaseClient} = useSupabase()
-
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const {updateMessage} = useSnackbar()
 
   const handleClose = () => {
     setOpen(false);
@@ -80,7 +77,21 @@ export default function AddMedicineModal({open, setOpen, pharmacy}: {open: boole
           if (key != "image") data[key] = value;
         });
 
-        await frontendClient('post', '/medicine/create', data)
+        let response = await frontendClient('post', 'medicine/create', data)
+
+        if (response.success){
+          updateMessage({
+            type: "success",
+            title: "Add Medicine",
+            body: response.message
+          })
+        }else{
+          updateMessage({
+            type: "error",
+            title: "Add Medicine",
+            body: response.message
+          })
+        }
 
 
         // Now you can use the 'data' object to access form values
