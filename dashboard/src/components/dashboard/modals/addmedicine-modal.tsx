@@ -59,11 +59,7 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Add Medicine"}
-        </DialogTitle>
-        <DialogContent>
-        <form
+         <form
       onSubmit={async (event) => {
         event.preventDefault();
 
@@ -105,6 +101,11 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         handleClose()
       }}
     >
+        <DialogTitle id="alert-dialog-title">
+          {"Add Medicine"}
+        </DialogTitle>
+        <DialogContent>
+
 
           <Grid container spacing={3}>
           <Grid  md={12} xs={12}>
@@ -209,14 +210,15 @@ export default function AddMedicineModal({open, setOpen}: {open: boolean, setOpe
         </FormControl>
       </Grid>
           </Grid>
-    </form>
+
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose} autoFocus>
+          <Button type="submit" onClick={handleClose} autoFocus>
             Add
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </React.Fragment>
   );
