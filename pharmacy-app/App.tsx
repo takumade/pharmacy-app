@@ -16,6 +16,22 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <AuthProvider>
+        {/* <GestureHandlerRootView style={{flex: 1}}>
+      <PaperProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{headerShown: false}}>
+            
+              
+                <Stack.Screen
+                  name="DrawerNavigator"
+                  component={DrawerNavigator}
+                  options={{animation: 'slide_from_bottom'}}
+                />
+                </Stack.Navigator>
+                </NavigationContainer>
+      </PaperProvider>
+            
+                </GestureHandlerRootView> */}
       <Layout></Layout>
     </AuthProvider>
   );

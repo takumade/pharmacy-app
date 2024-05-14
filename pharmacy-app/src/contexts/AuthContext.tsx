@@ -19,7 +19,7 @@ const headers = {
   
 };
 const TOKEN_KEY = "token";
-export const API_URL = "http://192.168.100.4:3000/api/user";
+export const API_URL = "http://192.168.100.3:3000/api/user";
 const AuthContext = createContext<AuthProps>({});
 
 export const useAuth = () => {
@@ -37,6 +37,7 @@ const AuthProvider = ({ children }: any) => {
     const loadToken = async () => {
       try {
         const token = await EncryptedStorage.getItem(TOKEN_KEY);
+        console.log("token", token);
         if (token) {
           setAuthState({ token, authenticated: true });
           axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -69,6 +70,7 @@ const AuthProvider = ({ children }: any) => {
       setAuthState({ token, authenticated: true });
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       await EncryptedStorage.setItem(TOKEN_KEY, token);
+      console.log(token)
     } catch (error) {
         console.log("Login failed")
         console.log(error)
