@@ -17,7 +17,7 @@ const useStore = create<StoreState>((set) => ({
   medicines: [],
   searchMedicines: async (name: string) => {
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU2NDExMDZ9.njhHhTSVzhwkuYxasIKfFh9LFLVhPg18fXd2mHXRt8E';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
       const response = await axios.get(`http://192.168.100.3:3000/api/medicine/search?name=${name}`, {
         headers: {
           'Authorization': token,

@@ -9,6 +9,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import BottomSheetC from '../components/BottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import useStore from '../store/store';
+import PharmacyDetails from '../components/PharmacyDetails';
 class Map extends React.Component {
   state = {
     latitude: '',
@@ -71,6 +72,7 @@ class Map extends React.Component {
         <BottomSheet index={1} snapPoints={snapPoints}>
           <View>
             <Search />
+            <PharmacyDetails />
           </View>
         </BottomSheet>
       </View>
