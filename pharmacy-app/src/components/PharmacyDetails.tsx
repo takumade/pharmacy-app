@@ -8,7 +8,6 @@ import { COLORS, FONTFAMILY, FONTSIZE } from '../theme/theme';
 
 const PharmacyDetails: FC = () => {
   const {medicines = []}: any = useStore(state => state); // provide a default value
-  console.log(medicines);
   return (
     <ScrollView>
    
