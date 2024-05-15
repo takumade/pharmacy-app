@@ -1,0 +1,87 @@
+
+
+import React, { FC } from 'react'
+
+import {
+  StyleSheet, 
+  View,
+  ScrollView,
+  StatusBar,
+  Image
+} from 'react-native';
+import {ScreenContainer} from 'react-native-screens';
+import {
+  BORDERRADIUS,
+  COLORS,
+  FONTFAMILY,
+  FONTSIZE,
+  SPACING,
+} from '../theme/theme';
+import HeaderBar from './HeaderBar';
+import CustomIcon from './CustomIcon';
+
+import { TextInput } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
+import Products from './Products';
+import ProductCategory from './ProductCategory';
+import HomeActionCards from "./HomeActionCards";
+
+import { List } from 'react-native-paper';
+
+
+const styles = StyleSheet.create({
+    cartItemsContainer:  {
+    borderRadius: BORDERRADIUS.radius_20,
+
+    },
+    cartItem: {
+        backgroundColor: COLORS.primaryWhiteHex,
+        borderRadius: BORDERRADIUS.radius_20,
+        paddingLeft: SPACING.space_15,
+        marginTop: SPACING.space_10,
+    }
+})
+
+const MedicineCartItem = () => {
+    return (   
+        <View style={styles.cartItemsContainer}>
+        <List.Item
+      title={<Text variant="titleMedium">Paracetamol</Text>}
+      description={<CartItemDesc/>}
+      left={props => <List.Image style={{marginTop: 8}}  source={{uri: 'https://picsum.photos/700'}}/>}
+      right={props => <MedicineQuantity/>}
+      style={styles.cartItem}
+    />
+    
+        </View>
+      )
+}
+
+export default MedicineCartItem;
+
+const MedicineQuantity:FC = () => {
+    return (<View >
+        <FontAwesomeIcon style={{alignSelf: "flex-end"}} name="times" size={FONTSIZE.size_18} />
+
+       <View style={{flexDirection: "row", gap: 12, alignItems: "center", marginTop: "40%"}}>
+        <FontAwesomeIcon name="minus" size={FONTSIZE.size_18} />
+       
+       <Text style={{fontSize: FONTSIZE.size_16}}>10</Text>
+
+       <FontAwesomeIcon name="plus" size={FONTSIZE.size_18} />
+      
+     </View>
+     </View>)
+}
+
+const CartItemDesc = () => {
+    return (<View>
+
+        <Text>Tablets .240mg</Text>
+
+        <Text variant="bodyMedium" style={{fontWeight: "bold", marginTop: 12}}>$10.00</Text>
+      </View>)
+}

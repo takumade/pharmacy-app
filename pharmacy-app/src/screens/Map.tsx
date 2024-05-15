@@ -10,6 +10,7 @@ import BottomSheetC from '../components/BottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import useStore from '../store/store';
 import PharmacyDetails from '../components/PharmacyDetails';
+import MedicineCartItem from '../components/MedicineCartItem';
 class Map extends React.Component {
   state = {
     latitude: '',
@@ -69,6 +70,7 @@ class Map extends React.Component {
           ))}
           <Marker coordinate={{latitude: -17.824858, longitude: 31.053028}} />
         </MapView>
+        <MedicineCartItem />
         <BottomSheet index={1} snapPoints={snapPoints}>
           <View>
             <Search />
