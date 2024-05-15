@@ -17,6 +17,7 @@ import { User } from '@/types/user.type';
 import {  RolePerm } from '@/types/permissions.type';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
+import { Pharmacy } from '@/types/pharmacy.type';
 
 export const metadata = { title: `Medicine | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -30,31 +31,17 @@ export default async function Page() {
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
+
+  let pharmacy: Pharmacy = medicine.length > 0 ? medicine[0].owner : null
   let permissions: RolePerm = getPermissions(user.role, 'medicine')
+
 
 
   return (
     <Stack spacing={3}>
-      <Stack direction="row" spacing={3}>
-        <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Medicine</Typography>
-          <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-            <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Import
-            </Button>
-            <Button color="inherit" startIcon={<DownloadIcon fontSize="var(--icon-fontSize-md)" />}>
-              Export
-            </Button>
-          </Stack>
-        </Stack>
-        <div>
-          <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
-            Add
-          </Button>
-        </div>
-      </Stack>
-      <GeneralFilters item="medicine" />
+
       <MedicineTable
+        pharmacy={pharmacy}
         count={medicine.length}
         rows={medicine}
         permissions={permissions}
