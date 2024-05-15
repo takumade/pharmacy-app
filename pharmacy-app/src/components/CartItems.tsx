@@ -22,15 +22,17 @@ import CustomIcon from '../components/CustomIcon';
 
 import { TextInput } from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import { Icon, Card, IconButton, Button, Text } from 'react-native-paper';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5"
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from "../components/HomeActionCards";
-
+import useStore from '../store/store';
 import { List } from 'react-native-paper';
 
+interface FavouritesProps {
+  cartItems: any[];
+}
 
 const styles = StyleSheet.create({
     cartItemsContainer:  {
@@ -45,7 +47,8 @@ const styles = StyleSheet.create({
     }
 })
 
-const CartItems = () => {
+const CartItems: React.FC<FavouritesProps> = ({cartItems}) => {
+  console.log(cartItems)
     return (   
         <View style={styles.cartItemsContainer}>
         <List.Item

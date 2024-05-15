@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC,useState} from 'react';
 import {StyleSheet, View, Button, ScrollView, Alert} from 'react-native';
 import {
   BORDERRADIUS,
@@ -12,13 +12,13 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import useStore from '../store/store';
 
 const MedicineCartItem: FC = () => {
-  const {medicines = []}: any = useStore(state => state);
+  const {medicines = [],addItemToCart}: any = useStore(state => state);
 
   return (
     <ScrollView>
       <View>
         {medicines?.data?.map((item: any) => (
-          <View key={item.id} style={styles.cartItemsContainer}>
+          <View key={item._id} style={styles.cartItemsContainer}>
             <List.Item
               title={<Text variant="titleMedium">{item.medicineName}</Text>}
               description={
@@ -48,9 +48,7 @@ const MedicineCartItem: FC = () => {
                     <Button
                       title="Add to Cart"
                       color="#76A593"
-                      onPress={() =>
-                        Alert.alert('Button with adjusted color pressed')
-                      }
+                      onPress={() => addItemToCart(item)}
                     />
                   </View>
                 </View>
