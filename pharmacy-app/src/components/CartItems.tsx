@@ -8,19 +8,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const CartItem: FC = () => {
  const {cartItems=[]}:any = useStore((state) => state);
- console.log(cartItems)
+
   return (
     <ScrollView>
-      <View>
+      <View >
         {
           cartItems?.map((item:any) => (
-    <View style={styles.cartItemsContainer}>
+    <View  key={item._id} style={styles.cartItemsContainer}>
       <List.Item
         title={<Text style={styles.title}>{item.brandName}</Text>}
         description={
           <View>
-            <Text>Tablets .240mg</Text>
-            <Text style={styles.price}>$10.00</Text>
+            <Text>{item.dosageStrength}</Text>
+            <Text style={styles.price}>${item.unitPrice}</Text>
           </View>
         }
         left={(props) => (

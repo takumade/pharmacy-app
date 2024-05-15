@@ -12,8 +12,8 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome5';
 import useStore from '../store/store';
 
 const MedicineCartItem: FC = () => {
-  const {medicines = [],cartItems=[],addItemToCart}: any = useStore(state => state);
- 
+  const {medicines = [],addItemToCart}: any = useStore(state => state);
+  addItemToCart
   return (
     <ScrollView>
       <View>
