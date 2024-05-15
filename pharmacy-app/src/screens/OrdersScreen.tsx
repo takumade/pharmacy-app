@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 import {StyleSheet, View, ScrollView, StatusBar, Image} from 'react-native';
 import {ScreenContainer} from 'react-native-screens';
@@ -13,8 +13,10 @@ import HeaderBar from '../components/HeaderBar';
 
 import {Icon, Card, IconButton, Button, Text} from 'react-native-paper';
 import CartItems from '../components/CartItems';
+import useStore from '../store/store';
 
-const OrdersScreen = () => {
+const OrdersScreen:FC = () => {
+  const {cartItems=[]}:any = useStore((state) => state);
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar
@@ -26,8 +28,8 @@ const OrdersScreen = () => {
         contentContainerStyle={styles.ScrollViewFlex}>
         <HeaderBar />
         <Text style={styles.ScreenTitle}>Your Cart</Text>
-
-        <CartItems />
+      {cartItems.length == 0 ? <Text>No item in cart</Text> : <CartItems />}
+        
 
         {/* Remove All  */}
         <View style={{marginTop: SPACING.space_15}}>
