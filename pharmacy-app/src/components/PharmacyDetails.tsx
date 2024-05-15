@@ -35,6 +35,9 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE.size_12,
     fontFamily: FONTFAMILY.poppins_medium,
     color: COLORS.primaryBlackHex,
+    borderTopColor: COLORS.primaryBlackHex,
+    borderTopWidth: 0.5,
+    paddingTop: 20,
   },
 });
 
