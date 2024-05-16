@@ -1,7 +1,7 @@
-import { create } from 'zustand';
+import {create} from 'zustand';
 import axios from 'axios';
 import EncryptedStorage from 'react-native-encrypted-storage';
-const produce = require("immer").produce;
+const produce = require('immer').produce;
 import CartItems from '../components/CartItems';
 interface SearchMedicine {
   id: number;
@@ -10,8 +10,8 @@ interface SearchMedicine {
 }
 
 interface Price {
-  size: string,
-  quantity: number
+  size: string;
+  quantity: number;
 }
 
 interface CartItem {
@@ -23,7 +23,7 @@ interface CartItem {
   quantity: number;
 }
 interface CartState {
-  cartItems: CartItem [];
+  cartItems: CartItem[];
   addItemToCart: (item: CartItem) => void;
   removeItemFromCart: (itemId: string) => void;
   incrementItemQuantity: (itemId: string) => void;
@@ -36,43 +36,53 @@ interface StoreState {
   searchMedicines: (name: string) => Promise<void>;
 }
 
-const useStore = create<StoreState>((set,get) => ({
+const useStore = create<StoreState>((set, get) => ({
   medicines: [],
-  cartItems:[],
+  cartItems: [],
 
   addItemToCart: (item: CartItem) => {
     set(
       produce((draft: CartState) => {
         const existingItem = draft.cartItems.find(
-          (cartItem) => cartItem._id === item._id
+          cartItem => cartItem._id === item._id,
         );
         if (!existingItem) {
           draft.cartItems.push(item);
         }
-      })
+      }),
     );
   },
 
   incrementItemQuantity: (itemId: string) => {
     set(
       produce((draft: CartState) => {
-        const item = draft.cartItems.find((item) => item._id === itemId);
+        const item = draft.cartItems.find(item => item._id === itemId);
         if (item) {
           item.quantity++;
         }
-      })
+      }),
     );
   },
 
+  decrementItemQuantity: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        const item = draft.cartItems.find(item => item._id === itemId);
+        if (item && item.quantity > 1) {
+          item.quantity--;
+        }
+      }),
+    );
+  },
   removeItemFromCart: (itemId: string) => {
     set(
       produce((draft: CartState) => {
-        draft.cartItems = draft.cartItems.filter((item) => item._id !== itemId);
-      })
-    )
+        draft.cartItems = draft.cartItems.filter(item => item._id !== itemId);
+      }),
+    );
   },
 
-  //to reuse the code later so that its sorts the items when adding to cart 
+  //to reuse the code later so that its sorts the items when adding to cart
   // addItemToCart: (item: CartItem) => {
   //   set(
   //     produce((draft: CartState) => {
@@ -106,17 +116,20 @@ const useStore = create<StoreState>((set,get) => ({
   // },
   searchMedicines: async (name: string) => {
     try {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
-      const response = await axios.get(`http://192.168.100.3:3000/api/medicine/search?name=${name}`, {
-        headers: {
-          'Authorization': token,
-          'Content-Type': 'application/json',
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
+      const response = await axios.get(
+        `http://192.168.100.3:3000/api/medicine/search?name=${name}`,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
       const data = response.data;
-      
-      set({ medicines: data });
-      
+
+      set({medicines: data});
     } catch (error) {
       console.error('Error searching medicines:', error);
     }
@@ -124,5 +137,3 @@ const useStore = create<StoreState>((set,get) => ({
 }));
 
 export default useStore;
-
-
