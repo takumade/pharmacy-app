@@ -17,7 +17,8 @@ import useStore from '../store/store';
 
 const OrdersScreen:FC = () => {
   const {cartItems=[]}:any = useStore((state) => state);
-  let totalAmount = cartItems.reduce((a: number, b: any) => a + b.unitPrice, 0).toFixed(2)
+  let totalAmount = cartItems.reduce((total: number, item: any) => total + (item.unitPrice * item.quantity), 0).toFixed(2);
+
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar
