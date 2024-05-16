@@ -24,7 +24,7 @@ const CartItem: FC = () => {
           </View>
         }
         left={(props) => (
-          <List.Image style={styles.image} source={{ uri: 'https://picsum.photos/700' }} />
+          <List.Image style={styles.image} source={{ uri: item.image }} />
         )}
         right={(props) => (
           <View>
