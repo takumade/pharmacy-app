@@ -49,6 +49,14 @@ const useStore = create<StoreState>((set,get) => ({
     );
   },
 
+  removeItemFromCart: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        draft.cartItems = draft.cartItems.filter((item) => item._id !== itemId);
+      })
+    )
+  },
+
   //to reuse the code later so that its sorts the items when adding to cart 
   // addItemToCart: (item: CartItem) => {
   //   set(
