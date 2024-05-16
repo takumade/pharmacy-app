@@ -15,11 +15,11 @@ interface Price {
 }
 
 interface CartItem {
-  id: string;
+  _id: string;
   medicineName: string;
   image: string;
   prices: Price[];
-  price: number;
+  unitPrice: number;
 }
 interface CartState {
   cartItems: CartItem [];
@@ -36,32 +36,51 @@ const useStore = create<StoreState>((set,get) => ({
   medicines: [],
   cartItems:[],
 
- addItemToCart: (item:any) => {
+  addItemToCart: (item: CartItem) => {
     set(
       produce((draft: CartState) => {
         const existingItem = draft.cartItems.find(
-          (cartItem) => cartItem.id === item.id
+          (cartItem) => cartItem._id === item._id
         );
-
-        if (existingItem) {
-          const existingPrice = existingItem.prices.find(
-            (price) => price.size === item.prices[0].size
-          );
-          if (existingPrice) {
-            existingPrice.quantity++;
-          } else {
-            existingItem.prices.push({ ...item.prices[0], quantity: 1 });
-            existingItem.prices.sort((a, b) => b.size.localeCompare(a.size));
-          }
-        } else {
-          draft.cartItems.push({
-            ...item,
-            prices: [{ ...item.prices, quantity: 1 }],
-          });
+        if (!existingItem) {
+          draft.cartItems.push(item);
         }
       })
     );
   },
+
+  //to reuse the code later so that its sorts the items when adding to cart 
+  // addItemToCart: (item: CartItem) => {
+  //   set(
+  //     produce((draft: CartState) => {
+  //       const existingItem = draft.cartItems.find(
+  //         (cartItem) => cartItem._id === item._id
+  //       );
+
+  //       if (existingItem) {
+  //         (item.prices || []).forEach((itemPrice) => {
+  //           const existingPrice = existingItem.prices.find(
+  //             (unitPrice) => unitPrice.size === itemPrice.size
+  //           );
+
+  //           if (existingPrice) {
+  //             existingPrice.quantity++;
+  //           } else {
+  //             existingItem.prices.push({ ...itemPrice, quantity: 1 });
+  //           }
+  //         });
+
+  //         existingItem.prices.sort((a, b) => b.size.localeCompare(a.size));
+  //       } else {
+  //         const newItem: CartItem = {
+  //           ...item,
+  //           prices: (item.prices || []).map((unitPrice) => ({ ...unitPrice, quantity: 1 })),
+  //         };
+  //         draft.cartItems.push(newItem);
+  //       }
+  //     })
+  //   );
+  // },
   searchMedicines: async (name: string) => {
     try {
       const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';

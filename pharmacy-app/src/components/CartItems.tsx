@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const CartItem: FC = () => {
  const {cartItems=[]}:any = useStore((state) => state);
-
+  console.log(cartItems.length)
   return (
     <ScrollView>
       <View >
