@@ -17,6 +17,7 @@ import useStore from '../store/store';
 
 const OrdersScreen:FC = () => {
   const {cartItems=[]}:any = useStore((state) => state);
+  let totalAmount = cartItems.reduce((a: number, b: any) => a + b.unitPrice, 0).toFixed(2)
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar
@@ -56,7 +57,7 @@ const OrdersScreen:FC = () => {
           }}>
           <Text variant="titleMedium">Total Amount:</Text>
 
-          <Text variant={'titleMedium'}>$66.00</Text>
+          <Text variant={'titleMedium'}>${totalAmount}</Text>
         </View>
 
         <Button
