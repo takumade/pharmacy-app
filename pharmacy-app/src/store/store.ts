@@ -28,6 +28,7 @@ interface CartState {
   removeItemFromCart: (itemId: string) => void;
   incrementItemQuantity: (itemId: string) => void;
   decrementItemQuantity: (itemId: string) => void;
+  clearCart: () => void;
 }
 
 interface StoreState {
@@ -81,8 +82,41 @@ const useStore = create<StoreState>((set, get) => ({
       }),
     );
   },
+  
+  clearCart: () => {
+    set(
+      produce((draft: CartState) => {
+        draft.cartItems = [];
+      }),
+    );
+  },
+  
+  searchMedicines: async (name: string) => {
+    try {
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
+      const response = await axios.get(
+        `http://192.168.100.3:3000/api/medicine/search?name=${name}`,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      const data = response.data;
 
-  //to reuse the code later so that its sorts the items when adding to cart
+      set({medicines: data});
+    } catch (error) {
+      console.error('Error searching medicines:', error);
+    }
+  },
+}));
+
+export default useStore;
+
+
+//to reuse the code later so that its sorts the items when adding to cart
   // addItemToCart: (item: CartItem) => {
   //   set(
   //     produce((draft: CartState) => {
@@ -114,26 +148,3 @@ const useStore = create<StoreState>((set, get) => ({
   //     })
   //   );
   // },
-  searchMedicines: async (name: string) => {
-    try {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
-      const response = await axios.get(
-        `http://192.168.100.3:3000/api/medicine/search?name=${name}`,
-        {
-          headers: {
-            Authorization: token,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      const data = response.data;
-
-      set({medicines: data});
-    } catch (error) {
-      console.error('Error searching medicines:', error);
-    }
-  },
-}));
-
-export default useStore;

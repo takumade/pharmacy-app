@@ -10,6 +10,7 @@ import {TouchableOpacity} from '@gorhom/bottom-sheet';
 const CartItem: FC = () => {
   const {cartItems = [], removeItemFromCart,incrementItemQuantity,decrementItemQuantity}: any = useStore(state => state);
   console.log(cartItems)
+
   return (
     <ScrollView>
       <View>
@@ -35,7 +36,7 @@ const CartItem: FC = () => {
                       size={FONTSIZE.size_18}
                     />
                   </TouchableOpacity>
-                  <View >
+                  <View style={styles.quantityContainer} >
                     <TouchableOpacity key={item._id} onPress={() => decrementItemQuantity(item._id)}>
                        <FontAwesomeIcon name="minus" size={FONTSIZE.size_18} />
                     </TouchableOpacity>
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 12,
     alignItems: 'center',
-    marginTop: '40%',
+    marginTop:32,
   },
   quantityText: {
     fontSize: FONTSIZE.size_16,

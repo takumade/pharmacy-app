@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 
 import {StyleSheet, View, ScrollView, StatusBar, Image} from 'react-native';
 import {ScreenContainer} from 'react-native-screens';
@@ -15,10 +15,15 @@ import {Icon, Card, IconButton, Button, Text} from 'react-native-paper';
 import CartItems from '../components/CartItems';
 import useStore from '../store/store';
 
-const OrdersScreen:FC = () => {
-  const {cartItems=[]}:any = useStore((state) => state);
-  let totalAmount = cartItems.reduce((total: number, item: any) => total + (item.unitPrice * item.quantity), 0).toFixed(2);
-
+const OrdersScreen: FC = () => {
+  const {cartItems = [],clearCart}: any = useStore(state => state);
+  let totalAmount = cartItems
+    .reduce(
+      (total: number, item: any) => total + item.unitPrice * item.quantity,
+      0,
+    )
+    .toFixed(2);
+ 
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar
@@ -30,31 +35,28 @@ const OrdersScreen:FC = () => {
         contentContainerStyle={styles.ScrollViewFlex}>
         <HeaderBar />
         <Text style={styles.ScreenTitle}>Your Cart</Text>
-      {cartItems.length == 0 ? <Text>No item in cart</Text> : <CartItems />}
-        
+        {cartItems.length == 0 ? <Text>No item in cart</Text> : <CartItems />}
 
         {/* Remove All  */}
         <View style={{marginTop: SPACING.space_15}}>
           <Button
             style={{alignSelf: 'flex-end'}}
             mode="text"
-            onPress={() => console.log('Pressed')}>
+            onPress={() => clearCart()}>
             Remove All
           </Button>
         </View>
-
-       
       </ScrollView>
 
-       {/* Total Amount  */}
+      {/* Total Amount  */}
 
-       <View style={{marginBottom: "30%"}}>
-       <View
+      <View style={{marginBottom: '30%'}}>
+        <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginTop: SPACING.space_15,
-            marginBottom: SPACING.space_36
+            marginBottom: SPACING.space_36,
           }}>
           <Text variant="titleMedium">Total Amount:</Text>
 
@@ -62,15 +64,15 @@ const OrdersScreen:FC = () => {
         </View>
 
         <Button
-           style={{
-            paddingVertical: "2%"           
+          style={{
+            paddingVertical: '2%',
           }}
           icon="cash-fast"
           mode="contained"
           onPress={() => console.log('Pressed')}>
           Place Order
         </Button>
-       </View>
+      </View>
     </View>
   );
 };
