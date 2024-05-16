@@ -8,7 +8,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {TouchableOpacity} from '@gorhom/bottom-sheet';
 
 const CartItem: FC = () => {
-  const {cartItems = [], removeItemFromCart}: any = useStore(state => state);
+  const {cartItems = [], removeItemFromCart,incrementItemQuantity}: any = useStore(state => state);
+  console.log(cartItems)
   return (
     <ScrollView>
       <View>
@@ -34,10 +35,12 @@ const CartItem: FC = () => {
                       size={FONTSIZE.size_18}
                     />
                   </TouchableOpacity>
-                  <View style={styles.quantityContainer}>
+                  <View >
                     <FontAwesomeIcon name="minus" size={FONTSIZE.size_18} />
-                    <Text style={styles.quantityText}>10</Text>
+                    <Text style={styles.quantityText}>{item.quantity}</Text>
+                  <TouchableOpacity key={item._id} onPress={() => incrementItemQuantity(item._id)}>
                     <FontAwesomeIcon name="plus" size={FONTSIZE.size_18} />
+                  </TouchableOpacity>
                   </View>
                 </View>
               )}

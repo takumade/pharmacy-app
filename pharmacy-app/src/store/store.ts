@@ -20,10 +20,14 @@ interface CartItem {
   image: string;
   prices: Price[];
   unitPrice: number;
+  quantity: number;
 }
 interface CartState {
   cartItems: CartItem [];
   addItemToCart: (item: CartItem) => void;
+  removeItemFromCart: (itemId: string) => void;
+  incrementItemQuantity: (itemId: string) => void;
+  decrementItemQuantity: (itemId: string) => void;
 }
 
 interface StoreState {
@@ -44,6 +48,17 @@ const useStore = create<StoreState>((set,get) => ({
         );
         if (!existingItem) {
           draft.cartItems.push(item);
+        }
+      })
+    );
+  },
+
+  incrementItemQuantity: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        const item = draft.cartItems.find((item) => item._id === itemId);
+        if (item) {
+          item.quantity++;
         }
       })
     );
