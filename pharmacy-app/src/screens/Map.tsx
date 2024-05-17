@@ -2,17 +2,21 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useRef} from 'react';
 import MapView, {Marker, Callout, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
-import {Searchbar} from 'react-native-paper';
+import Search from '../components/Search';
 import {TextInput} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import BottomSheetC from '../components/BottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
-export default class Map extends React.Component {
+import useStore from '../store/store';
+import PharmacyDetails from '../components/PharmacyDetails';
+import MedicineCartItem from '../components/MedicineCartItem';
+class Map extends React.Component {
   state = {
-    latitude: null,
-    longitude: null,
-    snapPoints: ['25%', '50%', '65%'],
+    latitude: '',
+    longitude: '',
+    snapPoints: ['25%', '35%', '65%'],
+    meds: [],
   };
 
   getUserLocation = () => {
@@ -36,8 +40,11 @@ export default class Map extends React.Component {
       </View>
     );
   };
+
   mapSection = () => {
     const {snapPoints} = this.state;
+    const {medicines = []}: any = this.props;
+
     return (
       <View style={{height: '100%', flexDirection: 'column'}}>
         <MapView
@@ -51,11 +58,23 @@ export default class Map extends React.Component {
           }}
           onMapReady={() => this.getUserLocation()}
           ref={ref => (this.mapRef = ref)}>
+          {medicines?.data?.map((med: any) => (
+            <Marker
+              key={med._id}
+              coordinate={{
+                latitude: med?.owner.latitude,
+                longitude: med?.owner.longitude,
+              }}
+              title={med?.owner?.name}
+            />
+          ))}
           <Marker coordinate={{latitude: -17.824858, longitude: 31.053028}} />
         </MapView>
+        <MedicineCartItem />
         <BottomSheet index={1} snapPoints={snapPoints}>
           <View>
-          <Searchbar placeholder='Search for drugs' value={''} /> 
+            <Search />
+            <PharmacyDetails />
           </View>
         </BottomSheet>
       </View>
@@ -71,3 +90,12 @@ export default class Map extends React.Component {
     );
   }
 }
+
+const withStore = (Component: any) => {
+  return (props: any) => {
+    const {medicines} = useStore();
+    return <Component {...props} medicines={medicines} />;
+  };
+};
+
+export default withStore(Map);

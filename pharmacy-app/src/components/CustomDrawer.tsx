@@ -15,7 +15,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface CustomDrawerProps extends DrawerContentComponentProps {}
 
+import AuthContext, {useAuth} from '../contexts/AuthContext';
+
 const CustomDrawer: React.FC<CustomDrawerProps> = props => {
+  const {onLogout} = useAuth();
   return (
     <View style={{flex: 1}}>
       <DrawerContentScrollView
@@ -55,7 +58,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = props => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
+        <TouchableOpacity onPress={onLogout} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Ionicons name="exit-outline" size={22} />
             <Text

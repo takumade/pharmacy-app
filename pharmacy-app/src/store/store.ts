@@ -1,78 +1,150 @@
 import {create} from 'zustand';
-
-interface userData {
-
-  name: string;
-  email: string;
-  password: string;
+import axios from 'axios';
+import EncryptedStorage from 'react-native-encrypted-storage';
+const produce = require('immer').produce;
+import CartItems from '../components/CartItems';
+interface SearchMedicine {
+  id: number;
+  genericName: string;
   // Add other properties as needed
 }
 
+interface Price {
+  size: string;
+  quantity: number;
+}
+
+interface CartItem {
+  _id: string;
+  medicineName: string;
+  image: string;
+  prices: Price[];
+  unitPrice: number;
+  quantity: number;
+}
+interface CartState {
+  cartItems: CartItem[];
+  addItemToCart: (item: CartItem) => void;
+  removeItemFromCart: (itemId: string) => void;
+  incrementItemQuantity: (itemId: string) => void;
+  decrementItemQuantity: (itemId: string) => void;
+  clearCart: () => void;
+}
 
 interface StoreState {
-  items: userData[];
-  getItems: () => Promise<void>;
-  signInUser: (userData: userData) => Promise<void>;
-  signUpUser: (userData: userData) => Promise<void>;
+  addItemToCart: any;
+  medicines: SearchMedicine[];
+  searchMedicines: (name: string) => Promise<void>;
 }
 
 const useStore = create<StoreState>((set, get) => ({
-  items: [],
-  getItems: async () => {
-    try {
-      const response = await fetch('https://cat-fact.herokuapp.com/facts');
-      const data = await response.json();
-   
-      set({ items: data });
-    } catch (error) {
-      console.error('Error fetching items:', error);
-    }
+  medicines: [],
+  cartItems: [],
+
+  addItemToCart: (item: CartItem) => {
+    set(
+      produce((draft: CartState) => {
+        const existingItem = draft.cartItems.find(
+          cartItem => cartItem._id === item._id,
+        );
+        if (!existingItem) {
+          draft.cartItems.push(item);
+        }
+      }),
+    );
+  },
+
+  incrementItemQuantity: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        const item = draft.cartItems.find(item => item._id === itemId);
+        if (item) {
+          item.quantity++;
+        }
+      }),
+    );
+  },
+
+  decrementItemQuantity: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        const item = draft.cartItems.find(item => item._id === itemId);
+        if (item && item.quantity > 1) {
+          item.quantity--;
+        }
+      }),
+    );
+  },
+  removeItemFromCart: (itemId: string) => {
+    set(
+      produce((draft: CartState) => {
+        draft.cartItems = draft.cartItems.filter(item => item._id !== itemId);
+      }),
+    );
   },
   
-  signInUser: async (userData: userData) => {
+  clearCart: () => {
+    set(
+      produce((draft: CartState) => {
+        draft.cartItems = [];
+      }),
+    );
+  },
+  
+  searchMedicines: async (name: string) => {
     try {
-      const response = await fetch('https://your-api-endpoint.com/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const token =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
+      const response = await axios.get(
+        `http://192.168.100.3:3000/api/medicine/search?name=${name}`,
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
         },
-        body: JSON.stringify(userData),
-      });
+      );
+      const data = response.data;
 
-      if (!response.ok) {
-        throw new Error('Sign in failed');
-      }
-
-      const data = await response.json();
-      // Handle the response data as needed (e.g., store the user token)
-      console.log('Sign in successful:', data);
+      set({medicines: data});
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error('Error searching medicines:', error);
     }
   },
-
-  signUpUser: async (userData: userData) => {
-    try {
-      const response = await fetch('https://your-api-endpoint.com/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Sign up failed');
-      }
-
-      const data = await response.json();
-      console.log('Sign up successful:', data);
-    } catch (error) {
-      console.error('Error signing up:', error);
-    }
-  },
-
-
 }));
 
 export default useStore;
+
+
+//to reuse the code later so that its sorts the items when adding to cart
+  // addItemToCart: (item: CartItem) => {
+  //   set(
+  //     produce((draft: CartState) => {
+  //       const existingItem = draft.cartItems.find(
+  //         (cartItem) => cartItem._id === item._id
+  //       );
+
+  //       if (existingItem) {
+  //         (item.prices || []).forEach((itemPrice) => {
+  //           const existingPrice = existingItem.prices.find(
+  //             (unitPrice) => unitPrice.size === itemPrice.size
+  //           );
+
+  //           if (existingPrice) {
+  //             existingPrice.quantity++;
+  //           } else {
+  //             existingItem.prices.push({ ...itemPrice, quantity: 1 });
+  //           }
+  //         });
+
+  //         existingItem.prices.sort((a, b) => b.size.localeCompare(a.size));
+  //       } else {
+  //         const newItem: CartItem = {
+  //           ...item,
+  //           prices: (item.prices || []).map((unitPrice) => ({ ...unitPrice, quantity: 1 })),
+  //         };
+  //         draft.cartItems.push(newItem);
+  //       }
+  //     })
+  //   );
+  // },
