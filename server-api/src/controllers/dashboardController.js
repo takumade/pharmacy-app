@@ -42,6 +42,11 @@ const getAdminStats = async (req, res) => {
         // Get total prescriptions for the pharmacy
         const totalPrescriptions = await Prescription.countDocuments();
 
+
+        const totalCustomers = await Order.find().distinct('userId').countDocuments();
+
+
+
         // Send the statistics in the response
         res.status(200).json({
             success: true,
@@ -52,6 +57,7 @@ const getAdminStats = async (req, res) => {
                 totalApprovedPharmacies,
                 totalBannedPharmacies,
                 totalMedicines,
+                totalCustomers,
                 totalOrders,
                 totalTransactions,
                 totalPrescriptions
@@ -80,6 +86,9 @@ const getPharmacyStats = async (req, res) => {
         // Get total prescriptions for the pharmacy
         const totalPrescriptions = await Prescription.countDocuments({ pharmacyId });
 
+
+        const totalCustomers = await Order.find({pharmacyId: pharmacyId}).distinct('userId').countDocuments();
+
         // Send the statistics in the response
         res.status(200).json({
             success: true,
@@ -87,7 +96,9 @@ const getPharmacyStats = async (req, res) => {
                 totalOrders,
                 totalTransactions,
                 totalMedicines,
-                totalPrescriptions
+                totalPrescriptions,
+                totalCustomers
+
             }
         });
     } catch (error) {
