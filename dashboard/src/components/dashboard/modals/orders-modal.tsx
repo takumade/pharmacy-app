@@ -125,8 +125,13 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
         </AppBar>
         <Stack spacing={3} style={{ padding: '5rem' }}>
           <Grid container spacing={3}>
-            <Grid item lg={4} md={6} xs={12}>
-              <MainInfo order={order} />
+            <Grid item lg={4} md={6} xs={12} spacing={3}>
+              <Grid item>
+                <MainInfo order={order} />
+              </Grid>
+              <Grid item style={{marginTop: 12}}>
+                <Prescriptions  order={order} handleApprove={approve} handleDecline={decline} />
+              </Grid>
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
               <OrderItems  order={order} handleApprove={approve} handleDecline={decline} />
@@ -173,7 +178,7 @@ export function MainInfo({ order }: { order: Order }): React.JSX.Element {
 }
 
 
-export function OrderItems({ order, handleApprove, handleDecline }: { order: Order, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
+function OrderItems({ order, handleApprove, handleDecline }: { order: Order, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
 
   const [currentImage, setCurrentImage] = React.useState(0);
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
@@ -234,6 +239,58 @@ export function OrderItems({ order, handleApprove, handleDecline }: { order: Ord
           <Button variant="contained" color="error" onClick={() => handleDecline(reason)}>Decline</Button>
           <Button variant="contained" onClick={() => handleApprove()}>Approve</Button>
         </CardActions>
+      </Card>
+    </React.Fragment>
+  );
+}
+
+
+function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
+
+  const [currentImage, setCurrentImage] = React.useState(0);
+  const [isViewerOpen, setIsViewerOpen] = React.useState(false);
+  const [images, setImages] = React.useState<string[]>([]);
+  const [reason, setReason] = React.useState<string>("");
+
+
+  const openImageViewer = (image:string) => {
+    setImages([image])
+    setCurrentImage(0);
+    setIsViewerOpen(true);
+  }
+
+  const closeImageViewer = () => {
+    setCurrentImage(0);
+    setIsViewerOpen(false);
+  };
+
+  const handleChange = (event: any) => {
+    // @ts-ignore
+      setReason(event.target.value)
+  }
+
+
+
+  return (
+    <React.Fragment
+
+    >
+
+
+      <Card>
+        <CardHeader subheader="The user submitted these prescription(s)" title="Prescriptions" />
+        <Divider />
+        <CardContent>
+
+
+        <List>
+          {
+            order && order.prescriptions.map(item => <ListItemButton>
+              <ListItemText primary={item._id}secondary={item.src} />
+            </ListItemButton>)
+          }
+        </List>
+        </CardContent>
       </Card>
     </React.Fragment>
   );
