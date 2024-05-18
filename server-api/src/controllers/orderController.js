@@ -124,11 +124,11 @@ const getOrders = async (req, res) => {
 
         // Find orders in the database based on the criteria
         if (req.user.role === userRoles.admin)
-            orders = await Order.find();
+            orders = await Order.find().populate("userId");
         else
 
         
-            orders = await Order.find(criteria);
+            orders = await Order.find(criteria).populate("userId");
 
         // Optionally, you can populate additional fields
         // For example, you might want to populate the pharmacy field
