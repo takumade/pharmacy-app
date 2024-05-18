@@ -16,34 +16,34 @@ const getAdminStats = async (req, res) => {
             return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
         }
 
-        // Get total users
-        const totalUsers = await User.countDocuments();
+        // Get  users
+        const users = await User.countDocuments();
 
-        // Get total pharmacies
-        const totalPharmacies = await Pharmacy.countDocuments();
+        // Get  pharmacies
+        const pharmacies = await Pharmacy.countDocuments();
 
-        const totalApplications = await Pharmacy.countDocuments({ isApproved: false, applicationStatus: applicationStatus.pending });
+        const applications = await Pharmacy.countDocuments({ isApproved: false, applicationStatus: applicationStatus.pending });
 
-        // Get total approved pharmacies
-        const totalApprovedPharmacies = await Pharmacy.countDocuments({ isApproved: true });
+        // Get  approved pharmacies
+        const approvedPharmacies = await Pharmacy.countDocuments({ isApproved: true });
 
-        // Get total banned pharmacies
-        const totalBannedPharmacies = await Pharmacy.countDocuments({ isBanned: true });
+        // Get  banned pharmacies
+        const bannedPharmacies = await Pharmacy.countDocuments({ isBanned: true });
 
-        // Get total medicines
-        const totalMedicines = await Medicine.countDocuments();
+        // Get  medicines
+        const medicines = await Medicine.countDocuments();
 
-        // Get total orders
-        const totalOrders = await Order.countDocuments();
+        // Get  orders
+        const orders = await Order.countDocuments();
 
-        // Get total transactions
-        const totalTransactions = await Transaction.countDocuments();
+        // Get  transactions
+        const transactions = await Transaction.countDocuments();
 
-        // Get total prescriptions for the pharmacy
-        const totalPrescriptions = await Prescription.countDocuments();
+        // Get  prescriptions for the pharmacy
+        const prescriptions = await Prescription.countDocuments();
 
 
-        const totalCustomers = await Order.find().distinct('userId').countDocuments();
+        const customers = await Order.find().distinct('userId').countDocuments();
 
 
 
@@ -51,16 +51,16 @@ const getAdminStats = async (req, res) => {
         res.status(200).json({
             success: true,
             data: {
-                totalUsers,
-                totalPharmacies,
-                totalApplications,
-                totalApprovedPharmacies,
-                totalBannedPharmacies,
-                totalMedicines,
-                totalCustomers,
-                totalOrders,
-                totalTransactions,
-                totalPrescriptions
+                users,
+                pharmacies,
+                applications,
+                approvedPharmacies,
+                bannedPharmacies,
+                medicines,
+                customers,
+                orders,
+                transactions,
+                prescriptions
             }
         });
     } catch (error) {
@@ -74,30 +74,30 @@ const getPharmacyStats = async (req, res) => {
         // Retrieve pharmacy ID from the user's request
         const pharmacyId = req.user.pharmacy;
 
-        // Get total orders for the pharmacy
-        const totalOrders = await Order.countDocuments({ pharmacy: pharmacyId });
+        // Get  orders for the pharmacy
+        const orders = await Order.countDocuments({ pharmacy: pharmacyId });
 
-        // Get total transactions for the pharmacy
-        const totalTransactions = await Transaction.countDocuments({ pharmacyId });
+        // Get  transactions for the pharmacy
+        const transactions = await Transaction.countDocuments({ pharmacyId });
 
-        // Get total medicines for the pharmacy
-        const totalMedicines = await Medicine.countDocuments({ pharmacyId });
+        // Get  medicines for the pharmacy
+        const medicines = await Medicine.countDocuments({ pharmacyId });
 
-        // Get total prescriptions for the pharmacy
-        const totalPrescriptions = await Prescription.countDocuments({ pharmacyId });
+        // Get  prescriptions for the pharmacy
+        const prescriptions = await Prescription.countDocuments({ pharmacyId });
 
 
-        const totalCustomers = await Order.find({pharmacyId: pharmacyId}).distinct('userId').countDocuments();
+        const customers = await Order.find({pharmacyId: pharmacyId}).distinct('userId').countDocuments();
 
         // Send the statistics in the response
         res.status(200).json({
             success: true,
             data: {
-                totalOrders,
-                totalTransactions,
-                totalMedicines,
-                totalPrescriptions,
-                totalCustomers
+                orders,
+                transactions,
+                medicines,
+                prescriptions,
+                customers
 
             }
         });
