@@ -22,6 +22,7 @@ import { useUser } from '@/hooks/use-user';
 
 export function SideNav(): React.JSX.Element {
   const pathname = usePathname();
+  const {user} = useUser()
 
   return (
     <Box
@@ -71,7 +72,7 @@ export function SideNav(): React.JSX.Element {
               Workspace
             </Typography>
             <Typography color="inherit" variant="subtitle1">
-              Devias
+            {user && user?.role[0].toUpperCase() + user?.role.substr(1)}
             </Typography>
           </Box>
           <CaretUpDownIcon />
