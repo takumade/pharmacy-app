@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
 import { User } from '@/types/user.type';
+import { Pharmacy } from '@/types/pharmacy.type';
 
 function noop(): void {
   // do nothing
@@ -30,7 +31,7 @@ function noop(): void {
 export interface Order {
   _id: string;
   userId: User;
-  pharmacyId: string;
+  pharmacyId: Pharmacy;
   items: Array<any>; // You may want to specify the type of items if you have a specific structure for them
   prescriptions: Array<any>; // You may want to specify the type of prescriptions if you have a specific structure for them
   totalAmount: number;
@@ -136,7 +137,7 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
                     />
                   </TableCell>
                   <TableCell>{row.userId.username}</TableCell>
-                  <TableCell>{row.pharmacyId}</TableCell>
+                  <TableCell>{row.pharmacyId.name}</TableCell>
                   <TableCell>{row.totalAmount}</TableCell>
                   <TableCell>{row.status}</TableCell>
                   <TableCell>{row.paymentMethod}</TableCell>
