@@ -285,8 +285,8 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
 
         <List>
           {
-            order && order.prescriptions.map(item => <ListItemButton>
-              <ListItemText primary={item._id}secondary={item.src} />
+            order && order.prescriptions.map((item, index) => <ListItemButton>
+              <ListItemText primary={"Prescription #" + (index + 1)}secondary={item._id} />
             </ListItemButton>)
           }
         </List>
