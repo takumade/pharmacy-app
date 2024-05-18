@@ -12,6 +12,8 @@ router.get('/:orderId', orderController.getOrder);
 
 router.post('/create', orderController.checkout);
 router.post('/delete/:orderId', orderController.deleteOrder);
+router.post('/approve/:orderId', orderController.approveOrder);
+router.post('/delete/:orderId', orderController.deleteOrder);
 // Add more routes as needed
 
 module.exports = router;
