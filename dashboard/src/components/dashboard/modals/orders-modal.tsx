@@ -165,14 +165,6 @@ export function MainInfo({ order }: { order: Order }): React.JSX.Element {
               </Stack>
             </Grid>
           </Grid>
-          <Stack spacing={1} >
-          <Typography color="text.secondary" variant="body2">
-                  <b>Phone:</b> {order.userId.phoneNumber}
-                </Typography>
-                <Typography color="text.secondary" variant="body2">
-                  <b>Email:</b> {order.userId.email}
-                </Typography>
-          </Stack>
         </Stack>
       </CardContent>
       <Divider />
@@ -220,9 +212,11 @@ export function OrderItems({ order, handleApprove, handleDecline }: { order: Ord
 
 
         <List>
-          <ListItemButton>
-            <ListItemText primary="Order Item" secondary="" />
-          </ListItemButton>
+          {
+            order.items.map(item => <ListItemButton>
+              <ListItemText primary={item.productName}secondary={"Quanity: " + item.quantity + "  Total Amount: " + item.price} />
+            </ListItemButton>)
+          }
           <Divider />
         </List>
 
