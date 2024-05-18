@@ -234,49 +234,34 @@ const approvePharmacy = async (req, res) => {
     }
   }
 
-  const getPharmacyCustomers = async (req, res) => {
-    try {
-        // Retrieve the pharmacy ID from the request parameters
-        const pharmacyId = req.params.pharmacyId;
 
-        // Find the pharmacy
-        const pharmacy = await Pharmacy.findById(pharmacyId);
-
-        // Check if the pharmacy exists
-        if (!pharmacy) {
-            return res.status(404).json({ success: false, message: "Pharmacy not found" });
-        }
-
-        // Check if the authenticated user owns the pharmacy
-        if (pharmacy.owner !== req.user._id) {
-            return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
-        }
-
-        // Find orders associated with the pharmacy
-        const orders = await Order.find({ pharmacyId: pharmacyId })
-                                  .distinct('userId')
-                                  .populate('userId');
-
-        // Send the list of customers in the response
-        res.status(200).json({ success: true, data: orders.map(order => order.userId) });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Internal server error" });
-    }
-};
 
 const getCustomers = async (req, res) => {
   try {
 
       // Check if the authenticated user owns the pharmacy
-      if (req.user.role !== userRoles.admin ) {
+      if (req.user.role !== userRoles.admin  && req.user.role !== userRoles.pharmacy) {
           return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
       }
 
-      // Find orders associated with the pharmacy
-      const orders = await Order.find()
-                                .distinct('userId')
-                                .populate('userId');
+      let orders
+
+
+
+      if (req.user.role === userRoles.pharmacy){
+        let pharmacy = await Pharmacy.findOne({owner: req.user._id})
+
+        // Find orders associated with the pharmacy
+        orders = await Order.find({pharmacyId: pharmacy._id})
+                                  .distinct('userId')
+                                  .populate('userId');
+      }
+
+      if (req.user.role === userRoles.admin)
+        // Find orders associated with the pharmacy
+        orders = await Order.find({})
+                                  .distinct('userId')
+                                  .populate('userId');
 
       // Send the list of customers in the response
       res.status(200).json({ success: true, data: orders.map(order => order.userId) });
@@ -296,7 +281,6 @@ module.exports = {
     editPharmacy,
     deletePharmacy,
     getCustomers,
-    getPharmacyCustomers,
     approvePharmacy,
     declinePharmacy
 }
