@@ -73,7 +73,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
     })
     }else{
       updateMessage({
-        title: 'Approve Applicaton',
+        title: 'Approve Order',
         body: response.message,
         type: "error"
       })
@@ -92,7 +92,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
     if (response.success){
 
       updateMessage({
-        title: 'Decline Applicaton',
+        title: 'Decline Order',
         body: response.message,
         type: "success"
       })
