@@ -120,7 +120,6 @@ const getOrders = async (req, res) => {
             let pharmacy = await Pharmacy.findOne({owner: req.user._id})
                                          .populate("userId")
                                          .populate("pharmacyId")
-                                         .populate("prescriptions")
             criteria.pharmacyId = pharmacy._id;
         }
 
@@ -128,13 +127,12 @@ const getOrders = async (req, res) => {
         if (req.user.role === userRoles.admin)
             orders = await Order.find().populate("userId")
                                        .populate("pharmacyId")
-                                       .populate("prescriptions")
+                                   
         else
 
         
             orders = await Order.find(criteria).populate("userId")
                                                .populate("pharmacyId")
-                                               .populate("prescriptions");
 
         // Optionally, you can populate additional fields
         // For example, you might want to populate the pharmacy field
