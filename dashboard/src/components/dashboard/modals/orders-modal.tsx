@@ -119,7 +119,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
               <X />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Pharmacy Application
+              Order
             </Typography>
           </Toolbar>
         </AppBar>
