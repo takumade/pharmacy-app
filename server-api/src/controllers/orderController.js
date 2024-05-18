@@ -118,6 +118,7 @@ const getOrders = async (req, res) => {
         // For example, you might want to filter orders by pharmacy
         if (req.user.role === userRoles.pharmacy) {
             let pharmacy = await Pharmacy.findOne({owner: req.user._id})
+                                         .populate("userId")
             criteria.pharmacyId = pharmacy._id;
         }
 
