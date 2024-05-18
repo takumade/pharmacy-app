@@ -19,34 +19,10 @@ import { Eye, Trash } from '@phosphor-icons/react';
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
-import { Permissions, RolePerm } from '@/types/permissions';
+import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
-
-function noop(): void {
-  // do nothing
-}
-
-export interface Order {
-  _id: string;
-  userId: string;
-  pharmacyId: string;
-  items: Array<any>; // You may want to specify the type of items if you have a specific structure for them
-  prescriptions: Array<any>; // You may want to specify the type of prescriptions if you have a specific structure for them
-  totalAmount: number;
-  status: string;
-  shippingAddress: {
-    // Define the structure of the shipping address object
-    // You can add more fields as needed
-    // Example:
-    streetAddress: string;
-    city: string;
-    state: string;
-    postalCode: string;
-  };
-  paymentMethod: string;
-  transactionId: string;
-  orderDate: string; // Assuming the date is represented as a string
-};
+import { Order } from '@/types/order.type';
+import OrdersModal from '../modals/orders-modal';
 
 
 interface GeneralTableProps {
@@ -64,6 +40,13 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState(false)
+  const [targetRow, setTargetRow] = React.useState<Order | null>(null)
+
+  const handleClickOpen = (row: Order) => {
+    setOpen(true);
+    setTargetRow(row)
+  };
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -89,6 +72,7 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
 
   return (
     <Card>
+      <OrdersModal open={open} setOpen={setOpen}  order={targetRow as Order} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
@@ -134,8 +118,8 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
                       }}
                     />
                   </TableCell>
-                  <TableCell>{row.userId}</TableCell>
-                  <TableCell>{row.pharmacyId}</TableCell>
+                  <TableCell>{row.userId.username}</TableCell>
+                  <TableCell>{row.pharmacyId.name}</TableCell>
                   <TableCell>{row.totalAmount}</TableCell>
                   <TableCell>{row.status}</TableCell>
                   <TableCell>{row.paymentMethod}</TableCell>
@@ -144,7 +128,7 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
-                        <IconButton>
+                        <IconButton onClick={() => handleClickOpen(row)}>
                           <Eye />
                         </IconButton>
                       )}
