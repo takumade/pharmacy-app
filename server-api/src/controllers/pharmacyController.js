@@ -265,26 +265,16 @@ const approvePharmacy = async (req, res) => {
     }
 };
 
-const getPharmacyCustomers = async (req, res) => {
+const getCustomers = async (req, res) => {
   try {
-      // Retrieve the pharmacy ID from the request parameters
-      const pharmacyId = req.params.pharmacyId;
-
-      // Find the pharmacy
-      const pharmacy = await Pharmacy.findById(pharmacyId);
-
-      // Check if the pharmacy exists
-      if (!pharmacy) {
-          return res.status(404).json({ success: false, message: "Pharmacy not found" });
-      }
 
       // Check if the authenticated user owns the pharmacy
-      if (pharmacy.owner !== req.user._id) {
+      if (req.user.role !== userRoles.admin ) {
           return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
       }
 
       // Find orders associated with the pharmacy
-      const orders = await Order.find({ pharmacyId: pharmacyId })
+      const orders = await Order.find()
                                 .distinct('userId')
                                 .populate('userId');
 
@@ -306,6 +296,7 @@ module.exports = {
     editPharmacy,
     deletePharmacy,
     getCustomers,
+    getPharmacyCustomers,
     approvePharmacy,
     declinePharmacy
 }
