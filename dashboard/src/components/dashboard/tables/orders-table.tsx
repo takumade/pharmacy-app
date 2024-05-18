@@ -22,6 +22,7 @@ import dayjs from 'dayjs';
 import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
 import { Order } from '@/types/order.type';
+import OrdersModal from '../modals/orders-modal';
 
 
 interface GeneralTableProps {
@@ -39,6 +40,13 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = React.useState(false)
+  const [targetRow, setTargetRow] = React.useState<Order | null>(null)
+
+  const handleClickOpen = (row: Order) => {
+    setOpen(true);
+    setTargetRow(row)
+  };
 
   const handleChangePage = (event: any, newPage: React.SetStateAction<number>) => {
     setPage(newPage);
@@ -64,6 +72,7 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
 
   return (
     <Card>
+      <OrdersModal open={open} setOpen={setOpen}  order={targetRow as Order} />
       <Box sx={{ overflowX: 'auto' }}>
         <Table sx={{ minWidth: '800px' }}>
           <TableHead>
@@ -119,7 +128,7 @@ export function OrderTable({ count = 0, rows = [], permissions }: GeneralTablePr
                   <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
-                        <IconButton>
+                        <IconButton onClick={() => handleClickOpen(row)}>
                           <Eye />
                         </IconButton>
                       )}
