@@ -251,8 +251,15 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
 
+  console.log("order: ", order)
 
-  const openImageViewer = (image:string) => {
+
+  const openImageViewer = async (id:string) => {
+
+    let response = await frontendClient('get', `prescription/${id}`, {})
+
+    let image = response.data.src
+
     setImages([image])
     setCurrentImage(0);
     setIsViewerOpen(true);
@@ -288,7 +295,7 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
 
         <List>
           {
-            order && order.prescriptions.map((item, index) => <ListItemButton onClick={() => openImageViewer(item.src)}>
+            order && order.prescriptions.map((item, index) => <ListItemButton onClick={() => openImageViewer(item._id)}>
               <ListItemText primary={"Prescription #" + (index + 1)}secondary={item._id} />
             </ListItemButton>)
           }
