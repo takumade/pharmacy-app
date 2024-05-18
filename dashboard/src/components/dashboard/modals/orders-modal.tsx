@@ -30,6 +30,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useSnackbar } from '@/contexts/snackbar-context';
 import frontendClient from '@/services/frontend-client';
+import { Order } from '@/types/order.type';
 
 
 
@@ -45,7 +46,7 @@ const Transition = React.forwardRef(function Transition(
 interface OrderModalProps {
   open: boolean;
   setOpen: any;
-  application: Pharmacy;
+  order: Order;
 }
 
 export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
@@ -61,7 +62,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
 
   const approve = async () => {
 
-    let response = await frontendClient('post', `pharmacy/approve/${application._id}`, {})
+    let response = await frontendClient('post', `order/approve/${order._id}`, {})
 
     if (response.success){
 
@@ -86,7 +87,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
 
 
   const decline =async (reason: string) => {
-    let response = await frontendClient('post', `pharmacy/decline/${application._id}`, {reason})
+    let response = await frontendClient('post', `order/decline/${order._id}`, {reason})
 
     if (response.success){
 
@@ -125,10 +126,10 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
         <Stack spacing={3} style={{ padding: '5rem' }}>
           <Grid container spacing={3}>
             <Grid item lg={4} md={6} xs={12}>
-              <MainInfo application={application} />
+              <MainInfo order={order} />
             </Grid>
             <Grid item lg={8} md={6} xs={12}>
-              <PharmacyLicenses  application={application} handleApprove={approve} handleDecline={decline} />
+              <OrderItems  order={order} handleApprove={approve} handleDecline={decline} />
             </Grid>
           </Grid>
 
@@ -139,7 +140,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
   );
 }
 
-export function MainInfo({ application }: { application: Pharmacy }): React.JSX.Element {
+export function MainInfo({ order }: { order: Order }): React.JSX.Element {
   return (
     <Card>
       <CardContent>
@@ -148,17 +149,17 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
             <Grid item>
               {' '}
               <div>
-                <Avatar src={application.logo} sx={{ height: '80px', width: '80px' }} />
+                <Avatar src={order.userId.avatar} sx={{ height: '80px', width: '80px' }} />
               </div>
             </Grid>
             <Grid item>
               <Stack spacing={1} sx={{ textAlign: 'left' }}>
-                <Typography variant="h5">{application.name}</Typography>
+                <Typography variant="h5">{order.userId.fullName}</Typography>
                 <Typography color="text.secondary" variant="body2">
-                   {application.location}
+                   {order.userId.email}
                 </Typography>
                 <Typography color="text.secondary" variant="body2">
-                  Lat: {application.latitude} , Long: {application.longitude}
+                  {order.userId.phoneNumber}
                 </Typography>
 
               </Stack>
@@ -166,14 +167,11 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
           </Grid>
           <Stack spacing={1} >
           <Typography color="text.secondary" variant="body2">
-                  <b>Phone:</b> {application.contactInformation.phone}
+                  <b>Phone:</b> {order.userId.phoneNumber}
                 </Typography>
                 <Typography color="text.secondary" variant="body2">
-                  <b>Email:</b> {application.contactInformation.email}
+                  <b>Email:</b> {order.userId.email}
                 </Typography>
-                <Typography color="text.secondary" variant="body2">
-                 <b>Operating Hours: </b> {application.operatingHours.weekdays.start} - {application.operatingHours.weekdays.end} (Weekdays) / {application.operatingHours.weekends.start} - {application.operatingHours.weekends.end} (Weekends)
-            </Typography>
           </Stack>
         </Stack>
       </CardContent>
@@ -183,7 +181,7 @@ export function MainInfo({ application }: { application: Pharmacy }): React.JSX.
 }
 
 
-export function PharmacyLicenses({ application, handleApprove, handleDecline }: { application: Pharmacy, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
+export function OrderItems({ order, handleApprove, handleDecline }: { order: Order, handleApprove: Function, handleDecline: Function }): React.JSX.Element {
 
   const [currentImage, setCurrentImage] = React.useState(0);
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
@@ -231,21 +229,10 @@ export function PharmacyLicenses({ application, handleApprove, handleDecline }: 
       )}
 
         <List>
-          <ListItemButton onClick={() => openImageViewer(application.cityCouncilLicense)}>
-            <ListItemText primary="City Council License" secondary="" />
+          <ListItemButton>
+            <ListItemText primary="Order Item" secondary="" />
           </ListItemButton>
           <Divider />
-          <ListItemButton onClick={() => openImageViewer(application.pharmacistCouncilLicense)}>
-            <ListItemText primary="Pharmacist Council License" secondary="" />
-          </ListItemButton>
-          <Divider />
-          <ListItemButton onClick={() => openImageViewer(application.medicinesControlAuthorityLicense)}>
-            <ListItemText primary="Medicines Control Authority License" secondary="" />
-          </ListItemButton>
-          <Divider />
-          <ListItemButton onClick={() => openImageViewer(application.healthProfessionsAuthorityLicense)}>
-            <ListItemText primary="Health Professional Authority License" secondary="" />
-          </ListItemButton>
         </List>
 
           <Stack  spacing={1}>
