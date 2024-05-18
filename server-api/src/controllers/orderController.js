@@ -152,7 +152,7 @@ const approveOrder = async (req, res) => {
   
     try {
       // Check if the user making the request is an admin
-      if (currentUser.role !== userRoles.pharmacy || currentUser.role !== userRoles.admin ) {
+      if (currentUser.role !== userRoles.pharmacy && currentUser.role !== userRoles.admin ) {
         return res.status(403).json({ success: false, message: "Only a pharmacy can approve a order" });
       }
   
@@ -174,31 +174,30 @@ const approveOrder = async (req, res) => {
     }
   }
 
-  const declinePharmacy = async (req, res) => {
+  const declineOrder = async (req, res) => {
     const currentUser = req.user;
 
     const { reason } = req.body
   
     try {
       // Check if the user making the request is an admin
-      if (currentUser.role !== userRoles.admin) {
-        return res.status(403).json({ success: false, message: "Only an admin can decline a pharmacy" });
+      if (currentUser.role !== userRoles.admin && currentUser.role !== userRoles.pharmacy ) {
+        return res.status(403).json({ success: false, message: "Only a pharmacy can decline an order" });
       }
   
       // Find the pharmacy by ID
-      const pharmacyId = req.params.pharmacyId;
-      const pharmacy = await Pharmacy.findById(pharmacyId);
-      if (!pharmacy) {
-        return res.status(404).json({ success: false, message: "Pharmacy not found" });
+      const orderId = req.params.orderId;
+      const order = await Order.findById(orderId);
+      if (!order) {
+        return res.status(404).json({ success: false, message: "Order not found" });
       }
   
       // Update the isApproved field to true
-      pharmacy.isApproved = false;
-      pharmacy.applicationStatus = applicationStatus.decline;
-      pharmacy.applicationReason = reason ? reason : ""
-      await pharmacy.save();
+      order.approveStatus = "pending" 
+      order.deniedReason = reason ? reason : ""
+      await order.save();
   
-      res.status(200).json({ success: true, message: "Pharmacy denied successfully", data: pharmacy });
+      res.status(200).json({ success: true, message: "Order denied successfully", data: pharmacy });
     } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
@@ -211,5 +210,7 @@ module.exports = {
     checkout,
     deleteOrder,
     getOrder,
-    getOrders
+    getOrders,
+    approveOrder,
+    declineOrder
 }
