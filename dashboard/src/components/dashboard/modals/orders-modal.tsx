@@ -87,7 +87,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
 
 
   const decline =async (reason: string) => {
-    let response = await frontendClient('post', `order/decline/${order._id}`, {reason})
+    let response = await frontendClient('post', `order/deny/${order._id}`, {reason})
 
     if (response.success){
 
@@ -251,7 +251,6 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
 
-  console.log("order: ", order)
 
 
   const openImageViewer = async (id:string) => {
