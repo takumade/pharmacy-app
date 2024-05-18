@@ -20,7 +20,7 @@ const getPrescription = async (req, res) => {
         }
 
         // Send the prescription in the response
-        res.status(200).json({ success: true, prescription });
+        res.status(200).json({ success: true, data: prescription });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: "Internal server error" });
