@@ -19,6 +19,7 @@ import { APIResponse } from '@/types/api-response';
 import { TransactionsTable } from '@/components/dashboard/tables/txn-table';
 import { UserTable } from '@/components/dashboard/tables/user-table';
 import { Pharmacy } from '@/types/pharmacy.type';
+import { CustomerTable } from '@/components/dashboard/tables/customer-table';
 
 export const metadata = { title: `Customers | Dashboard | ${config.site.name}` } satisfies Metadata;
 
@@ -28,24 +29,13 @@ export default async function Page() {
 
 
 
-  let response: APIResponse
-  let customers:User[] = []
+  let response: APIResponse =  await backendClient('get', 'pharmacy/customers', {})
+  let customers:User[] = response.data
 
   let userObject = cookies().get("custom-auth-user")
   let user: User = JSON.parse(userObject?.value as string)
 
 
-  if (user.role === "admin"){
-    response = await backendClient('get', 'pharmacy/customers')
-    customers = response.data
-  }
-
-  if (user.role === UserRoles.pharmacy){
-    let pharmacyReponse = await backendClient('get', `pharmacy/search?owner${user._id}`)
-    let pharmacy:Pharmacy = pharmacyReponse.data[0]
-    response = await backendClient('get', `pharmacy/customers/${pharmacy._id}`)
-    customers = response.data
-  }
 
 
 
@@ -56,7 +46,7 @@ export default async function Page() {
     <Stack spacing={3}>
       <Stack direction="row" spacing={3}>
         <Stack spacing={1} sx={{ flex: '1 1 auto' }}>
-          <Typography variant="h4">Users</Typography>
+          <Typography variant="h4">Customers</Typography>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             <Button color="inherit" startIcon={<UploadIcon fontSize="var(--icon-fontSize-md)" />}>
               Import
@@ -72,8 +62,8 @@ export default async function Page() {
           </Button>
         </div>
       </Stack>
-      <GeneralFilters item="users" />
-      <UserTable
+      <GeneralFilters item="customers" />
+      <CustomerTable
         count={customers.length}
         rows={customers}
         permissions={permissions}
