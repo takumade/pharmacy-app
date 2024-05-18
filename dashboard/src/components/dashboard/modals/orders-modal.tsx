@@ -250,7 +250,6 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
   const [currentImage, setCurrentImage] = React.useState(0);
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
-  const [reason, setReason] = React.useState<string>("");
 
 
   const openImageViewer = (image:string) => {
@@ -264,12 +263,6 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
     setIsViewerOpen(false);
   };
 
-  const handleChange = (event: any) => {
-    // @ts-ignore
-      setReason(event.target.value)
-  }
-
-
 
   return (
     <React.Fragment
@@ -282,10 +275,20 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
         <Divider />
         <CardContent>
 
+        {isViewerOpen && (
+        <ImageViewer
+          src={ images }
+          currentIndex={ currentImage }
+          disableScroll={ false }
+          closeOnClickOutside={ true }
+          onClose={ closeImageViewer }
+        />
+      )}
+
 
         <List>
           {
-            order && order.prescriptions.map((item, index) => <ListItemButton>
+            order && order.prescriptions.map((item, index) => <ListItemButton onClick={() => openImageViewer(item.src)}>
               <ListItemText primary={"Prescription #" + (index + 1)}secondary={item._id} />
             </ListItemButton>)
           }
