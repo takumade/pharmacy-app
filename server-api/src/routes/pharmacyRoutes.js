@@ -13,7 +13,6 @@ router.get('/applications', pharmacyController.getApplications);
 router.get('/:pharmacyId', pharmacyController.getPharmacy);
 router.get('/', pharmacyController.getPharmacies);
 router.get('/customers', pharmacyController.getCustomers);
-router.get('/customers/:pharmacyId', pharmacyController.getPharmacyCustomers);
 
 
 router.post('/create', pharmacyController.createPharmacy);
