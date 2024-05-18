@@ -56,11 +56,11 @@ export default async function Page() {
             </Button>
           </Stack>
         </Stack>
-        <div>
+        {/* <div>
           <Button startIcon={<PlusIcon fontSize="var(--icon-fontSize-md)" />} variant="contained">
             Add
           </Button>
-        </div>
+        </div> */}
       </Stack>
       <GeneralFilters item="customers" />
       <CustomerTable
