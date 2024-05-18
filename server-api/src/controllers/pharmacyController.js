@@ -237,8 +237,9 @@ const approvePharmacy = async (req, res) => {
 
 
 const getCustomers = async (req, res) => {
-  try {
+  console.log("User:", req.user)
 
+  try {
       // Check if the authenticated user owns the pharmacy
       if (req.user.role !== userRoles.admin  && req.user.role !== userRoles.pharmacy) {
           return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
@@ -253,18 +254,20 @@ const getCustomers = async (req, res) => {
 
         // Find orders associated with the pharmacy
         orders = await Order.find({pharmacyId: pharmacy._id})
-                                  .distinct('userId')
                                   .populate('userId');
       }
 
       if (req.user.role === userRoles.admin)
         // Find orders associated with the pharmacy
-        orders = await Order.find({})
-                                  .distinct('userId')
-                                  .populate('userId');
+        orders = await Order.find()
+                                  .populate('userId')
+
+      const uniqueUsers  = [...new Set( orders.map(obj => obj.userId._id)) ];
+      let customers = orders.map(order => order.userId)
+            .filter(user => uniqueUsers.includes(user._id))
 
       // Send the list of customers in the response
-      res.status(200).json({ success: true, data: orders.map(order => order.userId) });
+      res.status(200).json({ success: true, data: customers });
   } catch (error) {
       console.error(error);
       res.status(500).json({ success: false, message: "Internal server error" });
