@@ -214,19 +214,10 @@ export function OrderItems({ order, handleApprove, handleDecline }: { order: Ord
 
 
       <Card>
-        <CardHeader subheader="Click item to view. Click outside image to close" title="Licenses" />
+        <CardHeader subheader="The user ordered these item" title="Items" />
         <Divider />
         <CardContent>
 
-        {isViewerOpen && (
-        <ImageViewer
-          src={ images }
-          currentIndex={ currentImage }
-          disableScroll={ false }
-          closeOnClickOutside={ true }
-          onClose={ closeImageViewer }
-        />
-      )}
 
         <List>
           <ListItemButton>
