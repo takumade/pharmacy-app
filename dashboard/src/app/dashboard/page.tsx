@@ -47,19 +47,19 @@ export default async function Page(): Promise<React.JSX.Element> {
 
   return (
     <Grid container spacing={3}>
-      <Grid lg={3} sm={6} xs={12}>
+      { user.role === UserRoles.admin && <Grid lg={3} sm={6} xs={12}>
         <TotalUsers diff={16} trend="down" sx={{ height: '100%' }} value={data.users} />
-      </Grid>
+      </Grid>}
       <Grid lg={3} sm={6} xs={12}>
         <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={data.customers} />
       </Grid>
-      <Grid lg={3} sm={6} xs={12}>
+      { user.role === UserRoles.admin && <Grid lg={3} sm={6} xs={12}>
         <Pharmacies diff={12} trend="up" sx={{ height: '100%' }} value={data.approvedPharmacies} />
-      </Grid>
+      </Grid>}
 
-      <Grid lg={3} sm={6} xs={12}>
+      { user.role === UserRoles.admin && <Grid lg={3} sm={6} xs={12}>
         <TotalApplications sx={{ height: '100%' }} value={data.applications} />
-      </Grid>
+      </Grid>}
       <Grid lg={3} sm={6} xs={12}>
         <TotalOrders sx={{ height: '100%' }} value={data.orders} />
       </Grid>
@@ -70,9 +70,9 @@ export default async function Page(): Promise<React.JSX.Element> {
       <Grid lg={3} sm={6} xs={12}>
         <Medicine diff={12} trend="up" sx={{ height: '100%' }} value={data.medicines} />
       </Grid>
-      <Grid lg={3} sm={6} xs={12}>
+      { user.role === UserRoles.admin &&  <Grid lg={3} sm={6} xs={12}>
         <TotalPrescriptions diff={16} trend="down" sx={{ height: '100%' }} value={data.prescriptions} />
-      </Grid>
+      </Grid>}
       <Grid lg={8} xs={12}>
         <Sales
           chartSeries={[
