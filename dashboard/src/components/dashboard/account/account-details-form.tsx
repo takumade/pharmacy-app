@@ -73,7 +73,7 @@ export function AccountDetailsForm({user}: {user:User}): React.JSX.Element {
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Password</InputLabel>
-                <OutlinedInput label="Password" name='password' value={user.clearText} security="password"/>
+                <OutlinedInput label="Password" name='password' value={user.clearText} type="password"/>
               </FormControl>
             </Grid>
           </Grid>
