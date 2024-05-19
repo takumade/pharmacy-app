@@ -36,7 +36,7 @@ interface GeneralTableProps {
   permissions: RolePerm;
 }
 
-export function UserTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
+export function CustomerTable({ count = 0, rows = [], permissions }: GeneralTableProps): React.JSX.Element {
   const rowIds = React.useMemo(() => {
     return rows.map((user) => user._id);
   }, [rows]);
@@ -89,9 +89,7 @@ export function UserTable({ count = 0, rows = [], permissions }: GeneralTablePro
               <TableCell>Username</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Phone</TableCell>
-              <TableCell>Role</TableCell>
-              <TableCell>Is Verified</TableCell>
-              <TableCell>Actions</TableCell>
+              {/* <TableCell>Actions</TableCell> */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,9 +120,7 @@ export function UserTable({ count = 0, rows = [], permissions }: GeneralTablePro
                   <TableCell>{row.username}</TableCell>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>{row.phoneNumber}</TableCell>
-                  <TableCell>{row.role}</TableCell>
-                  <TableCell>{row.isVerified.toString()}</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <div style={{ display: 'flex' }}>
                       {permissions && permissions.view && (
                         <IconButton>
@@ -142,7 +138,7 @@ export function UserTable({ count = 0, rows = [], permissions }: GeneralTablePro
                         </IconButton>
                       )}
                     </div>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               );
             })}

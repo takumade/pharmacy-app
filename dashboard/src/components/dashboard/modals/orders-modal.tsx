@@ -73,7 +73,7 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
     })
     }else{
       updateMessage({
-        title: 'Approve Applicaton',
+        title: 'Approve Order',
         body: response.message,
         type: "error"
       })
@@ -87,12 +87,12 @@ export default function OrdersModal({ open, setOpen, order }: OrderModalProps) {
 
 
   const decline =async (reason: string) => {
-    let response = await frontendClient('post', `order/decline/${order._id}`, {reason})
+    let response = await frontendClient('post', `order/deny/${order._id}`, {reason})
 
     if (response.success){
 
       updateMessage({
-        title: 'Decline Applicaton',
+        title: 'Decline Order',
         body: response.message,
         type: "success"
       })
@@ -251,7 +251,6 @@ function Prescriptions({ order, handleApprove, handleDecline }: { order: Order, 
   const [isViewerOpen, setIsViewerOpen] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
 
-  console.log("order: ", order)
 
 
   const openImageViewer = async (id:string) => {

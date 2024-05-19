@@ -51,6 +51,15 @@ const orderSchema = new Schema({
         enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     },
+    approveStatus: {
+        type: String,
+        enum: ['pending', 'approved', 'denied'],
+        default: 'pending'
+    },
+    deniedReason: {
+        type: String,
+        default: ""
+    },
     shippingAddress: {
         street: String,
         city: String,
@@ -62,6 +71,7 @@ const orderSchema = new Schema({
         type: String,
         required: true
     },
+
     transactionId: String
 });
 

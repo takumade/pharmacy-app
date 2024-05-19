@@ -147,9 +147,70 @@ const getOrders = async (req, res) => {
 };
 
 
+const approveOrder = async (req, res) => {
+    const currentUser = req.user;
+  
+    try {
+      // Check if the user making the request is an admin
+      if (currentUser.role !== userRoles.pharmacy && currentUser.role !== userRoles.admin ) {
+        return res.status(403).json({ success: false, message: "Only a pharmacy can approve a order" });
+      }
+  
+      // Find the pharmacy by ID
+      const orderId = req.params.orderId;
+      const order = await Order.findById(orderId);
+      if (!order) {
+        return res.status(404).json({ success: false, message: "Order not found" });
+      }
+  
+      // Update the isApproved field to true
+      order.approveStatus = "approved";
+      await order.save();
+  
+      res.status(200).json({ success: true, message: "Order approved successfully", data: order });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
+  const declineOrder = async (req, res) => {
+    const currentUser = req.user;
+
+    const { reason } = req.body
+  
+    try {
+      // Check if the user making the request is an admin
+      if (currentUser.role !== userRoles.admin && currentUser.role !== userRoles.pharmacy ) {
+        return res.status(403).json({ success: false, message: "Only a pharmacy can decline an order" });
+      }
+  
+      // Find the pharmacy by ID
+      const orderId = req.params.orderId;
+      const order = await Order.findById(orderId);
+      if (!order) {
+        return res.status(404).json({ success: false, message: "Order not found" });
+      }
+  
+      // Update the isApproved field to true
+      order.approveStatus = "pending" 
+      order.deniedReason = reason ? reason : ""
+      await order.save();
+  
+      res.status(200).json({ success: true, message: "Order denied successfully", data: pharmacy });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  }
+
+
+
 module.exports = {
     checkout,
     deleteOrder,
     getOrder,
-    getOrders
+    getOrders,
+    approveOrder,
+    declineOrder
 }

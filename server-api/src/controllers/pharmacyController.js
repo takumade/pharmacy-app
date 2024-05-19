@@ -234,39 +234,44 @@ const approvePharmacy = async (req, res) => {
     }
   }
 
-  const getCustomers = async (req, res) => {
-    try {
-        // Retrieve the pharmacy ID from the request parameters
-        const pharmacyId = req.params.pharmacyId;
 
-        // Find the pharmacy
-        const pharmacy = await Pharmacy.findById(pharmacyId);
 
-        // Check if the pharmacy exists
-        if (!pharmacy) {
-            return res.status(404).json({ success: false, message: "Pharmacy not found" });
-        }
+const getCustomers = async (req, res) => {
+  console.log("User:", req.user)
 
-        // Check if the authenticated user owns the pharmacy
-        if (pharmacy.owner !== req.user._id) {
-            return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
-        }
+  try {
+      // Check if the authenticated user owns the pharmacy
+      if (req.user.role !== userRoles.admin  && req.user.role !== userRoles.pharmacy) {
+          return res.status(403).json({ success: false, message: "You are not authorized to access this resource" });
+      }
+
+      let orders
+
+
+
+      if (req.user.role === userRoles.pharmacy){
+        let pharmacy = await Pharmacy.findOne({owner: req.user._id})
 
         // Find orders associated with the pharmacy
-        const orders = await Order.find({ pharmacy: pharmacyId });
+        orders = await Order.find({pharmacyId: pharmacy._id})
+                                  .populate('userId');
+      }
 
-        // Extract unique user IDs from the orders
-        const userIds = [...new Set(orders.map(order => order.userId))];
+      if (req.user.role === userRoles.admin)
+        // Find orders associated with the pharmacy
+        orders = await Order.find()
+                                  .populate('userId')
 
-        // Find users who have placed orders at the pharmacy
-        const customers = await User.find({ _id: { $in: userIds } });
+      const uniqueUsers  = [...new Set( orders.map(obj => obj.userId._id)) ];
+      let customers = orders.map(order => order.userId)
+            .filter(user => uniqueUsers.includes(user._id))
 
-        // Send the list of customers in the response
-        res.status(200).json({ success: true, data: customers });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Internal server error" });
-    }
+      // Send the list of customers in the response
+      res.status(200).json({ success: true, data: customers });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+  }
 };
 
 
