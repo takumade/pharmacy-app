@@ -21,13 +21,14 @@ import HeaderBar from '../components/HeaderBar';
 
 import {TextInput} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import useStore from '../store/store';
 import {Text} from 'react-native-paper';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from '../components/HomeActionCards';
 
 const HomeScreen = () => {
+  const {medicines = [],addItemToCart}: any = useStore(state => state);
   return (
     <View style={styles.ScreenContainer}>
       <StatusBar
