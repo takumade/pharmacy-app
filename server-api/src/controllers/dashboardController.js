@@ -74,22 +74,26 @@ const getAdminStats = async (req, res) => {
 const getPharmacyStats = async (req, res) => {
     try {
         // Retrieve pharmacy ID from the user's request
-        const pharmacyId = req.user.pharmacy;
+
+        const pharmacy = await Pharmacy.findOne({owner: req.user._id})
+        const pharmacyId = pharmacy._id
+
+  
 
         // Get  orders for the pharmacy
-        const orders = await Order.countDocuments({ pharmacy: pharmacyId });
+        const orders = await Order.find({ pharmacyId: pharmacyId }).countDocuments();
 
         // Get  transactions for the pharmacy
-        const transactions = await Transaction.countDocuments({ pharmacyId });
+        const transactions = await Transaction.find({ pharmacyId: pharmacyId }).countDocuments();
 
         // Get  medicines for the pharmacy
-        const medicines = await Medicine.countDocuments({ pharmacyId });
+        const medicines = await Medicine.find({ owner: pharmacyId }).countDocuments();
 
         // Get  prescriptions for the pharmacy
-        const prescriptions = await Prescription.countDocuments({ pharmacyId });
+        const prescriptions = await Prescription.find({ pharmacyId:pharmacyId }).countDocuments();
 
 
-        const customers = await Order.find({pharmacyId: pharmacyId}).distinct('userId').countDocuments();
+        const customers = await Order.find({pharmacyId: pharmacyId}).distinct('userId').countDocuments()
 
         // Send the statistics in the response
         res.status(200).json({
