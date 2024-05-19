@@ -81,7 +81,7 @@ const getPharmacyStats = async (req, res) => {
   
 
         // Get  orders for the pharmacy
-        const orders = await Order.find({ pharmacy: pharmacyId }).countDocuments();
+        const orders = await Order.find({ pharmacyId: pharmacyId }).countDocuments();
 
         // Get  transactions for the pharmacy
         const transactions = await Transaction.find({ pharmacyId: pharmacyId }).countDocuments();
