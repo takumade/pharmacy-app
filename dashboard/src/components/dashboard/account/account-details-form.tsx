@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Unstable_Grid2';
+import { User } from '@/types/user.type';
 
 const states = [
   { value: 'alabama', label: 'Alabama' },
@@ -21,7 +22,7 @@ const states = [
   { value: 'los-angeles', label: 'Los Angeles' },
 ] as const;
 
-export function AccountDetailsForm(): React.JSX.Element {
+export function AccountDetailsForm({user}: {user:User}): React.JSX.Element {
   return (
     <form
       onSubmit={(event) => {
@@ -35,29 +36,29 @@ export function AccountDetailsForm(): React.JSX.Element {
           <Grid container spacing={3}>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>First name</InputLabel>
-                <OutlinedInput defaultValue="Sofia" label="First name" name="firstName" />
+                <InputLabel>Full Name</InputLabel>
+                <OutlinedInput defaultValue="Sofia" label="Full Name" name="firstName" value={user.fullName}/>
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
-                <InputLabel>Last name</InputLabel>
-                <OutlinedInput defaultValue="Rivers" label="Last name" name="lastName" />
+                <InputLabel>User</InputLabel>
+                <OutlinedInput label="Username" name="username" value={user.username} />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth required>
                 <InputLabel>Email address</InputLabel>
-                <OutlinedInput defaultValue="sofia@devias.io" label="Email address" name="email" />
+                <OutlinedInput label="Email address" name="email" value={user.email} />
               </FormControl>
             </Grid>
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>Phone number</InputLabel>
-                <OutlinedInput label="Phone number" name="phone" type="tel" />
+                <OutlinedInput label="Phone number" name="phone" type="tel"  value={user.phoneNumber}/>
               </FormControl>
             </Grid>
-            <Grid md={6} xs={12}>
+            {/* <Grid md={6} xs={12}>
               <FormControl fullWidth>
                 <InputLabel>State</InputLabel>
                 <Select defaultValue="New York" label="State" name="state" variant="outlined">
@@ -68,11 +69,11 @@ export function AccountDetailsForm(): React.JSX.Element {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             <Grid md={6} xs={12}>
               <FormControl fullWidth>
-                <InputLabel>City</InputLabel>
-                <OutlinedInput label="City" />
+                <InputLabel>Password</InputLabel>
+                <OutlinedInput label="Password" name='password' value={user.clearText} type="password"/>
               </FormControl>
             </Grid>
           </Grid>
