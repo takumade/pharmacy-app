@@ -16,7 +16,7 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   return (
     <AuthProvider>
-        <GestureHandlerRootView style={{flex: 1}}>
+        {/* <GestureHandlerRootView style={{flex: 1}}>
       <PaperProvider>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
@@ -31,8 +31,8 @@ const App = () => {
                 </NavigationContainer>
       </PaperProvider>
             
-                </GestureHandlerRootView>
-      {/* <Layout></Layout> */}
+                </GestureHandlerRootView> */}
+      <Layout></Layout>
     </AuthProvider>
   );
 };
