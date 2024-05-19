@@ -16,34 +16,62 @@ import { TotalOrders } from '@/components/dashboard/overview/total-orders';
 import { Medicine } from '@/components/dashboard/overview/medicine';
 import { TotalPrescriptions } from '@/components/dashboard/overview/total-prescriptions';
 import { TotalTransactions } from '@/components/dashboard/overview/total-txns';
+import backendClient from '@/services/backend-client';
+import { User, UserRoles } from '@/types/user.type';
+import { cookies } from 'next/headers';
+import { TotalCustomers } from '@/components/dashboard/overview/total-customers';
 
 export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
 
-export default function Page(): React.JSX.Element {
+export default async function Page(): Promise<React.JSX.Element> {
+
+  let userObject = cookies().get("custom-auth-user")
+  let user: User = JSON.parse(userObject?.value as string)
+
+  let response
+
+
+
+
+  if (user.role == UserRoles.admin)
+    response = await backendClient('GET', 'dashboard/admin')
+
+  if (user.role == UserRoles.pharmacy)
+    response = await backendClient('GET', 'dashboard/pharmacy')
+
+
+  let data = response?.data
+
+  console.log("Dashbaord Data: ", data)
+
+
   return (
     <Grid container spacing={3}>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalUsers diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
+        <TotalUsers diff={16} trend="down" sx={{ height: '100%' }} value={data.users} />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <Pharmacies diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
-      </Grid>
-
-      <Grid lg={3} sm={6} xs={12}>
-        <TotalApplications sx={{ height: '100%' }} value={75.5} />
+        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value={data.customers} />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalOrders sx={{ height: '100%' }} value="$15k" />
+        <Pharmacies diff={12} trend="up" sx={{ height: '100%' }} value={data.approvedPharmacies} />
       </Grid>
 
       <Grid lg={3} sm={6} xs={12}>
-        <TotalTransactions sx={{ height: '100%' }} value="$15k" />
+        <TotalApplications sx={{ height: '100%' }} value={data.applications} />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <Medicine diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
+        <TotalOrders sx={{ height: '100%' }} value={data.orders} />
+      </Grid>
+
+      <Grid lg={3} sm={6} xs={12}>
+        <TotalTransactions sx={{ height: '100%' }} value={data.transactions} />
       </Grid>
       <Grid lg={3} sm={6} xs={12}>
-        <TotalPrescriptions diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
+        <Medicine diff={12} trend="up" sx={{ height: '100%' }} value={data.medicines} />
+      </Grid>
+      <Grid lg={3} sm={6} xs={12}>
+        <TotalPrescriptions diff={16} trend="down" sx={{ height: '100%' }} value={data.prescriptions} />
       </Grid>
       <Grid lg={8} xs={12}>
         <Sales
