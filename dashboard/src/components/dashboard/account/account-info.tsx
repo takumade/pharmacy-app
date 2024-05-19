@@ -7,6 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { User } from '@/types/user.type';
 
 const user = {
   name: 'Sofia Rivers',
@@ -17,7 +18,7 @@ const user = {
   timezone: 'GTM-7',
 } as const;
 
-export function AccountInfo(): React.JSX.Element {
+export function AccountInfo({user}: {user: User}): React.JSX.Element {
   return (
     <Card>
       <CardContent>
@@ -26,22 +27,22 @@ export function AccountInfo(): React.JSX.Element {
             <Avatar src={user.avatar} sx={{ height: '80px', width: '80px' }} />
           </div>
           <Stack spacing={1} sx={{ textAlign: 'center' }}>
-            <Typography variant="h5">{user.name}</Typography>
+            <Typography variant="h5">{user.fullName}</Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.city} {user.country}
+              {user.email}
             </Typography>
             <Typography color="text.secondary" variant="body2">
-              {user.timezone}
+              {user.phoneNumber}
             </Typography>
           </Stack>
         </Stack>
       </CardContent>
       <Divider />
-      <CardActions>
+      {/* <CardActions>
         <Button fullWidth variant="text">
           Upload picture
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
