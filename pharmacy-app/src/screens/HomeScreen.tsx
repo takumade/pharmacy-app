@@ -18,7 +18,7 @@ import {
   SPACING,
 } from '../theme/theme';
 import HeaderBar from '../components/HeaderBar';
-
+import {Searchbar} from 'react-native-paper';
 import {TextInput} from 'react-native-paper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import useStore from '../store/store';
@@ -26,50 +26,67 @@ import {Text} from 'react-native-paper';
 import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from '../components/HomeActionCards';
+import Cardcarousel from '../components/Cardcarousel';
 
 const HomeScreen = () => {
-  const {medicines = [],addItemToCart}: any = useStore(state => state);
+  const {medicines = [], addItemToCart}: any = useStore(state => state);
   return (
-    <View style={styles.ScreenContainer}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={COLORS.primaryBlackHex}
-      />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.ScrollViewFlex}>
+    <View style={{flexDirection: 'column',}}>
+      <View
+        style={{
+          height: '30%',
+          padding: 20,
+          backgroundColor: '#902CC0',
+          borderBottomLeftRadius: 20,
+          borderBottomRightRadius: 20,
+        }}>
         <HeaderBar />
-        <Text style={styles.ScreenTitle}>Search for {'\n'}drugs below</Text>
-
-        {/*Search input  */}
         <View style={styles.InputContainerComponent}>
-          <View style={styles.searchSection}>
-            <Ionicons
-              style={styles.searchIcon}
-              name="search"
-              size={FONTSIZE.size_24}
-              color={COLORS.primaryBlackHex}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Search for drugs"
-              onChangeText={searchString => {}}
-              underlineColorAndroid="transparent"
-            />
-          </View>
+          <Searchbar placeholder="Search for drugs" value="" />
         </View>
-
-        <HomeActionCards />
-
-        <ProductCategory title="Popular Items" />
-
-        <Products />
-
-        <ProductCategory title="Recently Viewed Products" />
-
-        <Products />
-      </ScrollView>
+      
+      </View>
+       <View style={{  bottom: 50, zIndex: 1 }}>
+          <Cardcarousel />
+        </View>
+      <View style={{height: '70%', marginHorizontal: SPACING.space_30}}>
+        <ScrollView>
+       
+          {/* <HomeActionCards /> */}
+          <ProductCategory title="Popular Items" />
+          <Products />
+          <ProductCategory title="Recently Viewed Products" />
+          <Products />
+        </ScrollView>
+      </View>
     </View>
+
+    // <View style={styles.ScreenContainer}>
+    //   <StatusBar
+    //     barStyle="light-content"
+    //     backgroundColor={COLORS.primaryBlackHex}
+    //   />
+    //   <ScrollView
+    //     showsVerticalScrollIndicator={false}
+    //     contentContainerStyle={styles.ScrollViewFlex}>
+    //     <HeaderBar />
+
+    //     {/*Search input  */}
+    //     <View style={styles.InputContainerComponent}>
+    //       <Searchbar placeholder='Search for drugs' value="" />
+    //       </View>
+
+    //     <HomeActionCards />
+
+    //     <ProductCategory title="Popular Items" />
+
+    //     <Products />
+
+    //     <ProductCategory title="Recently Viewed Products" />
+
+    //     <Products />
+    //   </ScrollView>
+    // </View>
   );
 };
 const styles = StyleSheet.create({
@@ -97,7 +114,7 @@ const styles = StyleSheet.create({
   },
   InputContainerComponent: {
     flexDirection: 'row',
-    marginTop: SPACING.space_30,
+    marginTop: SPACING.space_10,
     borderRadius: BORDERRADIUS.radius_20,
     backgroundColor: COLORS.primaryWhiteHex,
     alignItems: 'center',
@@ -115,9 +132,8 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    paddingTop: 5,
-    paddingRight: 10,
-    paddingBottom: 10,
+    borderRadius: BORDERRADIUS.radius_20,
+
     paddingLeft: 0,
     backgroundColor: '#fff',
     color: '#424242',
@@ -125,3 +141,22 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+{
+  /* <View style={styles.InputContainerComponent}>
+          <View style={styles.searchSection}>
+            <Ionicons
+              style={styles.searchIcon}
+              name="search"
+              size={FONTSIZE.size_24}
+              color={COLORS.primaryBlackHex}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Search for drugs"
+              onChangeText={searchString => {}}
+              underlineColorAndroid="transparent"
+            />
+          </View>
+        </View> */
+}
