@@ -23,7 +23,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = props => {
     <View style={{flex: 1}}>
       <DrawerContentScrollView
         {...props}
-        contentContainerStyle={{backgroundColor: '#76A593'}}>
+        contentContainerStyle={{backgroundColor: '#fff'}}>
         <ImageBackground style={{padding: 20}}>
           <Image
             source={require('../assets/app_images/avatar.jpg')}
@@ -31,7 +31,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = props => {
           />
           <Text
             style={{
-              color: '#fff',
+              color: 'black',
               fontSize: 18,
               fontFamily: 'Roboto-Medium',
               marginBottom: 5,
@@ -39,14 +39,14 @@ const CustomDrawer: React.FC<CustomDrawerProps> = props => {
             Takunda Simbabwe
           </Text>
         </ImageBackground>
-        <View style={{flex: 1, backgroundColor: '#76A593', paddingTop: 10}}>
+        <View style={{flex: 1, backgroundColor: '#902CC0', paddingTop: 10}}>
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
       <View style={{padding: 20, borderTopWidth: 1, borderTopColor: '#ccc'}}>
         <TouchableOpacity onPress={() => {}} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="share-social-outline" size={22} />
+            <Ionicons name="share-social-outline" size={22}  color={'#fff'}/>
             <Text
               style={{
                 fontSize: 15,
@@ -60,7 +60,7 @@ const CustomDrawer: React.FC<CustomDrawerProps> = props => {
         </TouchableOpacity>
         <TouchableOpacity onPress={onLogout} style={{paddingVertical: 15}}>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Ionicons name="exit-outline" size={22} />
+            <Ionicons name="exit-outline" size={22} color={'#fff'} />
             <Text
               style={{
                 fontSize: 15,

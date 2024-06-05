@@ -70,7 +70,7 @@ class Map extends React.Component {
           ))}
           <Marker coordinate={{latitude: -17.824858, longitude: 31.053028}} />
         </MapView>
-        <MedicineCartItem />
+        {/* <MedicineCartItem /> */}
         <BottomSheet index={1} snapPoints={snapPoints}>
           <View>
             <Search />

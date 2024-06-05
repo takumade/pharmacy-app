@@ -26,7 +26,7 @@ const headers = {
 };
 
 const TOKEN_KEY = 'token';
-export const API_URL = 'http://192.168.100.3:3000/api/user';
+export const API_URL = 'http://192.168.100.3 :3000/api/user';
 
 const AuthContext = createContext<AuthProps>({
   authState: {token: null, authenticated: null},
