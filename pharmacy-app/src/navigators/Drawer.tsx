@@ -23,11 +23,14 @@ const DrawerNavigator = () => {
           backgroundColor: '#902CC0',
           width: 250,
         },
-      }}>
+      }}
+  
+      >
       <Drawer.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeScreen} 
         options={{
+          headerShown: false,
           headerTitle: '',
           drawerLabelStyle: {
             color: 'white',

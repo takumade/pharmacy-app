@@ -14,7 +14,7 @@ const HeaderBar: React.FC<HeaderBarProps> = ({title}) => {
     <View style={styles.HeaderContainer}>
      <WelcomeText />
       <Text style={styles.HeaderText}>{title}</Text>
-      <ProfilePic />
+      {/* <ProfilePic /> */}
     </View>
   );
 };

@@ -27,39 +27,58 @@ import Products from '../components/Products';
 import ProductCategory from '../components/ProductCategory';
 import HomeActionCards from '../components/HomeActionCards';
 import Cardcarousel from '../components/Cardcarousel';
-
+import {DrawerActions, useNavigation} from '@react-navigation/native';
+import {Button} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Snackbar from 'react-native-paper';
 const HomeScreen = () => {
   const {medicines = [], addItemToCart}: any = useStore(state => state);
+  const navigation = useNavigation();
+
   return (
-    <View style={{flexDirection: 'column',}}>
-      <View
-        style={{
-          height: '30%',
-          padding: 20,
-          backgroundColor: '#902CC0',
-          borderBottomLeftRadius: 20,
-          borderBottomRightRadius: 20,
-        }}>
-        <HeaderBar />
-        <View style={styles.InputContainerComponent}>
-          <Searchbar placeholder="Search for drugs" value="" />
+    <View style={{flexDirection: 'column'}}>
+        <StatusBar
+        barStyle="light-content"
+        backgroundColor="#902CC0"
+      />
+      <ScrollView>
+        <View
+          style={{
+            height: '30%',
+            padding: 20,
+            backgroundColor: '#902CC0',
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20,
+          }}>
+            <View style={styles.HeaderContainer}>
+          <Icon
+            name="menu"
+            size={24}
+            style={{alignSelf: 'flex-start'}}
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          />
+          <Icon name='cart' size={24} style={{alignSelf: 'flex-end'}} color='white'/>
+          </View>
+          <HeaderBar />
+          <View >
+            <Searchbar placeholder="Search for drugs" value="" />
+          </View>
         </View>
-      
-      </View>
-       <View style={{  bottom: 50, zIndex: 1 }}>
-          <Cardcarousel />
-        </View>
-      <View style={{height: '70%', marginHorizontal: SPACING.space_30}}>
-        <ScrollView>
-       
-          {/* <HomeActionCards /> */}
+
+        <View style={{height: '70%', marginHorizontal: SPACING.space_30}}>
+          <View style={{marginTop: -100, zIndex: 1}}>
+            <Cardcarousel />
+          </View>
+
+          <HomeActionCards />
           <ProductCategory title="Popular Items" />
           <Products />
           <ProductCategory title="Recently Viewed Products" />
           <Products />
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     </View>
+
 
     // <View style={styles.ScreenContainer}>
     //   <StatusBar
@@ -96,6 +115,12 @@ const styles = StyleSheet.create({
   },
   ScrollViewFlex: {
     flexGrow: 1,
+  },
+  HeaderContainer: {
+   
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   ScreenTitle: {
     fontSize: FONTSIZE.size_28,
@@ -137,6 +162,14 @@ const styles = StyleSheet.create({
     paddingLeft: 0,
     backgroundColor: '#fff',
     color: '#424242',
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 25,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
