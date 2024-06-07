@@ -19,7 +19,7 @@ import { Eye, Trash } from '@phosphor-icons/react';
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr';
 import dayjs from 'dayjs';
 
-import { Permissions, RolePerm } from '@/types/permissions';
+import { Permissions, RolePerm } from '@/types/permissions.type';
 import { useSelection } from '@/hooks/use-selection';
 import Image from 'next/image';
 

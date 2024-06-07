@@ -14,7 +14,7 @@ import { GeneralFilters } from '@/components/general/general-filter';
 import backendClient from '@/services/backend-client';
 import { cookies } from 'next/headers';
 import { User } from '@/types/user';
-import {  RolePerm } from '@/types/permissions';
+import {  RolePerm } from '@/types/permissions.type';
 import { getPermissions } from '@/permissions';
 import { APIResponse } from '@/types/api-response';
 import { PrescriptionTable } from '@/components/dashboard/tables/prescriptions-table';
