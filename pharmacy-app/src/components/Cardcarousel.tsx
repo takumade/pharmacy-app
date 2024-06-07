@@ -10,12 +10,12 @@ const Cardcarousel = () => {
     {
       id: 1,
       title: 'First Item',
-      image: require('../assets/app_images/logos.jpg'),
+      image: require('../assets/app_images/hmd.jpg'),
     },
     {
       id: 2,
       title: 'Second Item',
-      image: require('../assets/app_images/logos.jpg'),
+      image: require('../assets/app_images/hmd.jpg'),
     },
   ];
 
@@ -25,7 +25,7 @@ const Cardcarousel = () => {
         width={windowWidth * 0.9} // Set the width to 80% of the window width
         height={windowWidth / 2}
         data={list}
-        autoPlay={false}
+        autoPlay={true}
         pagingEnabled={pagingEnabled}
         scrollAnimationDuration={2000}
         renderItem={({ item }) => (

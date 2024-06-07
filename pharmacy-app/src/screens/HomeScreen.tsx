@@ -57,7 +57,7 @@ const HomeScreen = () => {
             style={{alignSelf: 'flex-start'}}
             onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
           />
-          <Icon name='cart' size={24} style={{alignSelf: 'flex-end'}} color='white'/>
+          <Icon name='cart' size={24} style={{alignSelf: 'flex-end'}} color='white' />
           </View>
           <HeaderBar />
           <View  style={{marginBottom: 80}}>
