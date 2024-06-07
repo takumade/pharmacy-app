@@ -25,24 +25,36 @@ export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } 
 
 export default async function Page(): Promise<React.JSX.Element> {
 
-  let userObject = cookies().get("custom-auth-user")
-  let user: User = JSON.parse(userObject?.value as string)
 
-  let response
+let userObject = cookies().get("custom-auth-user");
 
+let user: User | null = null;
 
+if (userObject?.value) {
+  try {
+    user = JSON.parse(userObject.value as string) as User;
+  } catch (error) {
+    user = null;
+  }
+} else {
+  user = null;
+}
 
+let response;
 
-  if (user.role == UserRoles.admin)
-    response = await backendClient('GET', 'dashboard/admin')
+if (user) {
+  if (user.role == UserRoles.admin) {
+    response = await backendClient('GET', 'dashboard/admin');
+  } else if (user.role == UserRoles.pharmacy) {
+    response = await backendClient('GET', 'dashboard/pharmacy');
+  } else {
+    response = null;
+  }
+} else {
+  response = null;
+}
 
-  if (user.role == UserRoles.pharmacy)
-    response = await backendClient('GET', 'dashboard/pharmacy')
-
-
-  let data = response?.data
-
-  console.log("Dashbaord Data: ", data)
+let data = response?.data;
 
 
   return (

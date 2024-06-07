@@ -16,21 +16,27 @@ const Drawer = createDrawerNavigator();
 const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
-      initialRouteName="Locate"
+      initialRouteName="Home"
       drawerContent={props => <CustomDrawer {...props} />}
       screenOptions={{
         drawerStyle: {
-          backgroundColor: '#76A593',
+          backgroundColor: '#902CC0',
           width: 250,
         },
-      }}>
+      }}
+  
+      >
       <Drawer.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeScreen} 
         options={{
+          headerShown: false,
           headerTitle: '',
+          drawerLabelStyle: {
+            color: 'white',
+          },
           drawerIcon: ({color}) => (
-            <Ionicons name="home-outline" size={22} color={color} />
+            <Ionicons name="home-outline" size={22} color={"white"} />
           ),
         }}
       />
@@ -39,8 +45,11 @@ const DrawerNavigator = () => {
         component={OrdersScreen}
         options={{
           headerTitle: '',
+          drawerLabelStyle: {
+            color: 'white',
+          },
           drawerIcon: ({color}) => (
-            <Ionicons name="wallet" size={22} color={color} />
+            <Ionicons name="wallet" size={22} color={"white"} />
           ),
         }}
       />
@@ -50,8 +59,11 @@ const DrawerNavigator = () => {
         component={Map}
         options={{
           headerTitle: '',
+          drawerLabelStyle: {
+            color: 'white',
+          },
           drawerIcon: ({color}) => (
-            <Ionicons name="location" size={22} color={color} />
+            <Ionicons name="location" size={22} color={"white"} />
           ),
         }}
       />
@@ -60,8 +72,11 @@ const DrawerNavigator = () => {
         component={Support}
         options={{
           headerTitle: '',
+          drawerLabelStyle: {
+            color: 'white',
+          },
           drawerIcon: ({color}) => (
-            <Ionicons name="help" size={22} color={color} />
+            <Ionicons name="help" size={22} color={"white"} />
           ),
         }}
       />

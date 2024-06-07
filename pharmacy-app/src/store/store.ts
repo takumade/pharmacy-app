@@ -37,6 +37,11 @@ interface StoreState {
   searchMedicines: (name: string) => Promise<void>;
 }
 
+const useAuthStore = create((set) => ({
+  token: null,
+  setToken: (newToken: any) => set({ token: newToken }),
+}));
+
 const useStore = create<StoreState>((set, get) => ({
   medicines: [],
   cartItems: [],
@@ -94,9 +99,9 @@ const useStore = create<StoreState>((set, get) => ({
   searchMedicines: async (name: string) => {
     try {
       const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU4MDEyNTd9.hpGnTT60zKe2rZlfYsD3q360Rl3JU0L-0G-3aahZT18';
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjM3ZmViMmIyZDBmYTQwYmYxZmJiNzEiLCJyb2xlIjoicGhhcm1hY3kiLCJpYXQiOjE3MTU5MzIyMDh9.BpC5K53mC2d8lSbYfQvnTF3sJ0NgSG11oKx6aDt5NNg';
       const response = await axios.get(
-        `http://192.168.100.3:3000/api/medicine/search?name=${name}`,
+        `http://172.18.224.1:3000/api/medicine/search?name=${name}`,
         {
           headers: {
             Authorization: token,
