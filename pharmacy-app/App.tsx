@@ -1,5 +1,5 @@
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -12,8 +12,12 @@ import DrawerNavigator from './src/navigators/Drawer';
 import AuthStack from './src/navigators/AuthStack';
 import AuthProvider, {useAuth} from './src/contexts/AuthContext';
 const Stack = createNativeStackNavigator();
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <AuthProvider>
          <GestureHandlerRootView style={{flex: 1}}>

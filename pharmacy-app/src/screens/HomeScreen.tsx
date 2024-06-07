@@ -60,7 +60,7 @@ const HomeScreen = () => {
           <Icon name='cart' size={24} style={{alignSelf: 'flex-end'}} color='white'/>
           </View>
           <HeaderBar />
-          <View >
+          <View  style={{marginBottom: 80}}>
             <Searchbar placeholder="Search for drugs" value="" />
           </View>
         </View>
@@ -70,7 +70,7 @@ const HomeScreen = () => {
             <Cardcarousel />
           </View>
 
-          <HomeActionCards />
+          {/* <HomeActionCards /> */}
           <ProductCategory title="Popular Items" />
           <Products />
           <ProductCategory title="Recently Viewed Products" />
